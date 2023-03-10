@@ -1,0 +1,20 @@
+{
+  "name": "marilena",
+  "version": "0.0.1",
+  "description": "simpoe tool for build mjml email on web",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "clear && tsc -w & nodemon ./dist/index.js"
+  },
+  "author": "diego tonini <diego.tonini93@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "fastify": "^4.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "nodemon": "^2.0.21",
+    "typescript": "^4.9.5"
+  }
+}
