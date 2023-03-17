@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`writer correctly email files create email with: [engine: NO, suffix: html, locale: en] 1`] = `
+"<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>test</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+"
+`;
