@@ -1,15 +1,18 @@
 import fastify from "fastify";
 import fastifyView from "@fastify/view";
+import fastifyWebSocket from "@fastify/websocket";
 import eta from "eta";
 import { loadConfig } from "./utils";
 import { handler as homeHandler } from "./routes/home";
 import { handler as emailLangVariants } from "./routes/list-languages";
 import { handler as emailHandler } from "./routes/email";
-import watch from "node-watch";
-import path from "path";
+import logger from "node-color-log";
+import { EVENT_NAME_NEED_REFRESH_WEBSOCKET } from "./const";
+import { setupWatcher } from "./lib/watcher";
 
 loadConfig().then((config) => {
   const { inputFolder } = config;
+  let websocket: WebSocket | undefined;
 
   const server = fastify({
     // logger: true,
@@ -18,6 +21,20 @@ loadConfig().then((config) => {
     engine: {
       eta,
     },
+  });
+  server.register(fastifyWebSocket);
+
+  server.register(async function () {
+    server.get("/socket", { websocket: true }, (connection, req) => {
+      websocket = connection.socket;
+      connection.socket.on("message", (message: any) => {
+        connection.socket.send("hi from server");
+      });
+      // Client disconnect
+      connection.socket.on("close", () => {
+        console.log("Client disconnected");
+      });
+    });
   });
 
   // render list of email founded
@@ -29,45 +46,35 @@ loadConfig().then((config) => {
   // render 1 email for 1 language
   server.get(`/${inputFolder}/:email/:locale`, emailHandler);
 
-  // inject config on each endpoint
+  // inject config on each endpoint. Now we load with loadConfig in other parts.
+  // Maybe we need to create a kind of wrapper or decorator...
   // server.addHook("onRequest", (request, reply, done) => {
   //   const ciccio = 3;
   //   (request.params as any).config = 3;
   //   done();
   // });
 
-  const watcher = watch(
-    path.join(inputFolder),
-    { recursive: true, filter: /\.json$/ },
-    function (evt, name) {
-      // example input/buy/it/variables.json
-      if (evt === "update") {
-        const parts = name.split("/");
-        const emailName = parts[1];
-        const locale = parts[2];
-        if (name.endsWith("variables.json")) {
-          // chnged variables
-          console.log("need to refresh", emailName, locale);
-        }
-        if (name.endsWith("common.json")) {
-          // changed common
-        }
-      }
-    }
-  );
+  const watcher = setupWatcher(config, websocket, {
+    handleEditVariables: function (emailName, locale): void {
+      console.log("new variables: need to refresh", emailName, locale);
+      websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
+    },
+  });
 
   server.addHook("onClose", (_, done) => {
     watcher.close();
     done();
   });
 
-  server.listen({ port: 8080 }, (err, address) => {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    console.log("Loaded config:");
-    console.log(config);
-    console.log(`Server listening at ${address}`);
+  const port = 8080;
+  server.ready().then(() => {
+    server.listen({ port }, (err, address) => {
+      if (err) {
+        console.error(err);
+        process.exit(1);
+      }
+      console.log(config);
+      logger.color("blue").log(`Server listening at http://localhost:${port}`);
+    });
   });
 });

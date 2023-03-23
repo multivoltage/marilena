@@ -3,6 +3,7 @@ import { loadConfig } from "../utils";
 import fs from "fs";
 import { inputOutputHtml } from "../lib/inputOutputHtml";
 import loadVariables from "../lib/loadVariables";
+import { inject } from "../lib/injectWebSocketNodeScript";
 
 export const handler: RouteHandler = async (request, reply) => {
   const config = await loadConfig();
@@ -21,6 +22,8 @@ export const handler: RouteHandler = async (request, reply) => {
     templateOptions: config.templateOptions,
   });
 
+  const htmlWithWebsocketScript = inject(html);
+
   reply.header("content-type", "text/html");
-  reply.send(html);
+  reply.send(htmlWithWebsocketScript);
 };
