@@ -1,12 +1,10 @@
 import fastify from "fastify";
 import fastifyView from "@fastify/view";
 import eta from "eta";
-import fs from "fs";
-import path from "path";
-import mjml2html from "mjml";
 import { loadConfig } from "./utils";
-import { inputOutputHtml } from "./lib/inputOutputHtml";
-import loadVariables from "./lib/loadVariables";
+import { handler as homeHandler } from "./routes/home";
+import { handler as emailLangVariants } from "./routes/list-languages";
+import { handler as emailHandler } from "./routes/email";
 
 loadConfig().then((config) => {
   const { inputFolder } = config;
@@ -19,58 +17,22 @@ loadConfig().then((config) => {
       eta,
     },
   });
+
   // render list of email founded
-  server.get("/", async (request, reply) => {
-    const inputFolderPath = path.join(inputFolder);
-    let list: { emailName: string; url: string }[] = [];
+  server.get("/", homeHandler);
 
-    try {
-      const folders = fs.readdirSync(inputFolderPath);
-      list = folders.map((folder) => ({
-        emailName: folder,
-        url: path.join(inputFolderPath, folder),
-      }));
-    } catch {}
+  // render list of locales for 1 email
+  server.get(`/${inputFolder}/:email`, emailLangVariants);
 
-    reply.view("/src/pages/email-list.html", { list });
-  });
+  // render 1 email for 1 language
+  server.get(`/${inputFolder}/:email/:locale`, emailHandler);
 
-  server.get(`/${inputFolder}/:email`, (request, reply) => {
-    const email = (request.params as any).email;
-    const locales = config.locales;
-
-    /** this is a FEATURE
-    if (locales.length === 1) {
-      // single language so we redirect to /[locale]
-      const locale = locales[0];
-      reply.redirect(`/input/${email}/${locale}`);
-    } */
-
-    let list: { locale: string; url: string }[] = [];
-    locales.forEach((locale) => {
-      list.push({ locale, url: `${email}/${locale}` });
-    });
-    reply.view("/src/pages/email-variants.html", { list });
-  });
-
-  server.get(`/${inputFolder}/:email/:locale`, (request, reply) => {
-    const email: string = (request.params as any).email;
-    const locale: string = (request.params as any).locale;
-
-    const mjmlTemplate = fs.readFileSync(
-      `${inputFolder}/${email}/index.html`,
-      "utf-8"
-    );
-
-    const html = inputOutputHtml({
-      inputHtml: mjmlTemplate,
-      variables: loadVariables({ config, emailName: email, locale }),
-      templateOptions: config.templateOptions,
-    });
-
-    reply.header("content-type", "text/html");
-    reply.send(html);
-  });
+  // inject config on each endpoint
+  // server.addHook("onRequest", (request, reply, done) => {
+  //   const ciccio = 3;
+  //   (request.params as any).config = 3;
+  //   done();
+  // });
 
   server.listen({ port: 8080 }, (err, address) => {
     if (err) {
