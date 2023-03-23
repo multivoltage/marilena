@@ -1,7 +1,6 @@
 <html>
-  <ul>
-   <% it.list.forEach(function(name){ %>
-      <a href="input/<%= name %>"><%= name %></a>
-   <% }) %>
-  </ul>
+  <p>Email founded:</p>
+  <% it.list.forEach(function({ emailName, url }){ %>
+    <li><a href="<%= url %>"><%= emailName %></a></li>
+  <% }) %>
 </html>

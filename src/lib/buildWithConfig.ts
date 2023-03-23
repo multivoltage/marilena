@@ -19,32 +19,28 @@ export function build(config: Config) {
 
   let list: string[];
   try {
-    list = fs
-      .readdirSync(inputFolderPath)
-      .filter((name) => name.endsWith(templateSuffix));
-  } catch {
+    const files = fs.readdirSync(inputFolderPath);
+    list = files;
+  } catch (e) {
+    console.error(e);
     list = [];
   }
 
-  list.forEach((fileName) => {
+  list.forEach((folder) => {
     // create /[outputFolderPath]/[emailName] if not existing
-    const folderEmailPath = path.join(
-      outputFolderPath,
-      removeExtension(fileName)
-    );
+    const folderEmailPath = path.join(outputFolderPath, folder);
     if (!fs.existsSync(folderEmailPath)) {
       fs.mkdirSync(folderEmailPath, { recursive: true });
     }
 
-    const mjmlTemplate = fs.readFileSync(`${inputFolder}/${fileName}`, "utf-8");
+    const mjmlTemplate = fs.readFileSync(
+      `${inputFolder}/${folder}/index.html`,
+      "utf-8"
+    );
 
     locales.forEach((locale) => {
       // create /[outputFolderPath]/[emailName]/[lang] if not existing
-      const folderEmailPathLang = path.join(
-        outputFolderPath,
-        removeExtension(fileName),
-        locale
-      );
+      const folderEmailPathLang = path.join(outputFolderPath, folder, locale);
       if (!fs.existsSync(folderEmailPathLang)) {
         fs.mkdirSync(folderEmailPathLang, { recursive: true });
       }
@@ -59,9 +55,9 @@ export function build(config: Config) {
         fs.writeFileSync(path.join(folderEmailPathLang, "index.html"), html, {
           encoding: "utf-8",
         });
-        logger.info("writed", fileName);
+        logger.info("writed", folder, locale);
       } catch (e) {
-        logger.error("failed writing", fileName, e);
+        logger.error("failed writing", folder, e);
       }
     });
   });
