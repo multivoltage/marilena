@@ -1,0 +1,10 @@
+{
+  "templateSuffix": ".html",
+  "inputFolder": "input",
+  "outputFolder": "output",
+  "locales": ["en"],
+  "templateOptions": {
+    "engine": "eta",
+    "variablesType": "json"
+  }
+}

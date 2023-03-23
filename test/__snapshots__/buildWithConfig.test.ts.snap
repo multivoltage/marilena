@@ -12,3 +12,16 @@ exports[`writer correctly email files create email with: [engine: NO, suffix: ht
 </mjml>
 "
 `;
+
+exports[`writer correctly email files create email with: [engine: eta, suffix: html, locale: en] 1`] = `
+"<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>hello en</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+"
+`;

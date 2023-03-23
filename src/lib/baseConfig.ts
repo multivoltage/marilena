@@ -4,7 +4,6 @@ const config: Config = {
   templateSuffix: ".html",
   inputFolder: "input",
   outputFolder: "output",
-  variablesType: "json",
   locales: ["en"],
 };
 

@@ -1,15 +1,17 @@
 import { Config } from "./lib/type";
 import baseConfig from "./lib/baseConfig";
+import logger from "node-color-log";
 
 export async function loadConfig() {
   try {
-    const config: Config = (await require("../config")).default;
+    const config: Config = await require("../config.json");
 
     return {
       ...baseConfig,
       ...config,
     };
-  } catch {
+  } catch (e) {
+    logger.error("error loading config.json, so use default config", e);
     return baseConfig;
   }
 }

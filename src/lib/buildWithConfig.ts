@@ -19,8 +19,8 @@ export function build(config: Config) {
 
   let list: string[];
   try {
-    const files = fs.readdirSync(inputFolderPath);
-    list = files;
+    const files = fs.readdirSync(inputFolderPath, { withFileTypes: true });
+    list = files.filter((f) => f.isDirectory()).map((f) => f.name);
   } catch (e) {
     console.error(e);
     list = [];
@@ -45,10 +45,11 @@ export function build(config: Config) {
         fs.mkdirSync(folderEmailPathLang, { recursive: true });
       }
 
-      const variables = loadVariables(locale);
+      const variables = loadVariables({ config, locale, emailName: folder });
       const html = inputOutputHtml({
         inputHtml: mjmlTemplate,
         variables,
+        templateOptions: config.templateOptions,
       });
 
       try {
