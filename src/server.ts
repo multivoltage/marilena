@@ -5,6 +5,8 @@ import fs from "fs";
 import path from "path";
 import mjml2html from "mjml";
 import { loadConfig } from "./utils";
+import { inputOutputHtml } from "./lib/inputOutputHtml";
+import loadVariables from "./lib/loadVariables";
 
 loadConfig().then((config) => {
   const { inputFolder } = config;
@@ -52,14 +54,19 @@ loadConfig().then((config) => {
   });
 
   server.get(`/${inputFolder}/:email/:locale`, (request, reply) => {
-    const email = (request.params as any).email;
+    const email: string = (request.params as any).email;
+    const locale: string = (request.params as any).locale;
 
     const mjmlTemplate = fs.readFileSync(
       `${inputFolder}/${email}/index.html`,
       "utf-8"
-    ); // => load mjml file
-    const mjmlTenplateWithVars = eta.render(mjmlTemplate, {});
-    const html = mjml2html(mjmlTenplateWithVars).html;
+    );
+
+    const html = inputOutputHtml({
+      inputHtml: mjmlTemplate,
+      variables: loadVariables({ config, emailName: email, locale }),
+      templateOptions: config.templateOptions,
+    });
 
     reply.header("content-type", "text/html");
     reply.send(html);
