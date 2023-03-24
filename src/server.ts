@@ -27,6 +27,7 @@ loadConfig().then((config) => {
   server.register(async function () {
     server.get("/socket", { websocket: true }, (connection, req) => {
       websocket = connection.socket;
+      console.log("Client connected");
       connection.socket.on("message", (message: any) => {
         connection.socket.send("hi from server");
       });
@@ -54,9 +55,13 @@ loadConfig().then((config) => {
   //   done();
   // });
 
-  const watcher = setupWatcher(config, websocket, {
-    handleEditVariables: function (emailName, locale): void {
+  const watcher = setupWatcher(config, {
+    handleEditVariables: function (emailName, locale) {
       console.log("new variables: need to refresh", emailName, locale);
+      websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
+    },
+    handleEmailChange: function (emailName) {
+      console.log("email changed: need to refresh", emailName);
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
   });

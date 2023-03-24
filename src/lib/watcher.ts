@@ -9,18 +9,17 @@ import { Config } from "./type";
 
 interface Callbacks {
   handleEditVariables: (emailName: string, locale: string) => void;
+  handleEmailChange: (emailNamew: string) => void;
 }
 
-export const setupWatcher = function (
-  config: Config,
-  websocket: WebSocket | undefined,
-  callbacks: Callbacks
-) {
-  const { inputFolder } = config;
+export const setupWatcher = function (config: Config, callbacks: Callbacks) {
+  const { inputFolder, templateSuffix } = config;
+
+  const regex = new RegExp(`.*(.json|${templateSuffix})`);
 
   return watch(
     path.join(inputFolder),
-    { recursive: true, filter: /\.json$/ },
+    { recursive: true, filter: regex },
     function (evt, name) {
       // example input/buy/it/variables.json
       if (evt === "update") {
@@ -30,6 +29,10 @@ export const setupWatcher = function (
         if (name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`)) {
           // chnged variables
           callbacks.handleEditVariables(emailName, locale);
+        }
+        if (name.endsWith(templateSuffix)) {
+          // changed email template
+          callbacks.handleEmailChange(emailName);
         }
         if (name.endsWith(`${FILE_NAME_COMMON_VARIABLES}.json`)) {
           // TODO

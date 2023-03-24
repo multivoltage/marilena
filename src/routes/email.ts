@@ -12,7 +12,7 @@ export const handler: RouteHandler = async (request, reply) => {
   const locale: string = (request.params as any).locale;
 
   const mjmlTemplate = fs.readFileSync(
-    `${inputFolder}/${email}/index.html`,
+    `${inputFolder}/${email}/index${config.templateSuffix}`,
     "utf-8"
   );
 

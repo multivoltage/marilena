@@ -7,7 +7,7 @@ import loadVariables from "./loadVariables";
 import logger from "node-color-log";
 
 export function buildSingle(config: Config, emailName: string) {
-  const { inputFolder, outputFolder, locales } = config;
+  const { inputFolder, outputFolder, locales, templateSuffix } = config;
 
   const inputFolderPath = path.join(inputFolder);
   const outputFolderPath = path.join(outputFolder);
@@ -15,7 +15,7 @@ export function buildSingle(config: Config, emailName: string) {
   const inputEmailFilePath = path.join(
     inputFolderPath,
     emailName,
-    "index.html"
+    `index${templateSuffix}`
   );
   const mjmlTemplate = fs.readFileSync(inputEmailFilePath, "utf-8");
 
