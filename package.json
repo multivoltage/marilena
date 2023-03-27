@@ -2,10 +2,10 @@
   "name": "marilena",
   "version": "0.0.1",
   "description": "a tool to build email with email using coll tool like mjml and different template engine",
-  "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && tsc -p tsconfig.json",
-    "start": "clear && tsc -w & nodemon ./dist/server.js",
+    "compile": "tsc -p tsconfig.json && node ./dist/server.js",
+    "start": "clear && nodemon -e ts --exec \"npm run compile\"",
     "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js",
     "test": "jest --silent=true",
     "cache": "jest --clearCache"
