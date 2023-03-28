@@ -10,7 +10,9 @@ import logger from "node-color-log";
 import { EVENT_NAME_NEED_REFRESH_WEBSOCKET } from "./const";
 import { setupWatcher } from "./lib/watcher";
 
-loadConfig().then((config) => {
+async function startServer() {
+  const config = await loadConfig();
+
   const { inputFolder } = config;
   let websocket: WebSocket | undefined;
 
@@ -82,4 +84,6 @@ loadConfig().then((config) => {
       logger.color("blue").log(`Server listening at http://localhost:${port}`);
     });
   });
-});
+}
+
+startServer();

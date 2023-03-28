@@ -1,5 +1,6 @@
 import { RouteHandler } from "fastify";
 import { loadConfig } from "../utils";
+import path from "path";
 
 export const handler: RouteHandler = async (request, reply) => {
   const { locales } = await loadConfig();
@@ -16,5 +17,8 @@ export const handler: RouteHandler = async (request, reply) => {
   locales.forEach((locale) => {
     list.push({ locale, url: `${email}/${locale}` });
   });
-  reply.view("/src/pages/email-variants.html", { list });
+
+  const pathView = path.join(__dirname, "../pages/email-variants.html");
+
+  reply.view(pathView, { list });
 };

@@ -16,5 +16,7 @@ export const handler: RouteHandler = async (request, reply) => {
     }));
   } catch {}
 
-  reply.view("/src/pages/email-list.html", { list });
+  const pathView = path.join(__dirname, "../pages/email-list.html");
+
+  reply.view(pathView, { list });
 };

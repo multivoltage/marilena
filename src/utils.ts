@@ -1,10 +1,12 @@
 import { Config } from "./lib/type";
 import baseConfig from "./lib/baseConfig";
 import logger from "node-color-log";
+import path from "path";
 
 export async function loadConfig() {
   try {
-    const config: Config = await require("../config.json");
+    const pathConfig = path.join(process.cwd(), "./config.json");
+    const config: Config = await require(pathConfig);
 
     return {
       ...baseConfig,
