@@ -2,10 +2,11 @@ import { Config } from "./types";
 import baseConfig from "./lib/baseConfig";
 import logger from "node-color-log";
 import path from "path";
+import { CONFIG_FILE_NAME } from "./const";
 
 export async function loadConfig() {
   try {
-    const pathConfig = path.join(process.cwd(), "./config.json");
+    const pathConfig = path.join(process.cwd(), `./${CONFIG_FILE_NAME}`);
     const config: Config = await require(pathConfig);
 
     return {
@@ -13,7 +14,7 @@ export async function loadConfig() {
       ...config,
     };
   } catch (e) {
-    logger.error("error loading config.json, so use default config", e);
+    logger.error(`error loading ${CONFIG_FILE_NAME}, so use default config`, e);
     return baseConfig;
   }
 }
