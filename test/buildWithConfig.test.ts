@@ -36,6 +36,9 @@ describe("writer correctly email files", () => {
       templateOptions: {
         variablesType: "json",
         engine: "eta",
+        prepareEngine: (eta: any) => {
+          eta.templates.define("partial_1", eta.compile("this is partial 1"));
+        },
       },
     };
 

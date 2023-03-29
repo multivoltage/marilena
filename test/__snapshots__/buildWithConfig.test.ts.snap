@@ -19,6 +19,7 @@ exports[`writer correctly email files create email with: [engine: eta, suffix: h
     <mj-section>
       <mj-column>
         <mj-text>hello en</mj-text>
+        <mj-text>this is partial 1</mj-text>
       </mj-column>
     </mj-section>
   </mj-body>

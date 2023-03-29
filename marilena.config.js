@@ -1,7 +1,6 @@
-const eta = require("eta");
-
-eta.templates.define("mypartial", eta.compile("PARTIAL SPEAKING"));
-
+/**
+ * this is an example for a config file. Project use this under development
+ */
 module.exports = {
   templateSuffix: ".html",
   inputFolder: "input",
@@ -10,5 +9,8 @@ module.exports = {
   templateOptions: {
     engine: "eta",
     variablesType: "json",
+    prepareEngine: (eta) => {
+      eta.templates.define("mypartial", eta.compile("PARTIAL SPEAKING"));
+    },
   },
 };
