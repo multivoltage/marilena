@@ -1,5 +1,5 @@
 import mjml2html from "mjml";
-import { Config } from "./type";
+import { Config } from "../types";
 import eta from "eta";
 import logger from "node-color-log";
 

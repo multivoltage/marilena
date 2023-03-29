@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import { Config } from "../src/lib/type";
+import { Config } from "../src/types";
 import { build } from "../src/lib/buildWithConfig";
 import fs from "fs";
 import path from "path";

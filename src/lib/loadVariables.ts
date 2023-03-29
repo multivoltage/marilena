@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { Config } from "./type";
+import { Config } from "../types";
 import { FILE_NAME_EMAIL_VARIABLES } from "../const";
 
 interface Options {

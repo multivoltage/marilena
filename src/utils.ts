@@ -1,4 +1,4 @@
-import { Config } from "./lib/type";
+import { Config } from "./types";
 import baseConfig from "./lib/baseConfig";
 import logger from "node-color-log";
 import path from "path";

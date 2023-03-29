@@ -5,7 +5,7 @@ import {
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
 } from "../const";
-import { Config } from "./type";
+import { Config } from "../types";
 
 interface Callbacks {
   handleEditVariables: (emailName: string, locale: string) => void;
