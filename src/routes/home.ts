@@ -9,7 +9,9 @@ export const handler: RouteHandler = async (request, reply) => {
   let list: { emailName: string; url: string }[] = [];
 
   try {
-    const folders = fs.readdirSync(inputFolderPath);
+    const folders = fs
+      .readdirSync(inputFolderPath)
+      .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item));
     list = folders.map((folder) => ({
       emailName: folder,
       url: path.join(inputFolderPath, folder),
