@@ -1,6 +1,7 @@
 import watch from "node-watch";
 import path from "path";
 import {
+  CONFIG_FILE_NAME,
   EVENT_NAME_NEED_REFRESH_WEBSOCKET,
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
@@ -9,7 +10,8 @@ import { Config } from "../types";
 
 interface Callbacks {
   handleEditVariables: (emailName: string, locale: string) => void;
-  handleEmailChange: (emailNamew: string) => void;
+  handleEmailChange: (emailName: string) => void;
+  handleEditConfig: (emailName: string) => void;
 }
 
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
@@ -18,7 +20,7 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
   const regex = new RegExp(`.*(.json|${templateSuffix})`);
 
   return watch(
-    path.join(inputFolder),
+    [path.join(inputFolder), CONFIG_FILE_NAME],
     { recursive: true, filter: regex },
     function (evt, name) {
       // example input/buy/it/variables.json
@@ -26,6 +28,10 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
         const parts = name.split("/");
         const emailName = parts[1];
         const locale = parts[2];
+
+        if (name.endsWith(CONFIG_FILE_NAME)) {
+          callbacks.handleEditConfig(emailName);
+        }
         if (name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`)) {
           // chnged variables
           callbacks.handleEditVariables(emailName, locale);

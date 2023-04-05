@@ -59,12 +59,17 @@ async function startServer() {
 
   const watcher = setupWatcher(config, {
     handleEditVariables: function (emailName, locale) {
-      console.log("new variables: need to refresh", emailName, locale);
+      logger.info("new variables: need to refresh", emailName, locale);
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
     handleEmailChange: function (emailName) {
-      console.log("email changed: need to refresh", emailName);
+      logger.info("email changed: need to refresh", emailName);
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
+    },
+    handleEditConfig: function () {
+      logger.error(
+        "Config changed, please stop and restart server. In the future this will be automatic"
+      );
     },
   });
 
@@ -77,9 +82,10 @@ async function startServer() {
   server.ready().then(() => {
     server.listen({ port }, (err, address) => {
       if (err) {
-        console.error(err);
+        logger.error(err);
         process.exit(1);
       }
+      logger.info("load server with config:");
       console.log(config);
       logger.color("blue").log(`Server listening at http://localhost:${port}`);
     });
