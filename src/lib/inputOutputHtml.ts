@@ -1,6 +1,7 @@
 import mjml2html from "mjml";
 import { Config } from "../types";
 import eta from "eta";
+import handlebars from "handlebars";
 import logger from "node-color-log";
 import { CONFIG_FILE_NAME } from "../const";
 
@@ -22,27 +23,32 @@ export function inputOutputHtml({
       return inputHtml;
     }
 
-    // eta.templates.define("aaa", eta.compile("PARTIAL"));
+    const { prepareEngine } = templateOptions;
+    if (!prepareEngine) {
+      logger.error(
+        `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`
+      );
+    }
 
     switch (templateOptions.engine) {
       case "eta": {
-        const { prepareEngine } = templateOptions;
         if (!!prepareEngine) {
           prepareEngine(eta);
-        } else {
-          logger.error(
-            `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`
-          );
         }
-
         return eta.render(inputHtml, variables);
+      }
+
+      case "handlebars": {
+        if (!!prepareEngine) {
+          prepareEngine(handlebars);
+        }
+        return handlebars.compile(inputHtml)(variables);
       }
 
       default: {
         logger.info(
-          `engine ${templateOptions.engine} not supported. Please contribute to the repo :)`
+          `engine ${templateOptions.engine} not supported, so template will be parsed without fill variables. Please contribute to the repo :)`
         );
-        logger.info("template will be parsed without fill variables");
         return inputHtml;
       }
     }

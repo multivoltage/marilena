@@ -53,4 +53,31 @@ describe("writer correctly email files", () => {
 
     expect(outpoutEn).toMatchSnapshot();
   });
+
+  test.only("create email with: [engine: handlebars, suffix: html, locale: en]", () => {
+    const config: Config = {
+      templateSuffix: ".html",
+      inputFolder: "test/handlebars_1/input",
+      outputFolder: "test/handlebars_1/output",
+      locales: ["en"],
+      templateOptions: {
+        variablesType: "json",
+        engine: "handlebars",
+        prepareEngine: (h: any) => {
+          h.registerPartial("myPartial", "partial with {{ user }}");
+        },
+      },
+    };
+
+    build(config);
+
+    const outpoutEn = fs.readFileSync(
+      path.join(config.outputFolder, testEmailName, "en", "index.html"),
+      { encoding: "utf-8" }
+    );
+
+    fs.rmSync(config.outputFolder, { recursive: true });
+
+    expect(outpoutEn).toMatchSnapshot();
+  });
 });

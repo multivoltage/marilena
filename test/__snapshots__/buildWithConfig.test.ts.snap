@@ -26,3 +26,17 @@ exports[`writer correctly email files create email with: [engine: eta, suffix: h
 </mjml>
 "
 `;
+
+exports[`writer correctly email files create email with: [engine: handlebars, suffix: html, locale: en] 1`] = `
+"<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text>hello diego tonini</mj-text>
+        <mj-text>partial with diego tonini</mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+"
+`;
