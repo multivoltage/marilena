@@ -14,9 +14,14 @@
   "bin": {
     "marilena": "./bin/marilena.js"
   },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/multivoltage/marilena"
+  },
   "files": [
     "bin",
-    "dist"
+    "dist",
+    "README.md"
   ],
   "keywords": [
     "mjml",

@@ -1,11 +1,7 @@
-import { removeExtension } from "../utils";
 import fs from "fs";
 import path from "path";
 import { Config } from "../types";
-import { inputOutputHtml } from "./inputOutputHtml";
 import { buildSingle } from "./buildSingleWithConfig";
-import loadVariables from "./loadVariables";
-import logger from "node-color-log";
 
 export function build(config: Config) {
   const { inputFolder, outputFolder, templateSuffix, locales } = config;

@@ -16,7 +16,7 @@ export const handler: RouteHandler = async (request, reply) => {
     "utf-8"
   );
 
-  const html = inputOutputHtml({
+  const html = await inputOutputHtml({
     inputHtml: mjmlTemplate,
     variables: loadVariables({ config, emailName: email, locale }),
     templateOptions: config.templateOptions,

@@ -54,7 +54,7 @@ describe("writer correctly email files", () => {
     expect(outpoutEn).toMatchSnapshot();
   });
 
-  test.only("create email with: [engine: handlebars, suffix: html, locale: en]", () => {
+  test("create email with: [engine: handlebars, suffix: html, locale: en]", () => {
     const config: Config = {
       templateSuffix: ".html",
       inputFolder: "test/handlebars_1/input",

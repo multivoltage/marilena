@@ -1,7 +1,7 @@
 import mjml2html from "mjml";
 import { Config } from "../types";
 import eta from "eta";
-import handlebars from "handlebars";
+// import handlebars from "handlebars";
 import logger from "node-color-log";
 import { CONFIG_FILE_NAME } from "../const";
 
@@ -13,12 +13,12 @@ interface Options {
   inputHtml: string;
   variables: object;
 }
-export function inputOutputHtml({
+export async function inputOutputHtml({
   inputHtml,
   variables,
   templateOptions,
-}: Options): string {
-  function rendereWithVars() {
+}: Options): Promise<string> {
+  async function rendereWithVars() {
     if (!templateOptions) {
       return inputHtml;
     }
@@ -39,6 +39,7 @@ export function inputOutputHtml({
       }
 
       case "handlebars": {
+        const handlebars = await import("handlebars");
         if (!!prepareEngine) {
           prepareEngine(handlebars);
         }
@@ -54,7 +55,7 @@ export function inputOutputHtml({
     }
   }
 
-  const mjmlTenplateWithVars = rendereWithVars();
+  const mjmlTenplateWithVars = await rendereWithVars();
 
   if (isTextExecution) {
     return mjmlTenplateWithVars;

@@ -19,14 +19,14 @@ export function buildSingle(config: Config, emailName: string) {
   const mjmlTemplate = fs.readFileSync(inputEmailFilePath, "utf-8");
 
   // create folder for each email and locale if not exist
-  locales.forEach((locale) => {
+  locales.forEach(async (locale) => {
     const emailFolderPath = path.join(outputFolderPath, emailName, locale);
     if (!fs.existsSync(emailFolderPath)) {
       fs.mkdirSync(emailFolderPath, { recursive: true });
     }
 
     const variables = loadVariables({ config, locale, emailName });
-    const html = inputOutputHtml({
+    const html = await inputOutputHtml({
       inputHtml: mjmlTemplate,
       variables,
       templateOptions: config.templateOptions,
