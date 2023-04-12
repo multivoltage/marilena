@@ -9,7 +9,7 @@ import {
 import { Config } from "../types";
 
 interface Callbacks {
-  handleEditVariables: (emailName: string, locale: string) => void;
+  handleEditVariables: (emailName: string, locale?: string) => void;
   handleEmailChange: (emailName: string) => void;
   handleEditConfig: (emailName: string) => void;
 }
@@ -23,25 +23,26 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
     [path.join(inputFolder), CONFIG_FILE_NAME],
     { recursive: true, filter: regex },
     function (evt, name) {
-      // example input/buy/it/variables.json
       if (evt === "update") {
         const parts = name.split("/");
         const emailName = parts[1];
-        const locale = parts[2];
 
         if (name.endsWith(CONFIG_FILE_NAME)) {
           callbacks.handleEditConfig(emailName);
-        }
-        if (name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`)) {
-          // chnged variables
+        } else if (name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`)) {
+          // chnged email variables
+          const locale = parts[2];
           callbacks.handleEditVariables(emailName, locale);
-        }
-        if (name.endsWith(templateSuffix)) {
+        } else if (name.endsWith(templateSuffix)) {
           // changed email template
           callbacks.handleEmailChange(emailName);
-        }
-        if (name.endsWith(`${FILE_NAME_COMMON_VARIABLES}.json`)) {
-          // TODO
+        } else if (
+          name.startsWith(
+            path.join(inputFolder, `${FILE_NAME_COMMON_VARIABLES}`)
+          )
+        ) {
+          // changed common variables
+          callbacks.handleEditVariables(emailName);
         }
       }
     }

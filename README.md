@@ -40,6 +40,8 @@ project
 | marilena.config.js
 │ package.json
 │ input
+│ └──common-en[variablesType] // common variables for all en emails
+│ └──common-xx[variablesType] // common variables for all xx emails
 │ └──buy // email name
 ││││││└─── index.html // index[templateSuffix]
 ││││││└─── en

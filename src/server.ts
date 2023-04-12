@@ -29,14 +29,11 @@ async function startServer() {
   server.register(async function () {
     server.get("/socket", { websocket: true }, (connection, req) => {
       websocket = connection.socket;
-      console.log("Client connected");
       connection.socket.on("message", (message: any) => {
         connection.socket.send("hi from server");
       });
       // Client disconnect
-      connection.socket.on("close", () => {
-        console.log("Client disconnected");
-      });
+      connection.socket.on("close", () => {});
     });
   });
 
