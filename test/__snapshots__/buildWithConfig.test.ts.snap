@@ -33,7 +33,7 @@ exports[`writer correctly email files create email with: [engine: handlebars, su
   <mj-body>
     <mj-section>
       <mj-column>
-        <mj-text>hello diego tonini</mj-text>
+        <mj-text>hello diego tonini has age 12</mj-text>
         <mj-text>partial with diego tonini</mj-text>
       </mj-column>
     </mj-section>

@@ -133,6 +133,7 @@ This project can producte output html from input template. But in a real word pr
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
 - [ ] fast-refresh on config change
-- [ ] load varibles from yaml format
-- [ ] load common variables
+- [x] load varibles from yaml format
+- [x] load common variables
 - [ ] easy way to send a real email
+- [ ] pass option to MJML render

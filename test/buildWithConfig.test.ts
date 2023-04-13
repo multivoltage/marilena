@@ -61,7 +61,7 @@ describe("writer correctly email files", () => {
       outputFolder: "test/handlebars_1/output",
       locales: ["en"],
       templateOptions: {
-        variablesType: "json",
+        variablesType: "yml",
         engine: "handlebars",
         prepareEngine: (h: any) => {
           h.registerPartial("myPartial", "partial with {{ user }}");
