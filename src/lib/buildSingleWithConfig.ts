@@ -6,7 +6,13 @@ import loadVariables from "./loadVariables";
 import logger from "node-color-log";
 
 export function buildSingle(config: Config, emailName: string) {
-  const { inputFolder, outputFolder, locales, templateSuffix } = config;
+  const {
+    inputFolder,
+    outputFolder,
+    locales,
+    templateSuffix,
+    mjmlParsingOptions,
+  } = config;
 
   const inputFolderPath = path.join(inputFolder);
   const outputFolderPath = path.join(outputFolder);
@@ -30,6 +36,7 @@ export function buildSingle(config: Config, emailName: string) {
       inputHtml: mjmlTemplate,
       variables,
       templateOptions: config.templateOptions,
+      mjmlParsingOptions,
     });
 
     const folderEmailPathLang = path.join(outputFolderPath, emailName, locale);

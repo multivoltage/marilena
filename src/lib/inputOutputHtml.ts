@@ -12,11 +12,13 @@ interface Options {
   templateOptions?: Config["templateOptions"];
   inputHtml: string;
   variables: object;
+  mjmlParsingOptions: Config["mjmlParsingOptions"];
 }
 export async function inputOutputHtml({
   inputHtml,
   variables,
   templateOptions,
+  mjmlParsingOptions,
 }: Options): Promise<string> {
   async function rendereWithVars() {
     if (!templateOptions) {
@@ -61,6 +63,6 @@ export async function inputOutputHtml({
     return mjmlTenplateWithVars;
   }
 
-  const html = mjml2html(mjmlTenplateWithVars).html;
+  const html = mjml2html(mjmlTenplateWithVars, mjmlParsingOptions).html;
   return html;
 }

@@ -13,4 +13,7 @@ module.exports = {
       eta.templates.define("mypartial", eta.compile("PARTIAL SPEAKING"));
     },
   },
+  mjmlParsingOptions: {
+    keepComments: false,
+  },
 };

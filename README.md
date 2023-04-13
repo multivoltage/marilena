@@ -12,6 +12,16 @@ npm i marilena
 
 ### How to use it
 
+0 - setup your `package.json`:
+
+```json
+"scripts": {
+  "start": "marilena --server",
+  "build": "marilena --build",
+  ...other
+},
+```
+
 1 - create a `marilena.config.js` file under root of your project:
 
 ```js
@@ -83,12 +93,13 @@ npm run build
 
 Under the hood a default configuration will be loaded but a file `marilena.config.js` allow us to set:
 | name | required | description | default |
-|-----------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+|--------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | templateSuffix | X | extension of files used for email. Used for filter and can any value | .html |
 | inputFolder | X | folder where email are in the project | input |
 | outputFolder | X | folder used for generated email (when run build command) | output |
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part id required to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
+| mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
 
 ## About templateOptions
 
@@ -129,11 +140,12 @@ This project can producte output html from input template. But in a real word pr
 - [x] MJML support
 - [x] load variables with template engine
 - [x] eta.js, handlebars
-- [ ] ejs, nunjucks, mustache, dot, liquid
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
-- [ ] fast-refresh on config change
 - [x] load varibles from yaml format
 - [x] load common variables
+- [x] pass option to MJML render
+- [ ] config in typescript
+- [ ] ejs, nunjucks, mustache, dot, liquid
 - [ ] easy way to send a real email
-- [ ] pass option to MJML render
+- [ ] fast-refresh on config change

@@ -7,7 +7,7 @@ import { inject } from "../lib/injectWebSocketNodeScript";
 
 export const handler: RouteHandler = async (request, reply) => {
   const config = await loadConfig();
-  const { inputFolder } = config;
+  const { inputFolder, mjmlParsingOptions } = config;
   const email: string = (request.params as any).email;
   const locale: string = (request.params as any).locale;
 
@@ -20,6 +20,7 @@ export const handler: RouteHandler = async (request, reply) => {
     inputHtml: mjmlTemplate,
     variables: loadVariables({ config, emailName: email, locale }),
     templateOptions: config.templateOptions,
+    mjmlParsingOptions,
   });
 
   const htmlWithWebsocketScript = inject(html);

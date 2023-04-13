@@ -1,5 +1,5 @@
 import { FastifyViewOptions } from "@fastify/view";
-
+import { MJMLParsingOptions } from "mjml-core";
 export interface Config {
   templateSuffix: string; // .html .eta .handlebars ...etc
   inputFolder: string; // default input
@@ -11,4 +11,5 @@ export interface Config {
     prepareEngine: (engineRoot: unknown) => void;
   };
   locales: string[]; // default ["en"]
+  mjmlParsingOptions?: MJMLParsingOptions;
 }
