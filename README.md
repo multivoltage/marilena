@@ -105,7 +105,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 
 This project can producte output html from input template. But in a real word probably we store variables in some part and render some content multiple times (example a footer). In this case `templateOptions` can define:
 
-- `engine`: a subset of fastify supported template engine. At this moment `["eta","handlebars"]` are supported. Apart `eta`, which is used also in the project library, all others require and installation of the engine since `marilena` use lazy import for engines.
+- `engine`: `eta` or `handlebars` are supported. Apart `eta`, which is used also in the project library, all others requires dependency installed since `marilena` use lazy import for engines.
 - `variablesType`: define if variables are loaded from json file or yaml file. At this moment only `json` are supported.
 - `prepareEngine`: define a callback where we can setup our engine. Basically you can define all things before the render. For example:
 

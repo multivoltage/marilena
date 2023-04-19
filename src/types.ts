@@ -5,7 +5,7 @@ export interface Config {
   inputFolder: string; // default input
   outputFolder: string; // default output
   templateOptions?: {
-    engine: keyof FastifyViewOptions["engine"];
+    engine: "eta" | "handlebars";
     variablesType: "json" | "yml"; // json or yml
     // engineRoot will be handlebars,etc etc...
     prepareEngine: (engineRoot: unknown) => void;
