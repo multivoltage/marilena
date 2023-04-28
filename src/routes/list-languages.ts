@@ -3,7 +3,7 @@ import { loadConfig } from "../utils";
 import path from "path";
 
 export const handler: RouteHandler = async (request, reply) => {
-  const { locales } = await loadConfig();
+  const { locales, templateSuffix } = await loadConfig();
   const email: string = (request.params as any).email;
 
   /** this is a FEATURE
@@ -15,7 +15,7 @@ export const handler: RouteHandler = async (request, reply) => {
 
   let list: { locale: string; url: string }[] = [];
   locales.forEach((locale) => {
-    list.push({ locale, url: `${email}/${locale}` });
+    list.push({ locale, url: `${email}/${locale}/index${templateSuffix}` });
   });
 
   const pathView = path.join(__dirname, "../pages/email-variants.html");
