@@ -63,6 +63,10 @@ async function startServer() {
       logger.info("email changed: need to refresh", emailName);
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
+    handleEditCss(emailName) {
+      logger.info("css changed: need to refresh", emailName);
+      websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
+    },
     handleEditConfig: function () {
       logger.error(
         "Config changed, please stop and restart server. In the future this will be automatic"

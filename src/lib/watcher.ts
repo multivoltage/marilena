@@ -11,13 +11,14 @@ interface Callbacks {
   handleEditVariables: (emailName: string, locale?: string) => void;
   handleEmailChange: (emailName: string) => void;
   handleEditConfig: (emailName: string) => void;
+  handleEditCss: (emailName: string) => void;
 }
 
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
   const { inputFolder, templateOptions } = config;
   const variablesType = templateOptions?.variablesType || "json";
 
-  const regex = new RegExp(`.*(.json|.yml|.html)`);
+  const regex = new RegExp(`.*(.json|.yml|.html|.css)`);
 
   return watch(
     [path.join(inputFolder), CONFIG_FILE_NAME],
@@ -45,6 +46,9 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
         ) {
           // changed common variables
           callbacks.handleEditVariables(emailName);
+        } else if (name.endsWith(".css")) {
+          // changed css
+          callbacks.handleEditCss(emailName);
         }
       }
     }

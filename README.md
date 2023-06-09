@@ -99,6 +99,8 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | templateOptions | | if you chose to use one of supported engines, this part id required to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
 
+---
+
 ## About templateOptions
 
 This project can producte output html from input template. But in a real word probably we store variables in some part and render some content multiple times (example a footer). In this case `templateOptions` can define:
@@ -133,6 +135,19 @@ This project can producte output html from input template. But in a real word pr
 
 ---
 
+## Use css
+
+If you want to add a css file import in `mj-include` tag. Path start from root directory of the project (like package json):
+
+```xml
+<mjml>
+  <mj-body>
+    <mj-include path="input/styles.css" type="css" css-inline="inline"/>
+    <!-- other mjml nodes -->
+  </mj-body>
+</mjml>
+```
+
 ## 🚀 features
 
 - [x] MJML support
@@ -140,6 +155,7 @@ This project can producte output html from input template. But in a real word pr
 - [x] eta.js, handlebars
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
+- [x] fast-refresh on css change
 - [x] load varibles from yaml format
 - [x] load common variables
 - [x] pass option to MJML render
