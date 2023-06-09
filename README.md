@@ -27,7 +27,6 @@ npm i marilena
 ```js
 // this is an example of config structure
 module.exports = {
-  templateSuffix: ".html",
   inputFolder: "input",
   outputFolder: "output",
   locales: ["en", "it"],
@@ -43,7 +42,7 @@ module.exports = {
 };
 ```
 
-2 - create a file structures based on your config. PLease remember that each email template requires `index` as name, and variables are loaded only from `variables.json`
+2 - create a file structures based on your config. PLease remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json`.
 
 ```
 project
@@ -53,7 +52,7 @@ project
 │ └──common-en[variablesType] // common variables for all en emails
 │ └──common-xx[variablesType] // common variables for all xx emails
 │ └──buy // email name
-││││││└─── index.html // index[templateSuffix]
+││││││└─── index.html
 ││││││└─── en
 │││││││││││└── variables.json
 ││││││└─── it
@@ -94,7 +93,6 @@ npm run build
 Under the hood a default configuration will be loaded but a file `marilena.config.js` allow us to set:
 | name | required | description | default |
 |--------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| templateSuffix | X | extension of files used for email. Used for filter and can any value | .html |
 | inputFolder | X | folder where email are in the project | input |
 | outputFolder | X | folder used for generated email (when run build command) | output |
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |

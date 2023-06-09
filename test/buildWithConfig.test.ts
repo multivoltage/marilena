@@ -9,7 +9,6 @@ const testEmailName = "hello"; // we have only hello.html inside inputs
 describe("writer correctly email files", () => {
   test("create email with: [engine: NO, suffix: html, locale: en]", () => {
     const config: Config = {
-      templateSuffix: ".html",
       inputFolder: "test/basic_1/input",
       outputFolder: "test/basic_1/output",
       locales: ["en"],
@@ -29,7 +28,6 @@ describe("writer correctly email files", () => {
 
   test("create email with: [engine: eta, suffix: html, locale: en]", () => {
     const config: Config = {
-      templateSuffix: ".html",
       inputFolder: "test/eta_1/input",
       outputFolder: "test/eta_1/output",
       locales: ["en"],
@@ -56,7 +54,6 @@ describe("writer correctly email files", () => {
 
   test("create email with: [engine: handlebars, suffix: html, locale: en]", () => {
     const config: Config = {
-      templateSuffix: ".html",
       inputFolder: "test/handlebars_1/input",
       outputFolder: "test/handlebars_1/output",
       locales: ["en"],

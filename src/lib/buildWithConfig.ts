@@ -4,7 +4,7 @@ import { Config } from "../types";
 import { buildSingle } from "./buildSingleWithConfig";
 
 export function build(config: Config) {
-  const { inputFolder, outputFolder, templateSuffix, locales } = config;
+  const { inputFolder, outputFolder } = config;
 
   const inputFolderPath = path.join(inputFolder);
   const outputFolderPath = path.join(outputFolder);

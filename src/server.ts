@@ -13,7 +13,7 @@ import { setupWatcher } from "./lib/watcher";
 async function startServer() {
   const config = await loadConfig();
 
-  const { inputFolder, templateSuffix } = config;
+  const { inputFolder } = config;
   let websocket: WebSocket | undefined;
 
   const server = fastify({
@@ -44,10 +44,7 @@ async function startServer() {
   server.get(`/${inputFolder}/:email`, emailLangVariants);
 
   // render 1 email for 1 language
-  server.get(
-    `/${inputFolder}/:email/:locale/index${templateSuffix}`,
-    emailHandler
-  );
+  server.get(`/${inputFolder}/:email/:locale/index.html`, emailHandler);
 
   // inject config on each endpoint. Now we load with loadConfig in other parts.
   // Maybe we need to create a kind of wrapper or decorator...

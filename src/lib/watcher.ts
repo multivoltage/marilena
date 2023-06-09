@@ -2,7 +2,6 @@ import watch from "node-watch";
 import path from "path";
 import {
   CONFIG_FILE_NAME,
-  EVENT_NAME_NEED_REFRESH_WEBSOCKET,
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
 } from "../const";
@@ -15,10 +14,10 @@ interface Callbacks {
 }
 
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
-  const { inputFolder, templateSuffix, templateOptions } = config;
+  const { inputFolder, templateOptions } = config;
   const variablesType = templateOptions?.variablesType || "json";
 
-  const regex = new RegExp(`.*(.json|.yml|${templateSuffix})`);
+  const regex = new RegExp(`.*(.json|.yml|.html)`);
 
   return watch(
     [path.join(inputFolder), CONFIG_FILE_NAME],
@@ -36,7 +35,7 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
           // chnged email variables
           const locale = parts[2];
           callbacks.handleEditVariables(emailName, locale);
-        } else if (name.endsWith(templateSuffix)) {
+        } else if (name.endsWith(".html")) {
           // changed email template
           callbacks.handleEmailChange(emailName);
         } else if (
