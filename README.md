@@ -1,6 +1,6 @@
 # Intro
 
-Emails are hard to develop. there is some awesome libs that makes the development more easy. But each library allow us to do a single thing without focus on a full development flow. This project wants to mix up MJML, a template enigne for variables/logic and a web server.
+Emails are hard to develop. There are some awesome library that makes the development more easy. But each library allow us to do a single thing without focus on a full development flow. This project wants to mix up MJML, a template engine for variables/logic and a web server, to create a basic an opinioned simple tool to generate email with a simple flow and command. Please Remember that market offers some cool services like Stripo, Mailchimp and others.
 
 ## 🚀 Usage
 
