@@ -25,3 +25,5 @@ dist-ssr
 
 # input/
 output/
+input/
+input/*
