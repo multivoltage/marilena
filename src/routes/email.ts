@@ -21,6 +21,7 @@ export const handler: RouteHandler = async (request, reply) => {
     variables: loadVariables({ config, emailName: email, locale }),
     templateOptions: config.templateOptions,
     mjmlParsingOptions,
+    isTextVersion: false,
   });
 
   const htmlWithWebsocketScript = inject(html);

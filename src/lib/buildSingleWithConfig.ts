@@ -6,7 +6,13 @@ import loadVariables from "./loadVariables";
 import logger from "node-color-log";
 
 export function buildSingle(config: Config, emailName: string) {
-  const { inputFolder, outputFolder, locales, mjmlParsingOptions } = config;
+  const {
+    inputFolder,
+    outputFolder,
+    locales,
+    mjmlParsingOptions,
+    textVersion,
+  } = config;
 
   const inputFolderPath = path.join(inputFolder);
   const outputFolderPath = path.join(outputFolder);
@@ -31,6 +37,7 @@ export function buildSingle(config: Config, emailName: string) {
       variables,
       templateOptions: config.templateOptions,
       mjmlParsingOptions,
+      isTextVersion: false,
     });
 
     const folderEmailPathLang = path.join(outputFolderPath, emailName, locale);
@@ -45,6 +52,29 @@ export function buildSingle(config: Config, emailName: string) {
       logger.info("writed", emailName, locale);
     } catch (e) {
       logger.error("failed writing", emailName, e);
+    }
+
+    // text version
+    if (textVersion) {
+      try {
+        const htmlOnlyText = await inputOutputHtml({
+          inputHtml: mjmlTemplate,
+          variables,
+          templateOptions: config.templateOptions,
+          mjmlParsingOptions,
+          isTextVersion: true,
+        });
+        fs.writeFileSync(
+          path.join(folderEmailPathLang, textVersion(emailName, locale)),
+          htmlOnlyText,
+          {
+            encoding: "utf-8",
+          }
+        );
+        logger.info("writed", emailName, locale, "text version");
+      } catch (e) {
+        logger.error("failed writing text version", emailName, e);
+      }
     }
   });
 }

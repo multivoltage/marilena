@@ -6,6 +6,7 @@ var path = require("path");
 module.exports = {
   inputFolder: "input",
   outputFolder: "output",
+  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
   locales: ["it"],
   templateOptions: {
     engine: "eta",

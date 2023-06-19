@@ -45,7 +45,8 @@
     "mjml": "^4.14.1",
     "node-color-log": "^10.0.2",
     "node-html-parser": "^6.1.5",
-    "node-watch": "^0.7.3"
+    "node-watch": "^0.7.3",
+    "string-strip-html": "^8.5.0"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

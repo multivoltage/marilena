@@ -3,6 +3,7 @@ import { MJMLParsingOptions } from "mjml-core";
 export interface Config {
   inputFolder: string; // default input
   outputFolder: string; // default output
+  textVersion?: (emailName: string, locale: string) => string;
   templateOptions?: {
     engine: "eta" | "handlebars";
     variablesType: "json" | "yml"; // json or yml

@@ -41,3 +41,5 @@ exports[`writer correctly email files create email with: [engine: handlebars, su
 </mjml>
 "
 `;
+
+exports[`writer correctly email files create text version email 1`] = `"only text version"`;

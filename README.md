@@ -42,15 +42,15 @@ module.exports = {
 };
 ```
 
-2 - create a file structures based on your config. PLease remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json`.
+2 - create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`.
 
 ```
 project
 | marilena.config.js
 │ package.json
 │ input
-│ └──common-en[variablesType] // common variables for all en emails
-│ └──common-xx[variablesType] // common variables for all xx emails
+│ └──common-en.[variablesType] // common variables for all en emails
+│ └──common-xx.[variablesType] // common variables for all xx emails
 │ └──buy // email name
 ││││││└─── index.html
 ││││││└─── en
@@ -98,6 +98,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part id required to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
+| textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt`
 
 ---
 
@@ -114,6 +115,10 @@ This project can producte output html from input template. But in a real word pr
 		engine:  "eta",
 		variablesType:  "json",
 		prepareEngine: (eta) => {
+            // we set out folder for templates/layout/partials
+            eta.configure({
+              views: path.join(process.cwd(), "input"),
+            });
             // we can register partial like:
             // eta is same of var eta = require("eta");
             eta.templates.define("partial_1", eta.compile("this is partial 1"));
