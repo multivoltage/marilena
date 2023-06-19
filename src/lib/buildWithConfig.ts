@@ -15,9 +15,20 @@ export function build(config: Config) {
   }
 
   let list: string[];
+
+  function isEmailDirectory(f: fs.Dirent): boolean {
+    const isDirectory = f.isDirectory();
+    const hasIndexHtnml =
+      isDirectory &&
+      fs.existsSync(
+        path.resolve(process.cwd(), inputFolder, f.name, "index.html")
+      );
+    return hasIndexHtnml;
+  }
+
   try {
     const files = fs.readdirSync(inputFolderPath, { withFileTypes: true });
-    list = files.filter((f) => f.isDirectory()).map((f) => f.name);
+    list = files.filter(isEmailDirectory).map((f) => f.name);
   } catch (e) {
     console.error(e);
     list = [];
