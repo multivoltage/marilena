@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Config } from "../types";
 import { buildSingle } from "./buildSingleWithConfig";
+import { isEmailDirectory } from "../utils";
 
 export function build(config: Config) {
   const { inputFolder, outputFolder } = config;
@@ -16,19 +17,11 @@ export function build(config: Config) {
 
   let list: string[];
 
-  function isEmailDirectory(f: fs.Dirent): boolean {
-    const isDirectory = f.isDirectory();
-    const hasIndexHtnml =
-      isDirectory &&
-      fs.existsSync(
-        path.resolve(process.cwd(), inputFolder, f.name, "index.html")
-      );
-    return hasIndexHtnml;
-  }
-
   try {
     const files = fs.readdirSync(inputFolderPath, { withFileTypes: true });
-    list = files.filter(isEmailDirectory).map((f) => f.name);
+    list = files
+      .filter((f) => isEmailDirectory(inputFolder, f))
+      .map((f) => f.name);
   } catch (e) {
     console.error(e);
     list = [];
