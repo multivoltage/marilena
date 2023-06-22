@@ -69,5 +69,10 @@
   },
   "lint-staged": {
     "*.{ts,js,css,md}": "prettier --write"
+  },
+  "release-it": {
+    "github": {
+      "release": false
+    }
   }
 }
