@@ -1,6 +1,6 @@
 {
   "name": "marilena",
-  "version": "0.0.8",
+  "version": "1.0.2",
   "description": "a tool to build emails with cool tools like mjml and different template engine like handlebars or eta.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && npm run copy",
