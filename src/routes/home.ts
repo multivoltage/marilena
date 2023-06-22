@@ -18,7 +18,6 @@ export const handler: RouteHandler = async (request, reply) => {
       }));
   } catch {}
 
-  console.log("xxx", list);
   const pathView = path.join(__dirname, "../pages/email-list.html");
 
   reply.view(pathView, { list });

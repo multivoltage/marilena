@@ -5,7 +5,7 @@ import { inputOutputHtml } from "./inputOutputHtml";
 import loadVariables from "./loadVariables";
 import logger from "node-color-log";
 
-export function buildSingle(config: Config, emailName: string) {
+export async function buildSingle(config: Config, emailName: string) {
   const {
     inputFolder,
     outputFolder,
@@ -25,7 +25,7 @@ export function buildSingle(config: Config, emailName: string) {
   const mjmlTemplate = fs.readFileSync(inputEmailFilePath, "utf-8");
 
   // create folder for each email and locale if not exist
-  locales.forEach(async (locale) => {
+  for (const locale of locales) {
     const emailFolderPath = path.join(outputFolderPath, emailName, locale);
     if (!fs.existsSync(emailFolderPath)) {
       fs.mkdirSync(emailFolderPath, { recursive: true });
@@ -76,5 +76,5 @@ export function buildSingle(config: Config, emailName: string) {
         logger.error("failed writing text version", emailName, e);
       }
     }
-  });
+  }
 }

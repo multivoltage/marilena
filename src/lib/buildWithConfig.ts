@@ -4,7 +4,7 @@ import { Config } from "../types";
 import { buildSingle } from "./buildSingleWithConfig";
 import { isEmailDirectory } from "../utils";
 
-export function build(config: Config) {
+export async function build(config: Config) {
   const { inputFolder, outputFolder } = config;
 
   const inputFolderPath = path.join(inputFolder);
@@ -27,7 +27,7 @@ export function build(config: Config) {
     list = [];
   }
 
-  list.forEach((emailName) => {
-    buildSingle(config, emailName);
-  });
+  for (const emailName of list) {
+    await buildSingle(config, emailName);
+  }
 }

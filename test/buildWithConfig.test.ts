@@ -1,32 +1,36 @@
-import { describe, expect, test } from "@jest/globals";
+import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
 import { Config } from "../src/types";
 import { build } from "../src/lib/buildWithConfig";
 import fs from "fs";
 import path from "path";
+import { rimrafSync } from "rimraf";
 
 const testEmailName = "hello"; // we have only hello.html inside inputs
 
 describe("writer correctly email files", () => {
-  test("create email with: [engine: NO, suffix: html, locale: en]", () => {
+  beforeAll(() => {
+    // delete all output test folder
+    rimrafSync("test/*/output", { glob: true });
+  });
+
+  test("create email with: [engine: NO, suffix: html, locale: en]", async () => {
     const config: Config = {
       inputFolder: "test/basic_1/input",
       outputFolder: "test/basic_1/output",
       locales: ["en"],
     };
 
-    build(config);
+    await build(config);
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
       { encoding: "utf-8" }
     );
 
-    fs.rmSync(config.outputFolder, { recursive: true });
-
     expect(outpoutEn).toMatchSnapshot();
   });
 
-  test("create email with: [engine: eta, suffix: html, locale: en]", () => {
+  test("create email with: [engine: eta, suffix: html, locale: en]", async () => {
     const config: Config = {
       inputFolder: "test/eta_1/input",
       outputFolder: "test/eta_1/output",
@@ -40,7 +44,7 @@ describe("writer correctly email files", () => {
       },
     };
 
-    build(config);
+    await build(config);
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
@@ -52,7 +56,7 @@ describe("writer correctly email files", () => {
     expect(outpoutEn).toMatchSnapshot();
   });
 
-  test("create email with: [engine: handlebars, suffix: html, locale: en]", () => {
+  test("create email with: [engine: handlebars, suffix: html, locale: en]", async () => {
     const config: Config = {
       inputFolder: "test/handlebars_1/input",
       outputFolder: "test/handlebars_1/output",
@@ -66,7 +70,7 @@ describe("writer correctly email files", () => {
       },
     };
 
-    build(config);
+    await build(config);
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
@@ -78,7 +82,7 @@ describe("writer correctly email files", () => {
     expect(outpoutEn).toMatchSnapshot();
   });
 
-  test("create text version email", () => {
+  test("create text version email", async () => {
     const config: Config = {
       inputFolder: "test/text_version/input",
       outputFolder: "test/text_version/output",
@@ -86,7 +90,7 @@ describe("writer correctly email files", () => {
       textVersion: (emailName, locale) => `${emailName}-${locale}.txt`,
     };
 
-    build(config);
+    await build(config);
 
     const outpoutTextVersion = fs.readFileSync(
       path.join(
