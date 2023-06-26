@@ -7,7 +7,7 @@ import { handler as homeHandler } from "./routes/home";
 import { handler as emailLangVariants } from "./routes/list-languages";
 import { handler as emailHandler } from "./routes/email";
 import logger from "node-color-log";
-import { EVENT_NAME_NEED_REFRESH_WEBSOCKET } from "./const";
+import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./const";
 import { setupWatcher } from "./lib/watcher";
 
 async function startServer() {
@@ -79,16 +79,17 @@ async function startServer() {
     done();
   });
 
-  const port = 8080;
   server.ready().then(() => {
-    server.listen({ port }, (err, address) => {
+    server.listen({ port: SERVER_PORT }, (err, address) => {
       if (err) {
         logger.error(err);
         process.exit(1);
       }
       logger.info("load server with config:");
       console.log(config);
-      logger.color("blue").log(`Server listening at http://localhost:${port}`);
+      logger
+        .color("blue")
+        .log(`Server listening at http://localhost:${SERVER_PORT}`);
     });
   });
 }

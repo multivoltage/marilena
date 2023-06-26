@@ -6,7 +6,7 @@
     "build": "npm run copy && etsc",
     "copy": "mkdir -p dist/pages && cp src/pages/*.html dist/pages",
     "start": "node dist/server.js",
-    "dev": "nodemon",
+    "dev": "npm run copy && nodemon",
     "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js",
     "test": "jest --silent=true",
     "jest-clean-cache": "jest --clearCache",

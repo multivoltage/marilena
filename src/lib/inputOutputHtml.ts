@@ -52,7 +52,7 @@ export async function inputOutputHtml({
       }
 
       default: {
-        logger.info(
+        logger.error(
           `engine ${templateOptions.engine} not supported, so template will be parsed without fill variables. Please contribute to the repo :)`
         );
         return inputHtml;
