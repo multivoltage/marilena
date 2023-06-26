@@ -1,3 +1,7 @@
 {
-  "ignore": ["*.json", "*.html"]
+  "watch": ["src"],
+  "ignore": ["src/**/*.test.ts", "node_modules", "*.json", "*.html"],
+  "ext": "ts,mjs,js,json,graphql",
+  "exec": "etsc && node ./dist/server.js",
+  "legacyWatch": true
 }
