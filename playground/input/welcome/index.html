@@ -1,0 +1,26 @@
+<% layout("./layout/layout-main.html") %>
+
+<!-- HEADER -->
+<mj-section css-class="gradient">
+  <mj-column width="100%">
+    <mj-image
+      src="https://picsum.photos/200"
+      alt=""
+      align="center"
+      width="150px"
+    />
+  </mj-column>
+</mj-section>
+
+<!-- CONTENT -->
+<mj-section background-color="white">
+  <mj-column width="100%">
+    <mj-text font-family="Helvetica" mj-class="mjclass">
+      <h1><%~ it.header_title %></h1>
+      <p><%~ it.description %></p>
+      <b><pre>{{ user }}</pre></b> come from variables, in case you have to
+      build and upload emails where there is a backend which parse and compile
+      with other engine like handlebars
+    </mj-text>
+  </mj-column>
+</mj-section>

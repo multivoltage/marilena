@@ -1,18 +1,18 @@
 /**
- * this is an example for a config file. Project use this under development
+ * this is of config file. Is used only inside playground
  */
 
 module.exports = {
-  inputFolder: "input",
-  outputFolder: "output",
+  inputFolder: "playground/input",
+  outputFolder: "playground/output",
   textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
-  locales: ["it"],
+  locales: ["it", "en"],
   templateOptions: {
     engine: "eta",
     variablesType: "yml",
     prepareEngine: (eta) => {
       eta.configure({
-        views: require("path").join(process.cwd(), "input"),
+        views: require("path").join(process.cwd(), "playground/input"),
       });
     },
   },
