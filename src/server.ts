@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import fastifyView from "@fastify/view";
 import fastifyWebSocket from "@fastify/websocket";
-import eta from "eta";
+import { Eta } from "eta";
 import { loadConfig } from "./utils";
 import { handler as homeHandler } from "./routes/home";
 import { handler as emailLangVariants } from "./routes/list-languages";
@@ -9,9 +9,11 @@ import { handler as emailHandler } from "./routes/email";
 import logger from "node-color-log";
 import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./const";
 import { setupWatcher } from "./lib/watcher";
+import path from "path";
 
 async function startServer() {
   const config = await loadConfig();
+  const eta = new Eta();
 
   const { inputFolder } = config;
   let websocket: WebSocket | undefined;
@@ -19,10 +21,12 @@ async function startServer() {
   const server = fastify({
     // logger: true,
   });
+
   server.register(fastifyView, {
     engine: {
       eta,
     },
+    templates: path.join(__dirname, "pages"),
   });
   server.register(fastifyWebSocket);
 
@@ -40,10 +44,10 @@ async function startServer() {
   // render list of email founded
   server.get("/", homeHandler);
 
-  // render list of locales for 1 email
+  // // render list of locales for 1 email
   server.get(`/${inputFolder}/:email`, emailLangVariants);
 
-  // render 1 email for 1 language
+  // // render 1 email for 1 language
   server.get(`/${inputFolder}/:email/:locale/index.html`, emailHandler);
 
   // inject config on each endpoint. Now we load with loadConfig in other parts.

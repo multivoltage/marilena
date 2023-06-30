@@ -18,7 +18,7 @@ export const handler: RouteHandler = async (request, reply) => {
     list.push({ locale, url: `${email}/${locale}/index.html` });
   });
 
-  const pathView = path.join(__dirname, "../pages/email-variants.html");
+  const pathView = path.join("../pages/email-variants.html");
 
   reply.view(pathView, { list });
 };

@@ -1,4 +1,3 @@
-import { FastifyViewOptions } from "@fastify/view";
 import { MJMLParsingOptions } from "mjml-core";
 export interface Config {
   inputFolder: string; // default input

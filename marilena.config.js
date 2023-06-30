@@ -1,7 +1,6 @@
 /**
  * this is an example for a config file. Project use this under development
  */
-var path = require("path");
 
 module.exports = {
   inputFolder: "input",
@@ -13,9 +12,8 @@ module.exports = {
     variablesType: "yml",
     prepareEngine: (eta) => {
       eta.configure({
-        views: path.join(process.cwd(), "input"),
+        views: require("path").join(process.cwd(), "input"),
       });
-      eta.templates.define("mypartial", eta.compile("PARTIAL SPEAKING"));
     },
   },
   mjmlParsingOptions: {

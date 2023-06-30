@@ -1,13 +1,10 @@
 import mjml2html from "mjml";
 import { Config } from "../types";
-import eta from "eta";
-// import handlebars from "handlebars";
 import logger from "node-color-log";
 import { CONFIG_FILE_NAME } from "../const";
 import { stripHtml } from "string-strip-html";
 
 const isTextExecution = process.env.NODE_ENV === "test";
-// this method should take soem html, add variables, convert with mjml and return html
 
 interface Options {
   templateOptions?: Config["templateOptions"];
@@ -30,17 +27,18 @@ export async function inputOutputHtml({
 
     const { prepareEngine } = templateOptions;
     if (!prepareEngine) {
-      logger.error(
+      throw new Error(
         `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`
       );
     }
 
     switch (templateOptions.engine) {
       case "eta": {
-        if (!!prepareEngine) {
-          prepareEngine(eta);
-        }
-        return eta.render(inputHtml, variables);
+        const { Eta } = await import("eta");
+        const eta = new Eta();
+        prepareEngine(eta);
+
+        return await eta.renderStringAsync(inputHtml, variables);
       }
 
       case "handlebars": {

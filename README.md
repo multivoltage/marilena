@@ -34,7 +34,7 @@ module.exports = {
     engine: "eta",
     variablesType: "json",
     prepareEngine: (xxx) => {
-      // engine eta => xxx = eta
+      // engine eta => xxx = new Eta()
       // engine handlebars => xxx = handlebars
       // read below about this part
     },
@@ -66,7 +66,7 @@ project
   <mj-body>
     <mj-section>
       <mj-column>
-        <!-- read below about template engine -->
+        <!-- eta js example, read below about template engine -->
         <mj-text>hello <%= it.user %></mj-text>
       </mj-column>
     </mj-section>
@@ -96,7 +96,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | inputFolder | X | folder where email are in the project | input |
 | outputFolder | X | folder used for generated email (when run build command) | output |
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
-| templateOptions | | if you chose to use one of supported engines, this part id required to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
+| templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt`
 
@@ -115,13 +115,12 @@ This project can producte output html from input template. But in a real word pr
 		engine:  "eta",
 		variablesType:  "json",
 		prepareEngine: (eta) => {
-            // we set out folder for templates/layout/partials
+            // eta is an istance of new Eta() so you need to set at least views options for templates/layout/partials
             eta.configure({
               views: path.join(process.cwd(), "input"),
             });
             // we can register partial like:
-            // eta is same of var eta = require("eta");
-            eta.templates.define("partial_1", eta.compile("this is partial 1"));
+            eta.loadTemplate(...);
 		},
 	},
 ```
@@ -157,7 +156,8 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 
 - [x] MJML support
 - [x] load variables with template engine
-- [x] eta.js, handlebars
+- [x] eta.js, handlebars (need to install if you use one of these engines)
+- [ ] ejs, nunjucks, mustache, dot, liquid
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
 - [x] fast-refresh on css change
@@ -165,6 +165,5 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [x] load common variables
 - [x] pass option to MJML render
 - [ ] config in typescript
-- [ ] ejs, nunjucks, mustache, dot, liquid
 - [ ] easy way to send a real email
 - [ ] fast-refresh on config change

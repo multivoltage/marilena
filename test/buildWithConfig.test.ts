@@ -1,9 +1,10 @@
-import { afterAll, beforeAll, describe, expect, test } from "@jest/globals";
+import { beforeAll, describe, expect, test } from "@jest/globals";
 import { Config } from "../src/types";
 import { build } from "../src/lib/buildWithConfig";
 import fs from "fs";
 import path from "path";
 import { rimrafSync } from "rimraf";
+import { Eta } from "eta";
 
 const testEmailName = "hello"; // we have only hello.html inside inputs
 
@@ -38,8 +39,13 @@ describe("writer correctly email files", () => {
       templateOptions: {
         variablesType: "json",
         engine: "eta",
-        prepareEngine: (eta: any) => {
-          eta.templates.define("partial_1", eta.compile("this is partial 1"));
+        prepareEngine: (engine: any) => {
+          const eta = engine as Eta;
+          eta.configure({
+            views: path.resolve(__dirname, "eta_1/input/partials"),
+          });
+
+          eta.loadTemplate("@partial_1", "this is programmatly partial");
         },
       },
     };
