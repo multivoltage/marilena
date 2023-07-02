@@ -2,7 +2,7 @@ import { RouteHandler } from "fastify";
 import { loadConfig } from "../utils";
 import fs from "fs";
 import { inputOutputHtml } from "../lib/inputOutputHtml";
-import loadVariables from "../lib/loadVariables";
+import { VARIABLES_LOADER } from "../lib/loadVariables";
 import { inject } from "../lib/injectWebSocketNodeScript";
 
 export const handler: RouteHandler = async (request, reply) => {
@@ -18,7 +18,7 @@ export const handler: RouteHandler = async (request, reply) => {
 
   const html = await inputOutputHtml({
     inputHtml: mjmlTemplate,
-    variables: loadVariables({ config, emailName: email, locale }),
+    variables: VARIABLES_LOADER.loadAll({ config, locale }, email),
     templateOptions: config.templateOptions,
     mjmlParsingOptions,
     isTextVersion: false,

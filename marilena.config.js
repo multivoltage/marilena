@@ -9,7 +9,6 @@ module.exports = {
   locales: ["it", "en"],
   templateOptions: {
     engine: "eta",
-    variablesType: "yml",
     prepareEngine: (eta) => {
       eta.configure({
         views: require("path").join(process.cwd(), "playground/input"),

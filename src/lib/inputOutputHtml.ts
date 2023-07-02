@@ -37,7 +37,7 @@ export async function inputOutputHtml({
         const { Eta } = await import("eta");
         const eta = new Eta();
         prepareEngine(eta);
-
+        // @ts-ignore
         return await eta.renderStringAsync(inputHtml, variables);
       }
 

@@ -15,8 +15,7 @@ interface Callbacks {
 }
 
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
-  const { inputFolder, templateOptions } = config;
-  const variablesType = templateOptions?.variablesType || "json";
+  const { inputFolder } = config;
 
   const regex = new RegExp(`.*(.json|.yml|.html|.css)`);
 
@@ -31,7 +30,8 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
         if (name.endsWith(CONFIG_FILE_NAME)) {
           callbacks.handleEditConfig(emailName);
         } else if (
-          name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.${variablesType}`)
+          name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`) ||
+          name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.yml`)
         ) {
           // chnged email variables
           const locale = parts[2];

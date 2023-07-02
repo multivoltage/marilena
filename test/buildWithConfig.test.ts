@@ -37,7 +37,6 @@ describe("writer correctly email files", () => {
       outputFolder: "test/eta_1/output",
       locales: ["en"],
       templateOptions: {
-        variablesType: "json",
         engine: "eta",
         prepareEngine: (engine: any) => {
           const eta = engine as Eta;
@@ -68,7 +67,6 @@ describe("writer correctly email files", () => {
       outputFolder: "test/handlebars_1/output",
       locales: ["en"],
       templateOptions: {
-        variablesType: "yml",
         engine: "handlebars",
         prepareEngine: (h: any) => {
           h.registerPartial("myPartial", "partial with {{ user }}");

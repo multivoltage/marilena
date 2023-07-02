@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Config } from "../types";
 import { inputOutputHtml } from "./inputOutputHtml";
-import loadVariables from "./loadVariables";
+import { VARIABLES_LOADER } from "./loadVariables";
 import logger from "node-color-log";
 
 export async function buildSingle(config: Config, emailName: string) {
@@ -12,6 +12,7 @@ export async function buildSingle(config: Config, emailName: string) {
     locales,
     mjmlParsingOptions,
     textVersion,
+    templateOptions,
   } = config;
 
   const inputFolderPath = path.join(inputFolder);
@@ -31,11 +32,13 @@ export async function buildSingle(config: Config, emailName: string) {
       fs.mkdirSync(emailFolderPath, { recursive: true });
     }
 
-    const variables = loadVariables({ config, locale, emailName });
+    const variables = templateOptions
+      ? VARIABLES_LOADER.loadAll({ config, locale }, emailName)
+      : {};
     const html = await inputOutputHtml({
       inputHtml: mjmlTemplate,
       variables,
-      templateOptions: config.templateOptions,
+      templateOptions: templateOptions,
       mjmlParsingOptions,
       isTextVersion: false,
     });
@@ -60,7 +63,7 @@ export async function buildSingle(config: Config, emailName: string) {
         const htmlOnlyText = await inputOutputHtml({
           inputHtml: mjmlTemplate,
           variables,
-          templateOptions: config.templateOptions,
+          templateOptions: templateOptions,
           mjmlParsingOptions,
           isTextVersion: true,
         });

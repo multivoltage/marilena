@@ -36,7 +36,6 @@ module.exports = {
 	locales: ["en","it],
 	templateOptions: {
 		engine:  "eta",
-		variablesType:  "json",
 		prepareEngine: (eta) => {
 			eta.templates.define("mypartial", eta.compile("PARTIAL SPEAKING"));
 		},

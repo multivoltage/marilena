@@ -5,7 +5,6 @@ export interface Config {
   textVersion?: (emailName: string, locale: string) => string;
   templateOptions?: {
     engine: "eta" | "handlebars";
-    variablesType: "json" | "yml"; // json or yml
     // engineRoot will be handlebars,etc etc...
     prepareEngine: (engineRoot: unknown) => void;
   };

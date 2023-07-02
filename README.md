@@ -32,7 +32,6 @@ module.exports = {
   locales: ["en", "it"],
   templateOptions: {
     engine: "eta",
-    variablesType: "json",
     prepareEngine: (xxx) => {
       // engine eta => xxx = new Eta()
       // engine handlebars => xxx = handlebars
@@ -49,14 +48,14 @@ project
 | marilena.config.js
 │ package.json
 │ input
-│ └──common-en.[variablesType] // common variables for all en emails
-│ └──common-xx.[variablesType] // common variables for all xx emails
+│ └──common-en.json // common json variables for all en emails
+│ └──common-it.yaml // common yaml variables for all it emails
 │ └──buy // email name
 ││││││└─── index.html
 ││││││└─── en
-│││││││││││└── variables.json
+│││││││││││└── variables.json // json variables for en buy email
 ││││││└─── it
-│││││││││││└── variables.json
+│││││││││││└── variables.yaml // yaml variables for it buy email
 ```
 
 3 - fill your emails template with MJML syntax
@@ -86,8 +85,6 @@ npm run start
 npm run build
 ```
 
----
-
 ## Configuration
 
 Under the hood a default configuration will be loaded but a file `marilena.config.js` allow us to set:
@@ -100,20 +97,16 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt`
 
----
-
 ## About templateOptions
 
 This project can producte output html from input template. But in a real word probably we store variables in some part and render some content multiple times (example a footer). In this case `templateOptions` can define:
 
 - `engine`: `eta` or `handlebars` are supported. Apart `eta`, which is used also in the project library, all others requires dependency installed since `marilena` use lazy import for engines.
-- `variablesType`: define if variables are loaded from json file or yaml file. At this moment only `json` are supported.
 - `prepareEngine`: define a callback where we can setup our engine. Basically you can define all things before the render. For example:
 
 ```js
 	templateOptions: {
 		engine:  "eta",
-		variablesType:  "json",
 		prepareEngine: (eta) => {
             // eta is an istance of new Eta() so you need to set at least views options for templates/layout/partials
             eta.configure({
@@ -128,7 +121,6 @@ This project can producte output html from input template. But in a real word pr
 ```js
 	templateOptions: {
 		engine:  "handlebars",
-		variablesType:  "json",
 		prepareEngine: (h) => {
             // we can register partial like:
             // handlebars is same of var h = require("handlebars");
@@ -161,7 +153,7 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
 - [x] fast-refresh on css change
-- [x] load varibles from yaml format
+- [x] load varibles from yaml/json format
 - [x] load common variables
 - [x] pass option to MJML render
 - [ ] config in typescript
