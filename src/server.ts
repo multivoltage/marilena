@@ -84,7 +84,8 @@ async function startServer() {
   });
 
   server.ready().then(() => {
-    server.listen({ port: SERVER_PORT }, (err, address) => {
+    server.listen({ port: SERVER_PORT }, async (err, address) => {
+      console.log("ciccio", address);
       if (err) {
         logger.error(err);
         process.exit(1);
@@ -94,6 +95,13 @@ async function startServer() {
       logger
         .color("blue")
         .log(`Server listening at http://localhost:${SERVER_PORT}`);
+
+      // open default browser if server is runned not by nodemon
+      if (process.env.NODE_ENV !== "development") {
+        import("open").then((m) => {
+          m.default(`http://localhost:${SERVER_PORT}`);
+        });
+      }
     });
   });
 }
