@@ -22,21 +22,27 @@ npm i marilena
 },
 ```
 
-1 - create a `marilena.config.js` file under root of your project:
+1 - create a `marilena.config.mjs` file under root of your project:
 
 ```js
-// this is an example of config structure
-module.exports = {
-  inputFolder: "input",
-  outputFolder: "output",
-  locales: ["en", "it"],
+import path from "path";
+// you can leverage your IDE's intellisense with jsdoc type hints
+/** @type {import('marilena').Config} */
+export default {
+  inputFolder: "playground/input",
+  outputFolder: "playground/output",
+  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
+  locales: ["it", "en"],
   templateOptions: {
     engine: "eta",
-    prepareEngine: (xxx) => {
-      // engine eta => xxx = new Eta()
-      // engine handlebars => xxx = handlebars
-      // read below about this part
+    prepareEngine: (eta) => {
+      eta.configure({
+        views: path.join(process.cwd(), "playground/input"),
+      });
     },
+  },
+  mjmlParsingOptions: {
+    keepComments: false,
   },
 };
 ```
