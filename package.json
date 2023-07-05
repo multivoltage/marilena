@@ -3,7 +3,7 @@
   "version": "1.0.5",
   "description": "a tool to build emails with cool tools like mjml and different template engine like handlebars or eta.js",
   "scripts": {
-    "build": "tsc && npm run copy && etsc",
+    "build": "tsc && npm run copy && etsc && npm run generate-types",
     "copy": "mkdir -p dist/pages && cp src/pages/*.html dist/pages",
     "start": "node dist/server.js",
     "dev": "npm run copy && nodemon",
@@ -15,10 +15,12 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "prepare": "husky install",
-    "release": "release-it"
+    "release": "release-it",
+    "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp"
   },
+  "types": "dist/types.d.ts",
   "bin": {
-    "marilena": "./bin/marilena.js"
+    "marilena": "bin/marilena.js"
   },
   "main": "dist/server.js",
   "repository": {

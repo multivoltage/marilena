@@ -1,8 +1,10 @@
+import path from "path";
 /**
  * this is of config file. Is used only inside playground
  */
 
-module.exports = {
+/** @type {import('.').Config} */
+export default {
   inputFolder: "playground/input",
   outputFolder: "playground/output",
   textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
@@ -11,7 +13,7 @@ module.exports = {
     engine: "eta",
     prepareEngine: (eta) => {
       eta.configure({
-        views: require("path").join(process.cwd(), "playground/input"),
+        views: path.join(process.cwd(), "playground/input"),
       });
     },
   },

@@ -13,6 +13,7 @@ import path from "path";
 
 async function startServer() {
   const config = await loadConfig();
+  console.log("configggg", config);
   const eta = new Eta();
 
   const { inputFolder } = config;

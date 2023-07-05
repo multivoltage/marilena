@@ -8,7 +8,9 @@ import fs from "fs";
 export async function loadConfig() {
   try {
     const pathConfig = path.join(process.cwd(), `./${CONFIG_FILE_NAME}`);
-    const config: Config = await require(pathConfig);
+
+    const configDefault = await import(pathConfig);
+    const config: Config = configDefault.default;
 
     return {
       ...baseConfig,
