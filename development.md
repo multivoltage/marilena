@@ -21,7 +21,7 @@ Once you've installed Node.js (which includes the popular `npm` package manager)
    mandatory for consumer project that want to call `--build` or `--server`
 2. `test` folder:
    this project use jest in combination with different configuration and check snapshot.
-3. `marilena.config.js`:
+3. `marilena.config.mjs`:
    this is configuration file used during ONLY on development.
 
 ## Project structure for 1 email

@@ -51,7 +51,7 @@ export default {
 
 ```
 project
-| marilena.config.js
+| marilena.config.mjs
 │ package.json
 │ input
 │ └──common-en.json // common json variables for all en emails
@@ -93,7 +93,7 @@ npm run build
 
 ## Configuration
 
-Under the hood a default configuration will be loaded but a file `marilena.config.js` allow us to set:
+Under the hood a default configuration will be loaded but a file `marilena.config.mjs` allow us to set:
 | name | required | description | default |
 |--------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
 | inputFolder | X | folder where email are in the project | input |
