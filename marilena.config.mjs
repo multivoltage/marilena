@@ -13,7 +13,7 @@ export default {
     engine: "eta",
     prepareEngine: (eta) => {
       eta.configure({
-        views: path.join(process.cwd(), "plsayground/input"),
+        views: path.join(process.cwd(), "playground/input"),
       });
     },
   },

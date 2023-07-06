@@ -20,7 +20,7 @@ describe("Server", () => {
     });
   });
 
-  it("welcome it email should render correctly", async () => {
+  it("welcome it email should render correctly", () => {
     cy.visit("http://localhost:8080/playground/input/welcome/it/index.html");
 
     // check header_title
