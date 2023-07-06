@@ -17,3 +17,4 @@ updates:
   - dependency-name: "@types/node"
   - dependency-name: husky
   - dependency-name: typescript
+  - dependency-name: string-strip-html
