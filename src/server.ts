@@ -13,7 +13,7 @@ import path from "path";
 
 async function startServer() {
   const config = await loadConfig();
-  console.log("configggg", config);
+
   const eta = new Eta();
 
   const { inputFolder } = config;
@@ -74,7 +74,7 @@ async function startServer() {
     },
     handleEditConfig: function () {
       logger.error(
-        "Config changed, please stop and restart server. In the future this will be automatic"
+        "Config changed, please stop and restart server. In the future this will be automatic",
       );
     },
   });
