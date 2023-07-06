@@ -86,7 +86,6 @@ async function startServer() {
 
   server.ready().then(() => {
     server.listen({ port: SERVER_PORT }, async (err, address) => {
-      console.log("ciccio", address);
       if (err) {
         logger.error(err);
         process.exit(1);
