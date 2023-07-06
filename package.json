@@ -8,7 +8,7 @@
     "start": "node dist/server.js",
     "dev": "npm run copy && nodemon",
     "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js",
-    "test": "npm run build && npm run test:unit && npm run test:server",
+    "test": "npm run test:unit && npm run test:server",
     "test:unit": "jest --silent=true",
     "test:server": "start-server-and-test start :8080 cy:run",
     "jest-clean-cache": "jest --clearCache",
