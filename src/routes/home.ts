@@ -1,20 +1,22 @@
 import { RouteHandler } from "fastify";
 import path from "path";
-import { isEmailDirectory, loadConfig } from "../utils";
+import { getPathConfig, isEmailDirectory, loadConfig } from "../utils";
 import fs from "fs";
 
 export const handler: RouteHandler = async (request, reply) => {
   const { inputFolder } = await loadConfig();
-  const inputFolderPath = path.join(inputFolder);
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
+
   let list: { emailName: string; url: string }[] = [];
 
   try {
     const folders = fs.readdirSync(inputFolderPath, { withFileTypes: true });
+
     list = folders
-      .filter((f) => isEmailDirectory(inputFolder, f))
+      .filter((f) => isEmailDirectory(inputFolderPath, f))
       .map((folder) => ({
         emailName: folder.name,
-        url: path.join(inputFolderPath, folder.name),
+        url: path.join(folder.name),
       }));
   } catch {}
 

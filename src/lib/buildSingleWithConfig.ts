@@ -4,6 +4,7 @@ import { Config } from "../types";
 import { inputOutputHtml } from "./inputOutputHtml";
 import { VARIABLES_LOADER } from "./loadVariables";
 import logger from "node-color-log";
+import { getPathConfig } from "../utils";
 
 export async function buildSingle(config: Config, emailName: string) {
   const {
@@ -15,13 +16,13 @@ export async function buildSingle(config: Config, emailName: string) {
     templateOptions,
   } = config;
 
-  const inputFolderPath = path.join(inputFolder);
-  const outputFolderPath = path.join(outputFolder);
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
+  const outputFolderPath = path.resolve(getPathConfig(), "..", outputFolder);
 
   const inputEmailFilePath = path.join(
     inputFolderPath,
     emailName,
-    `index.html`
+    `index.html`,
   );
   const mjmlTemplate = fs.readFileSync(inputEmailFilePath, "utf-8");
 
@@ -72,7 +73,7 @@ export async function buildSingle(config: Config, emailName: string) {
           htmlOnlyText,
           {
             encoding: "utf-8",
-          }
+          },
         );
         logger.info("writed", emailName, locale, "text version");
       } catch (e) {

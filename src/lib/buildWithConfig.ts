@@ -2,13 +2,13 @@ import fs from "fs";
 import path from "path";
 import { Config } from "../types";
 import { buildSingle } from "./buildSingleWithConfig";
-import { isEmailDirectory } from "../utils";
+import { getPathConfig, isEmailDirectory } from "../utils";
 
 export async function build(config: Config) {
   const { inputFolder, outputFolder } = config;
 
-  const inputFolderPath = path.join(inputFolder);
-  const outputFolderPath = path.join(outputFolder);
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
+  const outputFolderPath = path.resolve(getPathConfig(), "..", outputFolder);
 
   // create folder if not exist
   if (!fs.existsSync(outputFolderPath)) {
@@ -20,7 +20,7 @@ export async function build(config: Config) {
   try {
     const files = fs.readdirSync(inputFolderPath, { withFileTypes: true });
     list = files
-      .filter((f) => isEmailDirectory(inputFolder, f))
+      .filter((f) => isEmailDirectory(inputFolderPath, f))
       .map((f) => f.name);
   } catch (e) {
     console.error(e);

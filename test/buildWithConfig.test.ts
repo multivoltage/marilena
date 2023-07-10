@@ -25,7 +25,7 @@ describe("writer correctly email files", () => {
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
-      { encoding: "utf-8" }
+      { encoding: "utf-8" },
     );
 
     expect(outpoutEn).toMatchSnapshot();
@@ -53,7 +53,7 @@ describe("writer correctly email files", () => {
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
-      { encoding: "utf-8" }
+      { encoding: "utf-8" },
     );
 
     fs.rmSync(config.outputFolder, { recursive: true });
@@ -78,7 +78,7 @@ describe("writer correctly email files", () => {
 
     const outpoutEn = fs.readFileSync(
       path.join(config.outputFolder, testEmailName, "en", "index.html"),
-      { encoding: "utf-8" }
+      { encoding: "utf-8" },
     );
 
     fs.rmSync(config.outputFolder, { recursive: true });
@@ -101,9 +101,9 @@ describe("writer correctly email files", () => {
         config.outputFolder,
         testEmailName,
         "en",
-        `${testEmailName}-en.txt`
+        `${testEmailName}-en.txt`,
       ),
-      { encoding: "utf-8" }
+      { encoding: "utf-8" },
     );
 
     fs.rmSync(config.outputFolder, { recursive: true });

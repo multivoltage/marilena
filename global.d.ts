@@ -1,2 +1,1 @@
-
-declare module "ejs"
+declare module "ejs";

@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const welcomeHrefUrl = "playground/input/welcome";
+const welcomeHrefUrl = "welcome";
 const welcomeHrefUrl_it = (locale) => `welcome/${locale}/index.html`;
 
 describe("Server", () => {
@@ -21,7 +21,7 @@ describe("Server", () => {
   });
 
   it("welcome it email should render correctly", () => {
-    cy.visit("http://localhost:8080/playground/input/welcome/it/index.html");
+    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("it")}`);
 
     // check header_title
     cy.contains("Benvenuto {{ user }}");
