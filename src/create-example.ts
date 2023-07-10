@@ -26,7 +26,7 @@ fs.mkdirSync(fromPath, {
 });
 
 // 2 create marilena.config.mjs
-createConfig(fromPath);
+createConfig(rootFolder);
 
 // 3 create example/input example/ouuput
 createInpuFolder(fromPath);
@@ -45,5 +45,11 @@ createCommonEn(fromPath);
 createStyles(fromPath);
 
 logger.debug(
-  'I created a basic working example for you :). Check folder "example"',
+  `
+  I created a basic working example for you :). Check "marilena.config.mjs" file and "example folder.
+  Now you can setup you script like:
+  "scripts": {
+    "run-example": "marilena --server"
+  }
+  `,
 );
