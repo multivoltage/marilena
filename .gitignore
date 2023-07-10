@@ -28,3 +28,6 @@ test/*/output
 
 # temp folder used for generate types
 temp
+
+# example folder created by npm run create-example
+example

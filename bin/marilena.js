@@ -11,6 +11,8 @@ if (argv.server) {
 } else if (argv.build) {
   logger.info("run build email");
   require("../dist/lib/buildAllEmails");
+} else if (argv["create-example"]) {
+  require("../dist/create-example.js");
 } else {
-  logger.info("please use --build or --server commands");
+  logger.info("please use --build or --server or --create-example commands");
 }

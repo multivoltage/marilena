@@ -9,10 +9,10 @@ import { Config } from "../types";
 import { getPathConfig } from "../utils";
 
 interface Callbacks {
-  handleEditVariables: (emailName: string, locale?: string) => void;
-  handleEmailChange: (emailName: string) => void;
-  handleEditConfig: (emailName: string) => void;
-  handleEditCss: (emailName: string) => void;
+  handleEditVariables: () => void;
+  handleEmailChange: () => void;
+  handleEditConfig: () => void;
+  handleEditCss: () => void;
 }
 
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
@@ -27,31 +27,20 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
     { recursive: true, filter: regex },
     function (evt, name) {
       if (evt === "update") {
-        const parts = name.split("/");
-        const emailName = parts[1];
+        const baseName = path.basename(name);
 
-        if (name.endsWith(CONFIG_FILE_NAME)) {
-          callbacks.handleEditConfig(emailName);
-        } else if (
-          name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.json`) ||
-          name.endsWith(`${FILE_NAME_EMAIL_VARIABLES}.yml`)
-        ) {
+        if (baseName.endsWith(CONFIG_FILE_NAME)) {
+          // changed marilena.config.mjs
+          callbacks.handleEditConfig();
+        } else if (baseName.endsWith(`.json`) || baseName.endsWith(`.yml`)) {
           // chnged email variables
-          const locale = parts[2];
-          callbacks.handleEditVariables(emailName, locale);
-        } else if (name.endsWith(".html")) {
-          // changed email template
-          callbacks.handleEmailChange(emailName);
-        } else if (
-          name.startsWith(
-            path.join(inputFolder, `${FILE_NAME_COMMON_VARIABLES}`),
-          )
-        ) {
-          // changed common variables
-          callbacks.handleEditVariables(emailName);
-        } else if (name.endsWith(".css")) {
+          callbacks.handleEditVariables();
+        } else if (baseName.endsWith(".html")) {
+          // changed email/partial/layout
+          callbacks.handleEmailChange();
+        } else if (baseName.endsWith(".css")) {
           // changed css
-          callbacks.handleEditCss(emailName);
+          callbacks.handleEditCss();
         }
       }
     },
