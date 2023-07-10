@@ -7,6 +7,7 @@ import {
 } from "../const";
 import logger from "node-color-log";
 import yaml from "js-yaml";
+import { getPathConfig } from "../utils";
 
 interface Options {
   config: Config;
@@ -16,14 +17,18 @@ interface Options {
 function loadCommon(options: Options): object {
   const { locale, config } = options;
   const { inputFolder } = config;
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
 
   try {
     // try to load yml
     return yaml.load(
       fs.readFileSync(
-        path.join(inputFolder, `${FILE_NAME_COMMON_VARIABLES}-${locale}.yml`),
-        "utf-8"
-      )
+        path.join(
+          inputFolderPath,
+          `${FILE_NAME_COMMON_VARIABLES}-${locale}.yml`,
+        ),
+        "utf-8",
+      ),
     ) as object;
   } catch (e) {
     try {
@@ -31,18 +36,18 @@ function loadCommon(options: Options): object {
       const vars = JSON.parse(
         fs.readFileSync(
           path.join(
-            inputFolder,
-            `${FILE_NAME_COMMON_VARIABLES}-${locale}.json`
+            inputFolderPath,
+            `${FILE_NAME_COMMON_VARIABLES}-${locale}.json`,
           ),
-          "utf-8"
-        )
+          "utf-8",
+        ),
       );
       return vars;
     } catch {
       logger.error(
         `cannot load common variables for "${locale}" locale.
-        Please create file "${FILE_NAME_COMMON_VARIABLES}-${locale}" with .json or .yml extesnion file under ${inputFolder}.
-        Using empty variables now.`
+        Please create file "${FILE_NAME_COMMON_VARIABLES}-${locale}" with .json or .yml extesnion file under ${inputFolderPath}.
+        Using empty variables now.`,
       );
       return {};
     }
@@ -52,6 +57,7 @@ function loadCommon(options: Options): object {
 function loadSingle(options: Options, emailName: string): object {
   const { config, locale } = options;
   const { inputFolder } = config;
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
   let vars: object = {};
   let founded = false;
 
@@ -59,13 +65,13 @@ function loadSingle(options: Options, emailName: string): object {
     const ymlVarisblaes = yaml.load(
       fs.readFileSync(
         path.join(
-          inputFolder,
+          inputFolderPath,
           emailName,
           locale,
-          `${FILE_NAME_EMAIL_VARIABLES}.yml`
+          `${FILE_NAME_EMAIL_VARIABLES}.yml`,
         ),
-        "utf-8"
-      )
+        "utf-8",
+      ),
     ) as object;
     vars = { ...vars, ...ymlVarisblaes };
     founded = true;
@@ -75,13 +81,13 @@ function loadSingle(options: Options, emailName: string): object {
     const jsonVariables = JSON.parse(
       fs.readFileSync(
         path.join(
-          inputFolder,
+          inputFolderPath,
           emailName,
           locale,
-          `${FILE_NAME_EMAIL_VARIABLES}.json`
+          `${FILE_NAME_EMAIL_VARIABLES}.json`,
         ),
-        "utf-8"
-      )
+        "utf-8",
+      ),
     );
     vars = { ...vars, ...jsonVariables };
     founded = true;
@@ -89,7 +95,7 @@ function loadSingle(options: Options, emailName: string): object {
 
   if (!founded) {
     logger.error(
-      `cannot load variables for email "${emailName}" ${locale}. Please create file "${FILE_NAME_EMAIL_VARIABLES}" with .json or .yml extension file under ${inputFolder}/${emailName}/${locale}`
+      `cannot load variables for email "${emailName}" ${locale}. Please create file "${FILE_NAME_EMAIL_VARIABLES}" with .json or .yml extension file under ${inputFolderPath}/${emailName}/${locale}`,
     );
   }
 

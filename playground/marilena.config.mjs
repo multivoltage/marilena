@@ -5,8 +5,8 @@ import path from "path";
 
 /** @type {import('.').Config} */
 export default {
-  inputFolder: "playground/input",
-  outputFolder: "playground/output",
+  inputFolder: "./input",
+  outputFolder: "./output",
   textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
   locales: ["it", "en"],
   templateOptions: {

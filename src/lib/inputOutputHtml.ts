@@ -28,7 +28,7 @@ export async function inputOutputHtml({
     const { prepareEngine } = templateOptions;
     if (!prepareEngine) {
       throw new Error(
-        `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`
+        `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`,
       );
     }
 
@@ -51,7 +51,7 @@ export async function inputOutputHtml({
 
       default: {
         logger.error(
-          `engine ${templateOptions.engine} not supported, so template will be parsed without fill variables. Please contribute to the repo :)`
+          `engine ${templateOptions.engine} not supported, so template will be parsed without fill variables. Please contribute to the repo :)`,
         );
         return inputHtml;
       }

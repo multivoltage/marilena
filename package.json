@@ -5,9 +5,9 @@
   "scripts": {
     "build": "tsc && npm run copy && etsc && npm run generate-types",
     "copy": "mkdir -p dist/pages && cp src/pages/*.html dist/pages",
-    "start": "node dist/server.js",
-    "dev": "npm run copy && nodemon",
-    "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js",
+    "start": "node dist/server.js --project playground/marilena.config.mjs",
+    "dev": "npm run copy && nodemon --project playground/marilena.config.mjs",
+    "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server",
     "test:unit": "jest --silent=true",
     "test:server": "start-server-and-test start :8080 cy:run",
@@ -16,7 +16,9 @@
     "cy:run": "cypress run",
     "prepare": "husky install",
     "release": "release-it",
-    "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp"
+    "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp",
+    "prettier:check": "npx prettier --check .",
+    "prettier:fix": "npx prettier --write ."
   },
   "types": "dist/types.d.ts",
   "bin": {
@@ -60,6 +62,7 @@
     "@jest/globals": "^29.5.0",
     "@release-it/keep-a-changelog": "^3.1.0",
     "@types/js-yaml": "^4.0.5",
+    "@types/minimist": "^1.2.2",
     "@types/mjml": "^4.7.0",
     "@types/node": "^18.15.0",
     "cypress": "^12.16.0",

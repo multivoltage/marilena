@@ -1,9 +1,10 @@
 import { RouteHandler } from "fastify";
-import { loadConfig } from "../utils";
+import { getPathConfig, loadConfig } from "../utils";
 import fs from "fs";
 import { inputOutputHtml } from "../lib/inputOutputHtml";
 import { VARIABLES_LOADER } from "../lib/loadVariables";
 import { inject } from "../lib/injectWebSocketNodeScript";
+import path from "path";
 
 export const handler: RouteHandler = async (request, reply) => {
   const config = await loadConfig();
@@ -11,10 +12,15 @@ export const handler: RouteHandler = async (request, reply) => {
   const email: string = (request.params as any).email;
   const locale: string = (request.params as any).locale;
 
-  const mjmlTemplate = fs.readFileSync(
-    `${inputFolder}/${email}/index.html`,
-    "utf-8"
+  const filePath = path.resolve(
+    getPathConfig(),
+    "..",
+    inputFolder,
+    email,
+    "index.html",
   );
+
+  const mjmlTemplate = fs.readFileSync(filePath, "utf-8");
 
   const html = await inputOutputHtml({
     inputHtml: mjmlTemplate,

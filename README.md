@@ -22,15 +22,15 @@ npm i marilena
 },
 ```
 
-1 - create a `marilena.config.mjs` file under root of your project:
+1 - create a `marilena.config.mjs` file. Preferably under the root project:
 
 ```js
 import path from "path";
 // you can leverage your IDE's intellisense with jsdoc type hints
 /** @type {import('marilena').Config} */
 export default {
-  inputFolder: "playground/input",
-  outputFolder: "playground/output",
+  inputFolder: "./input",
+  outputFolder: "./output",
   textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
   locales: ["it", "en"],
   templateOptions: {
@@ -45,6 +45,15 @@ export default {
     keepComments: false,
   },
 };
+```
+
+1A - if you put `marilena.config.mjs` in a different path folder you have to update scripts:
+
+```json
+"scripts": {
+  "start": "marilena --server --project myFolder/marilena.config.mjs",
+  "build": "marilena --build --project myFolder/marilena.config.mjs",
+},
 ```
 
 2 - create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`.
@@ -96,8 +105,8 @@ npm run build
 Under the hood a default configuration will be loaded but a file `marilena.config.mjs` allow us to set:
 | name | required | description | default |
 |--------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| inputFolder | X | folder where email are in the project | input |
-| outputFolder | X | folder used for generated email (when run build command) | output |
+| inputFolder | X | folder where email are in the project. Path is relative to `marilena.config.mjs` | input |
+| outputFolder | X | folder used for generated email (when run build command). Path is relative to `marilena.config.mjs` | output |
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)

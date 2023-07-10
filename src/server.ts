@@ -46,10 +46,10 @@ async function startServer() {
   server.get("/", homeHandler);
 
   // // render list of locales for 1 email
-  server.get(`/${inputFolder}/:email`, emailLangVariants);
+  server.get(`/:email`, emailLangVariants);
 
   // // render 1 email for 1 language
-  server.get(`/${inputFolder}/:email/:locale/index.html`, emailHandler);
+  server.get(`/:email/:locale/index.html`, emailHandler);
 
   // inject config on each endpoint. Now we load with loadConfig in other parts.
   // Maybe we need to create a kind of wrapper or decorator...

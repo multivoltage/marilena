@@ -6,6 +6,7 @@ import {
   FILE_NAME_EMAIL_VARIABLES,
 } from "../const";
 import { Config } from "../types";
+import { getPathConfig } from "../utils";
 
 interface Callbacks {
   handleEditVariables: (emailName: string, locale?: string) => void;
@@ -17,10 +18,12 @@ interface Callbacks {
 export const setupWatcher = function (config: Config, callbacks: Callbacks) {
   const { inputFolder } = config;
 
-  const regex = new RegExp(`.*(.json|.yml|.html|.css)`);
+  const regex = new RegExp(`.*(.json|.yml|.html|.css|.eta|.hbs)`);
+  const pathConfig = getPathConfig();
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
 
   return watch(
-    [path.join(inputFolder), CONFIG_FILE_NAME],
+    [inputFolderPath, pathConfig],
     { recursive: true, filter: regex },
     function (evt, name) {
       if (evt === "update") {
@@ -41,7 +44,7 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
           callbacks.handleEmailChange(emailName);
         } else if (
           name.startsWith(
-            path.join(inputFolder, `${FILE_NAME_COMMON_VARIABLES}`)
+            path.join(inputFolder, `${FILE_NAME_COMMON_VARIABLES}`),
           )
         ) {
           // changed common variables
@@ -51,6 +54,6 @@ export const setupWatcher = function (config: Config, callbacks: Callbacks) {
           callbacks.handleEditCss(emailName);
         }
       }
-    }
+    },
   );
 };
