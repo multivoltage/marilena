@@ -60,16 +60,16 @@ async function startServer() {
   // });
 
   const watcher = setupWatcher(config, {
-    handleEditVariables: function (emailName, locale) {
-      logger.info("new variables: need to refresh", emailName, locale);
+    handleEditVariables: function () {
+      logger.info("new variables: need to refresh");
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
-    handleEmailChange: function (emailName) {
-      logger.info("email changed: need to refresh", emailName);
+    handleEmailChange: function () {
+      logger.info("email changed: need to refresh");
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
-    handleEditCss(emailName) {
-      logger.info("css changed: need to refresh", emailName);
+    handleEditCss() {
+      logger.info("css changed: need to refresh");
       websocket?.send(EVENT_NAME_NEED_REFRESH_WEBSOCKET);
     },
     handleEditConfig: function () {

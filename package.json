@@ -18,7 +18,8 @@
     "release": "release-it",
     "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp",
     "prettier:check": "npx prettier --check .",
-    "prettier:fix": "npx prettier --write ."
+    "prettier:fix": "npx prettier --write .",
+    "postinstall": "node dist/create-example.js && node ./dist/server.js --project example/marilena.config.mjs"
   },
   "types": "dist/types.d.ts",
   "bin": {
