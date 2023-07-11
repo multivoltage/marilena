@@ -18,7 +18,7 @@
     "cy:run-server": "cypress run --spec cypress/e2e/server.cy.ts",
     "cy:run-example": "cypress run --spec cypress/e2e/create-example.cy.ts",
     "prepare": "husky install",
-    "release": "dotenv release-it",
+    "release": "release-it",
     "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp",
     "prettier:check": "npx prettier --check .",
     "prettier:fix": "npx prettier --write ."
