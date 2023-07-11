@@ -21,8 +21,7 @@
     "release": "release-it",
     "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp",
     "prettier:check": "npx prettier --check .",
-    "prettier:fix": "npx prettier --write .",
-    "postinstall": "node dist/create-example.js"
+    "prettier:fix": "npx prettier --write ."
   },
   "types": "dist/types.d.ts",
   "bin": {
@@ -45,7 +44,7 @@
     "email tool",
     "email development"
   ],
-  "author": "diego tonini <diego.tonini93@gmail.com>",
+  "author": "Diego Tonini <diego.tonini93@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@fastify/view": "^8.0.0",
@@ -85,7 +84,7 @@
     "typescript": "^4.9.5"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
   "lint-staged": {
     "*.{ts,js,css,md}": "prettier --write"
@@ -96,6 +95,9 @@
     },
     "npm": {
       "publish": false
+    },
+    "hooks": {
+      "before:init": ["npm run build"]
     }
   }
 }

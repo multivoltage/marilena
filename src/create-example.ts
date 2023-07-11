@@ -47,9 +47,9 @@ createStyles(fromPath);
 logger.debug(
   `
   I created a basic working example for you :). Check "marilena.config.mjs" file and "example folder.
-  Now you can setup you script like:
+  Now you can setup you script like this and run start command:
   "scripts": {
-    "run-example": "marilena --server"
+    "start": "marilena --server"
   }
   `,
 );
