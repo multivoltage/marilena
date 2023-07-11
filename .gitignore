@@ -36,3 +36,5 @@ marilena.config.mjs
 # cypress
 cypress/screenshots
 cypress/videos
+
+.env
