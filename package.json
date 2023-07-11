@@ -91,6 +91,10 @@
     "*.{ts,js,css,md}": "prettier --write"
   },
   "release-it": {
+    "git": {
+      "requireBranch": "main",
+      "commitMessage": "chore: release v${version}"
+    },
     "github": {
       "release": true
     },
@@ -99,8 +103,11 @@
     },
     "hooks": {
       "before:init": [
-        "npm run build"
-      ]
+        "git pull",
+        "npm run build",
+        "npm run test"
+      ],
+      "after:bummp": "npx auto-changelog -p"
     }
   }
 }
