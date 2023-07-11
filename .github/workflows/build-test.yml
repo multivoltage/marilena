@@ -28,6 +28,9 @@ jobs:
       - name: Build
         run: npm run build    
 
+      - name: Cypress install
+        run: ./node_modules/cypress/bin/cypress install
+
       - name: Test unit
         run: npm run test:unit 
 
