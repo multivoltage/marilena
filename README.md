@@ -4,7 +4,7 @@ Emails are hard to develop. There are some awesome library that makes the develo
 
 ## 🚀 Usage
 
-### Install (require node >=18)
+### Install (require node >=14)
 
 ```sh
 npm i marilena
@@ -18,6 +18,7 @@ npm i marilena
 "scripts": {
   "start": "marilena --server",
   "build": "marilena --build",
+  "example": "marilena --create-example", // if you run this script, it generate a basic working example, and then you can run start
   ...other
 },
 ```
@@ -104,13 +105,13 @@ npm run build
 
 Under the hood a default configuration will be loaded but a file `marilena.config.mjs` allow us to set:
 | name | required | description | default |
-|--------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
 | inputFolder | X | folder where email are in the project. Path is relative to `marilena.config.mjs` | input |
 | outputFolder | X | folder used for generated email (when run build command). Path is relative to `marilena.config.mjs` | output |
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
-| mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml)
-| textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt`
+| mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
+| textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
 
 ## About templateOptions
 
