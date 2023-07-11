@@ -60,6 +60,7 @@
     "node-color-log": "^10.0.2",
     "node-html-parser": "^6.1.5",
     "node-watch": "^0.7.3",
+    "open": "^9.1.0",
     "string-strip-html": "^8.5.0"
   },
   "devDependencies": {
