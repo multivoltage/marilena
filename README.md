@@ -4,7 +4,7 @@ Emails are hard to develop. There are some awesome library that makes the develo
 
 ## 🚀 Usage
 
-### Install (require node >=14)
+### Install (require node >=16)
 
 ```sh
 npm i marilena
