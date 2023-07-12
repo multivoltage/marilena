@@ -1,6 +1,16 @@
 # Intro
 
-Emails are hard to develop. There are some awesome library that makes the development more easy. But each library allow us to do a single thing without focus on a full development flow. This project wants to mix up MJML, a template engine for variables/logic and a web server, to create a basic an opinioned simple tool to generate email with a simple flow and command. Please Remember that market offers some cool services like Stripo, Mailchimp and others.
+We know emails are `VERY HARD` to develop.
+Sometimes you can use tool like Maiject, SendPulse, MailerSend, Stripo.email etc. Some if this have cool interface with drag and drop and different actions to do.
+
+So why you/your company should use this library?
+
+- previous providers are not able to customize some parts. For example css rule. Or to do this is very complicated.
+- coming from [email-foundation-template](https://github.com/foundation/foundation-emails) and you want to try a different tool with advantages (please read below about features).
+- having complete control of development without use any Saas is mandatory.
+- the builded emails should be consumed by a backend service which use the emails again adding metadata coming from itself, or another api service for example. This scenario is the motivation which produced this library.
+
+Today market and opensource offers library that makes the development more easy. But each library/tools allow us to do a single thing without focus on a full development flow. This project wants to mix up MJML, a template engine for variables/logic and a web server, to create a tool able to generate emails with a simple flow and command. Please keep in mind that market offers some cool services like Maiject, SendPulse, MailerSend, Stripo.email etc so maybe you can find a fit with one of these solutions.
 
 ## 🚀 Usage
 
@@ -18,8 +28,7 @@ npm i marilena
 "scripts": {
   "start": "marilena --server",
   "build": "marilena --build",
-  "example": "marilena --create-example", // if you run this script, it generate a basic working example, and then you can run start
-  ...other
+  "example": "marilena --create-example", // if you run this script, it generates a working example, and then you can run start
 },
 ```
 
@@ -48,7 +57,7 @@ export default {
 };
 ```
 
-1A - if you put `marilena.config.mjs` in a different path folder you have to update scripts:
+1A - if you put `marilena.config.mjs` in a different path folder, or you did not generated a demo with `marilena --create-example` you have to update scripts:
 
 ```json
 "scripts": {
@@ -121,28 +130,28 @@ This project can producte output html from input template. But in a real word pr
 - `prepareEngine`: define a callback where we can setup our engine. Basically you can define all things before the render. For example:
 
 ```js
-	templateOptions: {
-		engine:  "eta",
-		prepareEngine: (eta) => {
-            // eta is an istance of new Eta() so you need to set at least views options for templates/layout/partials
-            eta.configure({
-              views: path.join(process.cwd(), "input"),
-            });
-            // we can register partial like:
-            eta.loadTemplate(...);
-		},
-	},
+templateOptions: {
+  engine:  "eta",
+  prepareEngine: (eta) => {
+    // eta is an istance of new Eta() so you need to set at least views options for templates/layout/partials
+    eta.configure({
+      views: path.join(process.cwd(), "input"),
+    });
+    // we can call all eta-js api like:
+    eta.loadTemplate(...);
+  },
+},
 ```
 
 ```js
-	templateOptions: {
-		engine:  "handlebars",
-		prepareEngine: (h) => {
-            // we can register partial like:
-            // handlebars is same of var h = require("handlebars");
-            h.registerPartial("myPartial", "partial with {{ user }}");
-		},
-	},
+templateOptions: {
+  engine:  "handlebars",
+  prepareEngine: (h) => {
+    // we can register partial like:
+    // handlebars is same of var h = require("handlebars");
+    h.registerPartial("myPartial", "partial with {{ user }}");
+  },
+},
 ```
 
 ---
@@ -160,18 +169,22 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 </mjml>
 ```
 
-## 🚀 features
+## 🚀 Features
 
 - [x] MJML support
 - [x] load variables with template engine
+- [x] multi language out of the box
 - [x] eta.js, handlebars (need to install if you use one of these engines)
-- [ ] ejs, nunjucks, mustache, dot, liquid
 - [x] fast-refresh on variables changes
 - [x] fast-refresh on template change
 - [x] fast-refresh on css change
 - [x] load varibles from yaml/json format
 - [x] load common variables
 - [x] pass option to MJML render
+
+## 🏗️ Roadmap (PRs are welcome 😀)
+
+- [ ] ejs, nunjucks, mustache, dot, liquid
 - [ ] config in typescript
-- [ ] easy way to send a real email
+- [ ] easy way to send a real email (AWS SES)
 - [ ] fast-refresh on config change

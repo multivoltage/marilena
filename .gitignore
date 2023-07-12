@@ -38,5 +38,3 @@ cypress/screenshots
 cypress/videos
 
 .env
-
-.npmrc
