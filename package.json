@@ -93,10 +93,8 @@
   "release-it": {
     "git": {
       "requireBranch": "main",
-      "commitMessage": "chore: release v${version}"
-    },
-    "github": {
-      "release": true
+      "commitMessage": "chore: release v${version}",
+      "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
     },
     "npm": {
       "publish": true
@@ -105,7 +103,7 @@
       "before:init": [
         "npm run build"
       ],
-      "after:bummp": "npx auto-changelog -p"
+      "after:bump": "npx auto-changelog -p"
     }
   }
 }
