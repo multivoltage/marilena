@@ -64,7 +64,6 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
-    "@release-it/keep-a-changelog": "^4.0.0",
     "@types/js-yaml": "^4.0.5",
     "@types/minimist": "^1.2.2",
     "@types/mjml": "^4.7.0",
