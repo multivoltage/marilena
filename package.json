@@ -103,7 +103,6 @@
     },
     "hooks": {
       "before:init": [
-        "git pull",
         "npm run build"
       ],
       "after:bummp": "npx auto-changelog -p"
