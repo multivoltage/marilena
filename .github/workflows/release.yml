@@ -26,13 +26,13 @@ jobs:
       - name: Initialize the NPM config
         run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
         env:
-          NPM_TOKEN ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Run release
         run: npm run release --ci
         env:
-          GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: End message
         run: echo 'All done!'
