@@ -100,7 +100,9 @@
     },
     "hooks": {
       "before:init": [
-        "npm run build"
+        "git pull",
+        "npm run build",
+        "npm run test"
       ],
       "after:bump": "npx auto-changelog -p"
     }
