@@ -70,7 +70,7 @@
     "@types/node": "^18.15.0",
     "cypress": "^12.16.0",
     "dotenv-cli": "^7.2.1",
-    "esbuild": "0.18.11",
+    "esbuild": "0.18.12",
     "handlebars": "^4.7.7",
     "husky": "^8.0.3",
     "jest": "^29.5.0",
