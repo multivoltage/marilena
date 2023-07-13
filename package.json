@@ -49,7 +49,6 @@
   "dependencies": {
     "@fastify/view": "^8.0.0",
     "@fastify/websocket": "^8.1.0",
-    "ejs": "^3.1.9",
     "esbuild-node-tsc": "^2.0.5",
     "eta": "^3.0.3",
     "fastify": "^4.14.1",
@@ -70,6 +69,7 @@
     "@types/node": "^18.15.0",
     "cypress": "^12.16.0",
     "dotenv-cli": "^7.2.1",
+    "ejs": "^3.1.9",
     "esbuild": "0.18.12",
     "handlebars": "^4.7.7",
     "husky": "^8.0.3",
