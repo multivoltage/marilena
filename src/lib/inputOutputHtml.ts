@@ -1,7 +1,7 @@
 import mjml2html from "mjml";
 import { Config } from "../types";
 import logger from "node-color-log";
-import { CONFIG_FILE_NAME } from "../const";
+import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const";
 import { stripHtml } from "string-strip-html";
 
 const isTextExecution = process.env.NODE_ENV === "test";
@@ -25,14 +25,20 @@ export async function inputOutputHtml({
       return inputHtml;
     }
 
-    const { prepareEngine } = templateOptions;
+    const { prepareEngine, engine } = templateOptions;
     if (!prepareEngine) {
       throw new Error(
         `templateOptions options is defined, but prepareEngine is null. Please check method under ${CONFIG_FILE_NAME}`,
       );
     }
 
-    switch (templateOptions.engine) {
+    if (!SUPPORTED_ENGINES.includes(engine)) {
+      throw new Error(
+        `engine ${engine} not supported. Options available are [${SUPPORTED_ENGINES}]. Please contribute to the repo :)`,
+      );
+    }
+
+    switch (engine) {
       case "eta": {
         const { Eta } = await import("eta");
         const eta = new Eta();
@@ -43,16 +49,11 @@ export async function inputOutputHtml({
 
       case "handlebars": {
         const handlebars = await import("handlebars");
-        if (!!prepareEngine) {
-          prepareEngine(handlebars);
-        }
+        prepareEngine(handlebars);
         return handlebars.compile(inputHtml)(variables);
       }
 
       default: {
-        logger.error(
-          `engine ${templateOptions.engine} not supported, so template will be parsed without fill variables. Please contribute to the repo :)`,
-        );
         return inputHtml;
       }
     }

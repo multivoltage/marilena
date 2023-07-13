@@ -110,4 +110,26 @@ describe("writer correctly email files", () => {
 
     expect(outpoutTextVersion).toMatchSnapshot();
   });
+
+  test("create email with unsupported engine should throw error", async () => {
+    expect.assertions(1);
+
+    const config: Config = {
+      inputFolder: "test/handlebars_1/input",
+      outputFolder: "test/handlebars_1/output",
+      locales: ["en"],
+      templateOptions: {
+        engine: "fake-engine" as any, // we use any since thid file is in ts and a consumer can use a normal mjs file without import types
+        prepareEngine: () => {},
+      },
+    };
+
+    try {
+      await build(config);
+    } catch (e) {
+      expect(e.message).toContain(
+        "engine fake-engine not supported. Options available are",
+      );
+    }
+  });
 });
