@@ -1,6 +1,5 @@
 import mjml2html from "mjml";
 import { Config } from "../types";
-import logger from "node-color-log";
 import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const";
 import { stripHtml } from "string-strip-html";
 
