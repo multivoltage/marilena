@@ -31,6 +31,24 @@ describe("writer correctly email files", () => {
     expect(outpoutEn).toMatchSnapshot();
   });
 
+  test("create email with: [engine: NO, suffix: html, locale: en] - custom htmlVersion", async () => {
+    const config: Config = {
+      inputFolder: "test/basic_1/input",
+      outputFolder: "test/basic_1/output",
+      htmlVersion: (emailName, locale) => `${emailName}-${locale}.html`,
+      locales: ["en"],
+    };
+
+    await build(config);
+
+    const outpoutEn = fs.readFileSync(
+      path.join(config.outputFolder, testEmailName, "en", "hello-en.html"),
+      { encoding: "utf-8" },
+    );
+
+    expect(outpoutEn).toMatchSnapshot();
+  });
+
   test("create email with: [engine: eta, suffix: html, locale: en]", async () => {
     const config: Config = {
       inputFolder: "test/eta_1/input",

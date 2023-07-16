@@ -41,7 +41,8 @@ import path from "path";
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
-  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
+  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`, // is optional
+  htmlVersion: (emailName, locale) => `${emailName}-custom.html`, // is optional
   locales: ["it", "en"],
   templateOptions: {
     engine: "eta",
@@ -120,6 +121,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
+| htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize html version. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
 
 ## About templateOptions

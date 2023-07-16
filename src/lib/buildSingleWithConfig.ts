@@ -13,6 +13,7 @@ export async function buildSingle(config: Config, emailName: string) {
     locales,
     mjmlParsingOptions,
     textVersion,
+    htmlVersion,
     templateOptions,
   } = config;
 
@@ -50,7 +51,10 @@ export async function buildSingle(config: Config, emailName: string) {
     }
 
     try {
-      fs.writeFileSync(path.join(folderEmailPathLang, "index.html"), html, {
+      const fileName = htmlVersion
+        ? htmlVersion(emailName, locale)
+        : "index.html";
+      fs.writeFileSync(path.join(folderEmailPathLang, fileName), html, {
         encoding: "utf-8",
       });
       logger.info("writed", emailName, locale);

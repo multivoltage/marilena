@@ -3,7 +3,7 @@ import path from "path";
  * this is of config file. Is used only inside playground
  */
 
-/** @type {import('.').Config} */
+/** @type {import('../').Config} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
