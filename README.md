@@ -188,3 +188,5 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [ ] config in typescript
 - [ ] easy way to send a real email (AWS SES)
 - [ ] fast-refresh on config change
+- [ ] snaphost test for each email
+- [ ] refactor to esm instead common js
