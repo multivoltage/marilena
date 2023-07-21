@@ -6,7 +6,7 @@
     "build": "tsc && npm run copy && etsc && npm run generate-types",
     "copy": "mkdir -p dist/pages && cp src/pages/*.html dist/pages",
     "start": "node dist/server.js --project playground/marilena.config.mjs",
-    "start:example": "node dist/server.js --project marilena.config.mjs",
+    "start:example": "node dist/server.js --project example/marilena.config.mjs",
     "dev": "npm run copy && nodemon --project playground/marilena.config.mjs",
     "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server && npm run test:example",

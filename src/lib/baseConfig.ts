@@ -1,9 +1,9 @@
-import { Config } from "../types";
+import { CoreConfig } from "../types";
 
-const config: Config = {
-  inputFolder: "input",
-  outputFolder: "output",
+const coreConfig: CoreConfig = {
+  inputFolder: "./input",
+  outputFolder: "./output",
   locales: ["en"],
 };
 
-export default config;
+export default coreConfig;

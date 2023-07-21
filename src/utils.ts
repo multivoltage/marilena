@@ -1,4 +1,4 @@
-import { Config } from "./types";
+import { UserConfig } from "./types";
 import baseConfig from "./lib/baseConfig";
 import logger from "node-color-log";
 import path from "path";
@@ -10,7 +10,7 @@ import argv from "minimist";
 export async function loadConfig() {
   try {
     const configDefault = await import(getPathConfig());
-    const config: Config = configDefault.default;
+    const config: UserConfig = configDefault.default;
 
     return {
       ...baseConfig,
