@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
-import { Config } from "../src/types";
+import { CoreConfig } from "../src/types";
 import { build } from "../src/lib/buildWithConfig";
 import fs from "fs";
 import path from "path";
@@ -15,7 +15,7 @@ describe("writer correctly email files", () => {
   });
 
   test("create email with: [engine: NO, suffix: html, locale: en]", async () => {
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/basic_1/input",
       outputFolder: "test/basic_1/output",
       locales: ["en"],
@@ -32,7 +32,7 @@ describe("writer correctly email files", () => {
   });
 
   test("create email with: [engine: NO, suffix: html, locale: en] - custom htmlVersion", async () => {
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/basic_1/input",
       outputFolder: "test/basic_1/output",
       htmlVersion: (emailName, locale) => `${emailName}-${locale}.html`,
@@ -50,7 +50,7 @@ describe("writer correctly email files", () => {
   });
 
   test("create email with: [engine: eta, suffix: html, locale: en]", async () => {
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/eta_1/input",
       outputFolder: "test/eta_1/output",
       locales: ["en"],
@@ -80,7 +80,7 @@ describe("writer correctly email files", () => {
   });
 
   test("create email with: [engine: handlebars, suffix: html, locale: en]", async () => {
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/handlebars_1/input",
       outputFolder: "test/handlebars_1/output",
       locales: ["en"],
@@ -105,7 +105,7 @@ describe("writer correctly email files", () => {
   });
 
   test("create text version email", async () => {
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/text_version/input",
       outputFolder: "test/text_version/output",
       locales: ["en"],
@@ -132,7 +132,7 @@ describe("writer correctly email files", () => {
   test("create email with unsupported engine should throw error", async () => {
     expect.assertions(1);
 
-    const config: Config = {
+    const config: CoreConfig = {
       inputFolder: "test/handlebars_1/input",
       outputFolder: "test/handlebars_1/output",
       locales: ["en"],

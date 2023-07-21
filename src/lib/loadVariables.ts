@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { Config } from "../types";
+import { CoreConfig } from "../types";
 import {
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
@@ -10,7 +10,7 @@ import yaml from "js-yaml";
 import { getPathConfig } from "../utils";
 
 interface Options {
-  config: Config;
+  config: CoreConfig;
   locale: string;
 }
 

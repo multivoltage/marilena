@@ -1,16 +1,17 @@
 # Intro
 
-We know emails are `VERY HARD` to develop.
-Sometimes you can use tool like Maiject, SendPulse, MailerSend, Stripo.email etc. Some if this have cool interface with drag and drop and different actions to do.
+We know emails are `VERY HARD` to develop from scratch.
+Sometimes you can use tool like Maiject, SendPulse, MailerSend, Stripo.email etc. Some of this have cool interfaces with drag and drop and different actions to do.
 
 So why you/your company should use this library?
 
+- you need to produce some html files using layouts and partials for different languages, passing them to a backend witch add maybe some data coming from itself (or another service) and fills your html files with its template engine.
+- backend of your company deploy email using with a custom service that use Amazon SES.
 - previous providers are not able to customize some parts. For example css rule. Or to do this is very complicated.
 - coming from [email-foundation-template](https://github.com/foundation/foundation-emails) and you want to try a different tool with advantages (please read below about features).
 - having complete control of development without use any Saas is mandatory.
-- the builded emails should be consumed by a backend service which use the emails again adding metadata coming from itself, or another api service for example. This scenario is the motivation which produced this library.
 
-Today market and opensource offers library that makes the development more easy. But each library/tools allow us to do a single thing without focus on a full development flow. This project wants to mix up MJML, a template engine for variables/logic and a web server, to create a tool able to generate emails with a simple flow and command. Please keep in mind that market offers some cool services like Maiject, SendPulse, MailerSend, Stripo.email etc so maybe you can find a fit with one of these solutions.
+This project wants to mix up MJML, a template engine for variables and a web server, to create a tool able to generate emails with a simple flow and one command. Please keep in mind that Maiject, SendPulse, MailerSend, Stripo.email etc maybe can be already perfect for your purpose.
 
 ## 🚀 Usage
 
@@ -20,29 +21,31 @@ Today market and opensource offers library that makes the development more easy.
 npm i marilena
 ```
 
-### How to use it
+### Setup
 
-0 - setup your `package.json`:
+marilena provides a command witch generate a small but working example with eta.js, variables, layout and partials. You can choose to generate this example adding these commands to your `package.json` and then run `npm run generate-example`.
 
 ```json
 "scripts": {
-  "start": "marilena --server",
-  "build": "marilena --build",
-  "example": "marilena --create-example", // if you run this script, it generates a working example, and then you can run start
+  "start": "marilena --server --project example/marilena.config.mjs",
+  "build": "marilena --build --project example/marilena.config.mjs",
+  "generate-example": "marilena --create-example",
 },
 ```
 
-1 - create a `marilena.config.mjs` file. Preferably under the root project:
+### Setup (manual)
+
+If you fails to generate the example or you want to build a project from 0 you need to crete `marilena.config.mjs` file in the root of your project. Please check below the fields since any of these are required.
 
 ```js
 import path from "path";
 // you can leverage your IDE's intellisense with jsdoc type hints
-/** @type {import('marilena').Config} */
+/** @type {import('marilena').UserConfig} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
-  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`, // is optional
-  htmlVersion: (emailName, locale) => `${emailName}-custom.html`, // is optional
+  textVersion: (emailName, locale) => `${emailName}_text_version-${locale}.txt`,
+  htmlVersion: (emailName, locale) => `${emailName}-custom.html`,
   locales: ["it", "en"],
   templateOptions: {
     engine: "eta",
@@ -58,16 +61,16 @@ export default {
 };
 ```
 
-1A - if you put `marilena.config.mjs` in a different path folder, or you did not generated a demo with `marilena --create-example` you have to update scripts:
+Edit you `package.json`. By default `marilena` try to find config in the root of your project. If you put the config in a different path, you need to pass `--project` argument in the scripts
 
 ```json
 "scripts": {
-  "start": "marilena --server --project myFolder/marilena.config.mjs",
-  "build": "marilena --build --project myFolder/marilena.config.mjs",
+  "start": "marilena --server",
+  "build": "marilena --build",
 },
 ```
 
-2 - create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`.
+create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`. Yes you can use both :)
 
 ```
 project
@@ -107,7 +110,7 @@ npm run start
 ```
 
 ```sh
-# build all emails based on config (template engine, output folder, and locales)
+# build all emails based on config
 npm run build
 ```
 
@@ -116,12 +119,12 @@ npm run build
 Under the hood a default configuration will be loaded but a file `marilena.config.mjs` allow us to set:
 | name | required | description | default |
 | ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| inputFolder | X | folder where email are in the project. Path is relative to `marilena.config.mjs` | input |
-| outputFolder | X | folder used for generated email (when run build command). Path is relative to `marilena.config.mjs` | output |
-| locales | X | array of languages used. If you company has only spanish email use an array of single value | ["en"] |
+| inputFolder | | folder where email are in the project. Path is relative to `marilena.config.mjs` | ./input |
+| outputFolder | | folder used for generated email (when run build command). Path is relative to `marilena.config.mjs` | ./output |
+| locales | | array of languages used. If you need only spanish email use an array of single value | ["es"] |
 | templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
-| htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize html version. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
+| htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize the output html filename. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
 
 ## About templateOptions
@@ -186,9 +189,9 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 
 ## 🏗️ Roadmap (PRs are welcome 😀)
 
-- [ ] ejs, nunjucks, mustache, dot, liquid
+- [ ] liquid, ejs, nunjucks, mustache, dot
 - [ ] config in typescript
-- [ ] easy way to send a real email (AWS SES)
+- [ ] easy way to send a real email (AWS Ses/Nodemailer)
 - [ ] fast-refresh on config change
-- [ ] snaphost test for each email
+- [ ] snaphost test for each email out of the box
 - [ ] refactor to esm instead common js

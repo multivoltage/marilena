@@ -1,10 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { Config } from "../types";
+import { CoreConfig } from "../types";
 import { buildSingle } from "./buildSingleWithConfig";
 import { getPathConfig, isEmailDirectory } from "../utils";
 
-export async function build(config: Config) {
+export async function build(config: CoreConfig) {
   const { inputFolder, outputFolder } = config;
 
   const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);

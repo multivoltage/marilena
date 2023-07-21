@@ -10,8 +10,8 @@ import path from "path";
 
 /** @type {import('marilena').Config} */
 export default {
-  inputFolder: "./example/input",
-  outputFolder: "./example/output",
+  inputFolder: "./input",
+  outputFolder: "./output",
   locales: ["en"],
   templateOptions: {
     engine: "eta",

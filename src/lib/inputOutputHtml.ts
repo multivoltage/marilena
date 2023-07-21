@@ -1,15 +1,15 @@
 import mjml2html from "mjml";
-import { Config } from "../types";
+import { CoreConfig } from "../types";
 import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const";
 import { stripHtml } from "string-strip-html";
 
 const isTextExecution = process.env.NODE_ENV === "test";
 
 interface Options {
-  templateOptions?: Config["templateOptions"];
+  templateOptions?: CoreConfig["templateOptions"];
   inputHtml: string;
   variables: object;
-  mjmlParsingOptions: Config["mjmlParsingOptions"];
+  mjmlParsingOptions: CoreConfig["mjmlParsingOptions"];
   isTextVersion: boolean;
 }
 export async function inputOutputHtml({

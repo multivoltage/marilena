@@ -5,7 +5,7 @@ import {
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
 } from "../const";
-import { Config } from "../types";
+import { CoreConfig } from "../types";
 import { getPathConfig } from "../utils";
 
 interface Callbacks {
@@ -15,7 +15,10 @@ interface Callbacks {
   handleEditCss: () => void;
 }
 
-export const setupWatcher = function (config: Config, callbacks: Callbacks) {
+export const setupWatcher = function (
+  config: CoreConfig,
+  callbacks: Callbacks,
+) {
   const { inputFolder } = config;
 
   const regex = new RegExp(`.*(.json|.yml|.html|.css|.eta|.hbs)`);
