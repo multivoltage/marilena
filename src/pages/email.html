@@ -1,0 +1,28 @@
+<html>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
+
+  </style>
+  
+  <iframe src="<%= it.url %>" id="email-frame"></iframe>
+
+  <script>
+    const socket = new WebSocket("ws://localhost:8080/socket");
+  
+    // Listen for messages
+    socket.addEventListener("message", (event) => {
+      const message = event.data;
+      if(message === "need_refresh"){
+        document.getElementById('email-frame').contentWindow.location.reload();
+      }
+    });
+    </script>
+</html>
