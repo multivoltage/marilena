@@ -22,12 +22,15 @@ describe("create-example", () => {
   it("welcome it email should render correctly", () => {
     cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
 
-    cy.contains("This is a working example with:");
-    // check header_title
-    cy.contains("Welcome {{ user }}");
-    // check common-it
-    cy.contains("this is a description taken from common-en.yml");
-    // check footer
-    cy.contains("this is partial for footer");
+    cy.getEmailFrame().within(() => {
+      cy.contains("This is a working example with:");
+      cy.contains("partials");
+      // check header_title
+      cy.contains("Welcome {{ user }}");
+      // check common-it
+      cy.contains("this is a description taken from common-en.yml");
+      // check footer
+      cy.contains("this is partial for footer");
+    });
   });
 });
