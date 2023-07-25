@@ -101,7 +101,9 @@ async function startServer() {
         .log(`Server listening at http://localhost:${SERVER_PORT}`);
 
       // open default browser if server is runned not by nodemon
-      if (process.env.NODE_ENV !== "development") {
+      const isDevelopment = process.env.NODE_ENV === "development";
+
+      if (!isDevelopment) {
         import("open").then((m) => {
           m.default(`http://localhost:${SERVER_PORT}`);
         });

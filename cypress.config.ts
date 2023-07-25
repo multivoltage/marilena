@@ -1,4 +1,6 @@
 import { defineConfig } from "cypress";
+import { readFileSync, writeFileSync } from "fs";
+import path from "path";
 
 export default defineConfig({
   e2e: {
@@ -7,4 +9,5 @@ export default defineConfig({
     },
   },
   video: false,
+  chromeWebSecurity: false,
 });

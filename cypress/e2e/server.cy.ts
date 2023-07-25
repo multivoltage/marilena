@@ -23,12 +23,14 @@ describe("Email Render", () => {
   it("welcome it email should render correctly", () => {
     cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("it")}`);
 
-    // check header_title
-    cy.contains("Benvenuto {{ user }}");
-    // check common-it
-    cy.contains("questa è una descrizione presa da common-it.yml");
-    // check footer
-    cy.contains("this is partial for footer");
+    cy.getEmailFrame().within(() => {
+      // check header_title
+      cy.contains("Benvenuto {{ user }}");
+      // check common-it
+      cy.contains("questa è una descrizione presa da common-it.yml");
+      // check footer
+      cy.contains("this is partial for footer");
+    });
   });
 });
 
