@@ -3,7 +3,7 @@
 const welcomeHrefUrl = "welcome";
 const welcomeHrefUrl_it = (locale) => `welcome/${locale}/index.html`;
 
-describe("Email Render", () => {
+describe("Email Render - Playground", () => {
   it("home page show email founded list with links", () => {
     cy.visit("http://localhost:8080/");
 
@@ -34,7 +34,7 @@ describe("Email Render", () => {
   });
 });
 
-describe("Email refresh", () => {
+describe("Email refresh - Playground", () => {
   const filePathHtml = "playground/input/welcome/index.html";
   const filePathVariablesCommonEn = "playground/input/common-en.yml";
   const filePathVariablesEn = "playground/input/welcome/en/variables.yml";
@@ -109,3 +109,25 @@ describe("Email refresh", () => {
     cy.contains("body", NOT_EXISTING_TEXT).should("exist");
   });
 });
+
+// describe.only("delete", () => {
+//   before(() => {
+//     cy.wrap("asmdsdj").as("todo");
+//   });
+
+//   it("test 1", function () {
+//     cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+
+//     // cy.wrap("asmdsdj").as("todo");
+
+//     cy.on("fail", () => {
+//       console.log("saved todo is", this.todo);
+//       // cy.get("@todo").then((c) => console.log(c));
+//       // cy.get("@todo").then((c) => console.log(c));
+//       // cy.get("@todo").then((c) => console.log(c));
+//       console.log("fail");
+//     });
+
+//     // throw new Error("ciccio");
+//   });
+// });
