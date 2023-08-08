@@ -76,7 +76,11 @@ describe("Email refresh - Playground", () => {
       const newText = text.replace(stringToChange, NOT_EXISTING_TEXT);
       cy.writeFile(filePathHtml, newText, "utf-8");
     });
-    cy.contains("body", NOT_EXISTING_TEXT).should("exist");
+
+    cy.wait(1000); // without that for some reason cypress load old body
+    cy.getEmailFrame().within((el) => {
+      cy.contains(NOT_EXISTING_TEXT);
+    });
   });
 
   it("email page should refresh when common variables change", () => {
@@ -91,7 +95,11 @@ describe("Email refresh - Playground", () => {
       const newText = text.replace(stringToChange, NOT_EXISTING_TEXT);
       cy.writeFile(filePathVariablesCommonEn, newText, "utf-8");
     });
-    cy.contains("body", NOT_EXISTING_TEXT).should("exist");
+
+    cy.wait(1000); // without that for some reason cypress load old body
+    cy.getEmailFrame().within((el) => {
+      cy.contains(NOT_EXISTING_TEXT);
+    });
   });
 
   it("email page should refresh when en dedicated variables change", () => {
@@ -106,7 +114,11 @@ describe("Email refresh - Playground", () => {
       const newText = text.replace(stringToChange, NOT_EXISTING_TEXT);
       cy.writeFile(filePathVariablesEn, newText, "utf-8");
     });
-    cy.contains("body", NOT_EXISTING_TEXT).should("exist");
+
+    cy.wait(1000); // without that for some reason cypress load old body
+    cy.getEmailFrame().within((el) => {
+      cy.contains(NOT_EXISTING_TEXT);
+    });
   });
 });
 
