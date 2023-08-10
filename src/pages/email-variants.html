@@ -1,8 +1,10 @@
 <html>
-  <p>Language founded</p>
-  <ul>
-    <% it.list.forEach(function({ locale, url }){ %>
-    <li><a href="<%= url %>"><%= locale %></a></li>
-    <% }) %>
-  </ul>
+  <body>
+    <p>Language founded</p>
+    <ul>
+      <% it.list.forEach(function({ locale, url }){ %>
+      <li><a href="<%= url %>"><%= locale %></a></li>
+      <% }) %>
+    </ul>
+  </body>
 </html>
