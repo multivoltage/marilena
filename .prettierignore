@@ -30,6 +30,7 @@ logs
 
 # html, yml, json
 *.html
+!src/pages/*.html
 *.eta
 *.ejs
 *.hbs
