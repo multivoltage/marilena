@@ -1,0 +1,5 @@
+{
+    "statusCode": 400,
+    "error": "Bad Request",
+    "message": "Email address is not verified. The following identities failed the check in region US-EAST-1: noreply@custom_domain.com"
+}

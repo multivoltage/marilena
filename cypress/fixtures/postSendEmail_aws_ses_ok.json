@@ -1,0 +1,15 @@
+{
+    "envelope": {
+        "from": "noreply@custom_domain.com",
+        "to": [
+            "diego.tonini93@gmail.com"
+        ]
+    },
+    "messageId": "<xyz@email.amazonses.com>",
+    "response": "123456",
+    "raw": {
+        "type": "Buffer",
+        "data": [
+        ]
+    }
+}
