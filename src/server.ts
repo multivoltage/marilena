@@ -7,6 +7,7 @@ import { handler as homeHandler } from "./routes/home";
 import { handler as emailLangVariants } from "./routes/list-languages";
 import { handler as emailHandler } from "./routes/email";
 import { handler as getHtmlEmailHandler } from "./routes/api/get-html-email";
+import { handler as postSendEmail } from "./routes/api/post-send-email";
 import logger from "node-color-log";
 import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./const";
 import { setupWatcher } from "./lib/watcher";
@@ -52,8 +53,10 @@ async function startServer() {
   // render 1 email for 1 language
   server.get(`/:email/:locale/index.html`, emailHandler);
 
-  // GET html api
+  // GET  api email content
   server.get(`/api/getHtmlEmail/:email/:locale`, getHtmlEmailHandler);
+  // POSt api send test email
+  server.post(`/api/postSendEmail/:email/:locale`, postSendEmail);
 
   // inject config on each endpoint. Now we load with loadConfig in other parts.
   // Maybe we need to create a kind of wrapper or decorator...

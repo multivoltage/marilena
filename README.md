@@ -126,6 +126,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
 | htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize the output html filename. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
+| sendTestOptions | | option in case you want to send the email to some account for testing. Setting this should add `send email` button during development: Read below for some use cases |
 
 ## About templateOptions
 
@@ -161,6 +162,28 @@ templateOptions: {
 
 ---
 
+## About templateOptions
+
+This option provides a fast way to test email sending an email to real account. For now this is possible using `aws-ses` provider. In this case you shoul have a valid Amazon SES account. Setting this options will add a small form in the email page development. Example:
+
+```js
+sendTestOptions: {
+  provider: "aws-ses", // only aws-ses is supported
+  to: "diego.tonini93@gmail.com", // this is only a default. During development you can set different address
+  from: "noreply@custom_domain.com", // only valid and registered alias are working with your associated Aws Ses accout
+  // this field must return an object of type aws.SES. Below is only a basic working example
+  ses: () =>
+    new aws.SES({
+      apiVersion: "2010-12-01", // should be the same
+      region: "us-east-1",
+      credentials: {
+        accessKeyId: "...",
+        secretAccessKey: "...",
+      },
+    }),
+  },
+```
+
 ## Use css
 
 If you want to add a css file import in `mj-include` tag. Path start from root directory of the project (like package json):
@@ -186,12 +209,13 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [x] load varibles from yaml/json format
 - [x] load common variables
 - [x] pass option to MJML render
+- [x] easy way to send a real email (AWS Ses)
 
 ## 🏗️ Roadmap (PRs are welcome 😀)
 
 - [ ] liquid, ejs, nunjucks, mustache, dot
 - [ ] config in typescript
-- [ ] easy way to send a real email (AWS Ses/Nodemailer)
+- [ ] extends send test email to custom provider
 - [ ] fast-refresh on config change
 - [ ] snaphost test for each email out of the box
 - [ ] refactor to esm instead common js

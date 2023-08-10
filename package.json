@@ -4,7 +4,7 @@
   "description": "a tool to build emails with cool tools like mjml and different template engine like handlebars or eta.js",
   "scripts": {
     "build": "tsc && npm run copy && etsc && npm run generate-types",
-    "copy": "mkdir -p dist/pages && cp src/pages/*.html dist/pages",
+    "copy": "rm -rf dist && mkdir -p dist && cp -R src/pages dist/pages",
     "start": "node dist/server.js --project playground/marilena.config.mjs",
     "start:example": "node dist/server.js --project example/marilena.config.mjs",
     "dev": "npm run copy && nodemon --project playground/marilena.config.mjs",
@@ -47,6 +47,7 @@
   "author": "Diego Tonini <diego.tonini93@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.388.0",
     "@fastify/view": "^8.0.0",
     "@fastify/websocket": "^8.1.0",
     "esbuild-node-tsc": "^2.0.5",
@@ -58,6 +59,7 @@
     "node-color-log": "^10.0.2",
     "node-html-parser": "^6.1.5",
     "node-watch": "^0.7.3",
+    "nodemailer": "^6.9.4",
     "open": "^9.1.0",
     "string-strip-html": "^8.5.0"
   },
@@ -67,6 +69,7 @@
     "@types/minimist": "^1.2.2",
     "@types/mjml": "^4.7.0",
     "@types/node": "^18.15.0",
+    "@types/nodemailer": "^6.4.9",
     "cypress": "^12.16.0",
     "dotenv-cli": "^7.2.1",
     "ejs": "^3.1.9",
