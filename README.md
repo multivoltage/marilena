@@ -126,7 +126,7 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
 | htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize the output html filename. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
-| sendTestOptions | | option in case you want to send the email to some account for testing. Setting this should add `send email` button during development: Read below for some use cases |
+| sendTestOptions | | option in case you want to send the email to some account for testing. Setting this should add `send-email` button during development: Read below for some use cases |
 
 ## About templateOptions
 
@@ -162,26 +162,63 @@ templateOptions: {
 
 ---
 
-## About templateOptions
+## About sendTestOptions
 
-This option provides a fast way to test email sending an email to real account. For now this is possible using `aws-ses` provider. In this case you shoul have a valid Amazon SES account. Setting this options will add a small form in the email page development. Example:
+This option provides a fast way to test email sending an email to real account. You shoud pass also `createTransport` function that return a `Transporter`.
+See [nodemailer tutorial](https://nodemailer.com/smtp/)
+
+Example `marilena.config.mjs` to work with Aws SES:
 
 ```js
-sendTestOptions: {
-  provider: "aws-ses", // only aws-ses is supported
-  to: "diego.tonini93@gmail.com", // this is only a default. During development you can set different address
-  from: "noreply@custom_domain.com", // only valid and registered alias are working with your associated Aws Ses accout
-  // this field must return an object of type aws.SES. Below is only a basic working example
-  ses: () =>
-    new aws.SES({
-      apiVersion: "2010-12-01", // should be the same
-      region: "us-east-1",
-      credentials: {
-        accessKeyId: "...",
-        secretAccessKey: "...",
-      },
-    }),
+import * as aws from "@aws-sdk/client-ses";
+import nodemailer from "nodemailer";
+
+export default {
+  ...config,
+  sendTestOptions: {
+    to: "diego.tonini93@gmail.com",
+    from: "noreply@custom-domain.com", // this is not random email, but should be registered in you provider
+    createTransport: () =>
+      nodemailer.createTransport({
+        SES: {
+          ses: new aws.SES({
+            apiVersion: "2010-12-01",
+            region: "us-east-1",
+            credentials: {
+              accessKeyId: "...",
+              secretAccessKey: "...",
+            },
+          }),
+          aws,
+        },
+      }),
   },
+};
+```
+
+Example `marilena.config.mjs` to work with forwardemail or other custom setting;
+
+```js
+import nodemailer from "nodemailer";
+
+export default {
+  ...config,
+  sendTestOptions: {
+    to: "diego.tonini93@gmail.com",
+    from: "noreply@custom-domain.com", // this is not random email, but should be registered in you provider
+    createTransport: () =>
+      nodemailer.createTransport({
+        host: "smtp.forwardemail.net",
+        port: 465,
+        secure: true,
+        auth: {
+          // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+          user: "REPLACE-WITH-YOUR-ALIAS@YOURDOMAIN.COM",
+          pass: "REPLACE-WITH-YOUR-GENERATED-PASSWORD",
+        },
+      }),
+  },
+};
 ```
 
 ## Use css
@@ -209,13 +246,12 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [x] load varibles from yaml/json format
 - [x] load common variables
 - [x] pass option to MJML render
-- [x] easy way to send a real email (AWS Ses)
+- [x] send test email (nodemailer, aws ses)
 
 ## 🏗️ Roadmap (PRs are welcome 😀)
 
 - [ ] liquid, ejs, nunjucks, mustache, dot
 - [ ] config in typescript
-- [ ] extends send test email to custom provider
 - [ ] fast-refresh on config change
 - [ ] snaphost test for each email out of the box
 - [ ] refactor to esm instead common js

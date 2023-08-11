@@ -1,5 +1,5 @@
 import { MJMLParsingOptions } from "mjml-core";
-import * as aws from "@aws-sdk/client-ses";
+import { Transporter } from "nodemailer";
 export interface UserConfig {
   inputFolder?: string; // default input
   outputFolder?: string; // default output
@@ -21,12 +21,8 @@ export type SupportedEngine = "eta" | "handlebars";
 export type CoreConfig = UserConfig &
   Required<Pick<UserConfig, "inputFolder" | "outputFolder" | "locales">>;
 
-type BaseSendTestOptions = {
+export interface SendTestOptions {
   from: string;
   to: string;
-};
-
-export type SendTestOptions = BaseSendTestOptions & {
-  provider: "aws-ses";
-  ses: () => aws.SES;
-};
+  createTransport: () => Transporter;
+}
