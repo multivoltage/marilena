@@ -11,7 +11,7 @@
     "start": "npm run build && cross-env NODE_ENV=production node ./dist/server --project playground/marilena.config.mjs",
     "start:example": "node dist/server.js --project example/marilena.config.mjs",
     "dev": "tsx server.ts --project playground/marilena.config.mjs",
-    "build-emails": "clear && npm run build && node ./dist/lib/buildAllEmails.js --project playground/marilena.config.mjs",
+    "build-emails": "clear && npm run build && node ./dist/src/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server && npm run test:example",
     "test:unit": "jest --silent=true",
     "test:server": "start-server-and-test start :8080 cy:run-server",
