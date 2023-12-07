@@ -9,7 +9,7 @@
     "build:server": "vite build --ssr src/client/entry-server.tsx --outDir dist/server",
     "copy-files": "copyfiles \"public/**/*\" dist && copyfiles -u 2 \"dist/client/**/*\" dist && copyfiles -u 2 \"dist/client/assets/**/*\" dist/public",
     "start": "npm run build && cross-env NODE_ENV=production node ./dist/server --project playground/marilena.config.mjs",
-    "start:example": "node dist/server.js --project example/marilena.config.mjs",
+    "start:example": "npm run build && cross-env NODE_ENV=production node ./dist/server --project example/marilena.config.mjs",
     "dev": "tsx server.ts --project playground/marilena.config.mjs",
     "build-emails": "clear && npm run build && node ./dist/src/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server && npm run test:example",
