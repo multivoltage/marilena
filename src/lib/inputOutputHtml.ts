@@ -1,6 +1,6 @@
 import mjml2html from "mjml";
 import { CoreConfig } from "../types";
-import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const";
+import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const.js";
 import { stripHtml } from "string-strip-html";
 
 const isTextExecution = process.env.NODE_ENV === "test";

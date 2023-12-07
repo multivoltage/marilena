@@ -1,4 +1,4 @@
-import { loadConfig } from "../utils";
+import { loadConfig } from "../utils.js";
 import { RequestHandler } from "express";
 
 export type Response = Array<{ locale: string }>;

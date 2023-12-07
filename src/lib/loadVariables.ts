@@ -1,13 +1,13 @@
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 import { CoreConfig } from "../types";
 import {
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
-} from "../const";
+} from "../const.js";
 import logger from "node-color-log";
 import yaml from "js-yaml";
-import { getPathConfig } from "../utils";
+import { getPathConfig } from "../utils.js";
 
 interface Options {
   config: CoreConfig;

@@ -1,9 +1,9 @@
 import { UserConfig } from "./types";
-import baseConfig from "./lib/baseConfig";
+import baseConfig from "./lib/baseConfig.js";
 import logger from "node-color-log";
-import path from "path";
-import { CONFIG_FILE_NAME } from "./const";
-import fs from "fs";
+import path from "node:path";
+import { CONFIG_FILE_NAME } from "./const.js";
+import fs from "node:fs";
 import argv from "minimist";
 
 // this methods shoul never take arguments since I expected that retun only a config

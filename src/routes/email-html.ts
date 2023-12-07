@@ -1,9 +1,9 @@
-import { getPathConfig, loadConfig } from "../utils";
+import { getPathConfig, loadConfig } from "../utils.js";
 import { RequestHandler } from "express";
 import fs from "node:fs";
 import path from "node:path";
-import { inputOutputHtml } from "src/lib/inputOutputHtml";
-import { VARIABLES_LOADER } from "src/lib/loadVariables";
+import { inputOutputHtml } from "../lib/inputOutputHtml.js";
+import { VARIABLES_LOADER } from "../lib/loadVariables.js";
 
 export const handler: RequestHandler = async (request, res) => {
   const config = await loadConfig();

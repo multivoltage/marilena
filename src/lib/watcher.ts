@@ -4,9 +4,9 @@ import {
   CONFIG_FILE_NAME,
   FILE_NAME_COMMON_VARIABLES,
   FILE_NAME_EMAIL_VARIABLES,
-} from "../const";
+} from "../const.js";
 import { CoreConfig } from "../types";
-import { getPathConfig } from "../utils";
+import { getPathConfig } from "../utils.js";
 
 interface Callbacks {
   handleEditVariables: () => void;

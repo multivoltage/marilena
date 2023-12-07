@@ -1,5 +1,5 @@
-import { loadConfig } from "../utils";
-import { build } from "./buildWithConfig";
+import { loadConfig } from "../utils.js";
+import { build } from "./buildWithConfig.js";
 
 async function buildAllEmail() {
   const config = await loadConfig();
