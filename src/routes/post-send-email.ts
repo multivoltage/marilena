@@ -1,9 +1,9 @@
 import { RouteHandler } from "fastify";
-import { getPathConfig, loadConfig } from "../../utils";
+import { getPathConfig, loadConfig } from "../utils";
 import fs from "fs";
-import { inputOutputHtml } from "../../lib/inputOutputHtml";
-import { VARIABLES_LOADER } from "../../lib/loadVariables";
-import { sendTestEmail } from "../../lib/send-test-email";
+import { inputOutputHtml } from "../lib/inputOutputHtml";
+import { VARIABLES_LOADER } from "../lib/loadVariables";
+import { sendTestEmail } from "../lib/send-test-email";
 import path from "path";
 
 export const handler: RouteHandler = async (request, reply) => {
