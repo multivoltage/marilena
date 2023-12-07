@@ -1,10 +1,10 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { CoreConfig, UserConfig } from "../types";
-import { inputOutputHtml } from "./inputOutputHtml";
-import { VARIABLES_LOADER } from "./loadVariables";
+import { inputOutputHtml } from "./inputOutputHtml.js";
+import { VARIABLES_LOADER } from "./loadVariables.js";
 import logger from "node-color-log";
-import { getPathConfig } from "../utils";
+import { getPathConfig } from "../utils.js";
 
 export async function buildSingle(config: CoreConfig, emailName: string) {
   const {

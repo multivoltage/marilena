@@ -1,8 +1,8 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { CoreConfig } from "../types";
-import { buildSingle } from "./buildSingleWithConfig";
-import { getPathConfig, isEmailDirectory } from "../utils";
+import { buildSingle } from "./buildSingleWithConfig.js";
+import { getPathConfig, isEmailDirectory } from "../utils.js";
 
 export async function build(config: CoreConfig) {
   const { inputFolder, outputFolder } = config;

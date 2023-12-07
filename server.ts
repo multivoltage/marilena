@@ -7,15 +7,15 @@ import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { fileURLToPath } from "url";
 import { WebSocketServer, WebSocket } from "ws";
-import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./src/const";
+import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./src/const.js";
 
 /** api routes */
-import { handler as emailListHandler } from "./src/routes/email-list";
-import { handler as emailLangVariants } from "./src/routes/email-lang-variants";
-import { handler as emailHtmlHandler } from "./src/routes/email-html";
-import { loadConfig } from "./src/utils";
+import { handler as emailListHandler } from "./src/routes/email-list.js";
+import { handler as emailLangVariants } from "./src/routes/email-lang-variants.js";
+import { handler as emailHtmlHandler } from "./src/routes/email-html.js";
+import { loadConfig } from "./src/utils.js";
 import logger from "node-color-log";
-import { setupWatcher } from "./src/lib/watcher";
+import { setupWatcher } from "./src/lib/watcher.js";
 
 const isTest = process.env.NODE_ENV === "test" || !!process.env.VITE_TEST_BUILD;
 
