@@ -1,5 +1,5 @@
-import path from "path";
-import fs from "fs";
+import path from "node:path";
+import fs from "node:fs";
 import createInpuFolder from "./create-example/create-input-folder";
 import createOutputFolder from "./create-example/create-output-folder";
 import createConfig from "./create-example/create-config";

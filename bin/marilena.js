@@ -10,9 +10,9 @@ if (argv.server) {
   require("../dist/server.js");
 } else if (argv.build) {
   logger.info("run build email");
-  require("../dist/lib/buildAllEmails");
+  require("../dist/src/lib/buildAllEmails.js");
 } else if (argv["create-example"]) {
-  require("../dist/create-example.js");
+  require("../dist/src/create-example.js");
 } else {
   logger.info("please use --build or --server or --create-example commands");
 }

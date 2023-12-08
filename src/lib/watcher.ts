@@ -1,5 +1,5 @@
 import watch from "node-watch";
-import path from "path";
+import path from "node:path";
 import {
   CONFIG_FILE_NAME,
   FILE_NAME_COMMON_VARIABLES,

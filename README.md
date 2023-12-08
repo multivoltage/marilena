@@ -38,7 +38,7 @@ marilena provides a command witch generate a small but working example with eta.
 If you fails to generate the example or you want to build a project from 0 you need to crete `marilena.config.mjs` file in the root of your project. Please check below the fields since any of these are required.
 
 ```js
-import path from "path";
+import path from "node:path";
 // you can leverage your IDE's intellisense with jsdoc type hints
 /** @type {import('marilena').UserConfig} */
 export default {
