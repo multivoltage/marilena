@@ -6,7 +6,7 @@
     "baseUrl": ".",
     "checkJs": true,
     "declaration": true,
-    "declarationMap": true,
+    "declarationMap": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
@@ -19,7 +19,7 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "target": "ES2017",
-    "types": ["vite/client"]
+    "types": ["vite/client"],
   },
   "include": ["src/**/*", "types/*", "server.ts", "node_modules/vite/types/*"],
   "ts-node": {

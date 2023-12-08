@@ -38,7 +38,8 @@
   "files": [
     "bin",
     "dist",
-    "README.md"
+    "README.md",
+    "!**/*.tsbuildinfo"
   ],
   "keywords": [
     "mjml",
