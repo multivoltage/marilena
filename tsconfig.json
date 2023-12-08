@@ -17,7 +17,7 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "target": "ES2017",
     "types": ["vite/client"]
   },
@@ -25,7 +25,7 @@
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "ES2020"
     }
   }
 }

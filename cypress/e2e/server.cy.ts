@@ -1,18 +1,19 @@
 /// <reference types="cypress" />
+import { SERVER_PORT } from "../../src/const";
 
-const welcomeHrefUrl = "welcome";
-const welcomeHrefUrl_it = (locale) => `welcome/${locale}/index.html`;
+const welcomeHrefUrl = "/welcome";
+const welcomeHrefUrl_it = (locale) => `${welcomeHrefUrl}/${locale}`;
 
 describe("Email Render - Playground", () => {
   it("home page show email founded list with links", () => {
-    cy.visit("http://localhost:8080/");
+    cy.visit(`http://localhost:${SERVER_PORT}/`);
 
     cy.contains("Email founded");
     cy.contains("welcome").should("have.attr", "href", welcomeHrefUrl);
   });
 
   it("welcome email should render language variants [it,en]", () => {
-    cy.visit("http://localhost:8080/" + welcomeHrefUrl);
+    cy.visit(`http://localhost:${SERVER_PORT}` + welcomeHrefUrl);
 
     cy.get("ul").within(() => {
       cy.contains("it").should("have.attr", "href", welcomeHrefUrl_it("it"));
@@ -21,15 +22,18 @@ describe("Email Render - Playground", () => {
   });
 
   it("welcome it email should render correctly", () => {
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("it")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("it")}`);
 
-    cy.getEmailFrame().within(() => {
+    cy.wait(1000);
+    cy.getEmailFrame().then(($el) => {
       // check header_title
-      cy.contains("Benvenuto {{ user }}");
+      expect($el.text()).to.contain("Benvenuto {{ user }}");
       // check common-it
-      cy.contains("questa è una descrizione presa da common-it.yml");
+      expect($el.text()).to.contain(
+        "questa è una descrizione presa da common-it.yml",
+      );
       // check footer
-      cy.contains("this is partial for footer");
+      expect($el.text()).to.contain("this is partial for footer");
     });
   });
 });
@@ -66,7 +70,7 @@ describe("Email refresh - Playground", () => {
 
   it("email page should refresh when html file change", () => {
     const NOT_EXISTING_TEXT = "NOT_EXISTING-#-NOT_EXISTING" + Math.random();
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("it")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("it")}`);
 
     cy.contains("body", NOT_EXISTING_TEXT).should("not.exist");
     cy.readFile(filePathHtml).then((text: string) => {
@@ -78,14 +82,14 @@ describe("Email refresh - Playground", () => {
     });
 
     cy.wait(1000); // without that for some reason cypress load old body
-    cy.getEmailFrame().within((el) => {
-      cy.contains(NOT_EXISTING_TEXT);
+    cy.getEmailFrame().then(($el) => {
+      expect($el.text()).to.contain(NOT_EXISTING_TEXT);
     });
   });
 
   it("email page should refresh when common variables change", () => {
     const NOT_EXISTING_TEXT = "NOT_EXISTING-#-NOT_EXISTING" + Math.random();
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
 
     cy.contains("body", NOT_EXISTING_TEXT).should("not.exist");
     cy.readFile(filePathVariablesCommonEn).then((text: string) => {
@@ -97,14 +101,14 @@ describe("Email refresh - Playground", () => {
     });
 
     cy.wait(1000); // without that for some reason cypress load old body
-    cy.getEmailFrame().within((el) => {
-      cy.contains(NOT_EXISTING_TEXT);
+    cy.getEmailFrame().then(($el) => {
+      expect($el.text()).to.contain(NOT_EXISTING_TEXT);
     });
   });
 
   it("email page should refresh when en dedicated variables change", () => {
     const NOT_EXISTING_TEXT = "NOT_EXISTING-#-NOT_EXISTING" + Math.random();
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
 
     cy.contains("body", NOT_EXISTING_TEXT).should("not.exist");
     cy.readFile(filePathVariablesEn).then((text: string) => {
@@ -116,15 +120,15 @@ describe("Email refresh - Playground", () => {
     });
 
     cy.wait(1000); // without that for some reason cypress load old body
-    cy.getEmailFrame().within((el) => {
-      cy.contains(NOT_EXISTING_TEXT);
+    cy.getEmailFrame().then(($el) => {
+      expect($el.text()).to.contain(NOT_EXISTING_TEXT);
     });
   });
 });
 
 describe("Email Actions - Playground", () => {
   it("email page with should sendOptions should send a test email and render result without error", () => {
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}/${welcomeHrefUrl_it("en")}`);
 
     cy.intercept("POST", /api\/postSendEmail/, {
       fixture: "postSendEmail_aws_ses_ok",
@@ -141,7 +145,7 @@ describe("Email Actions - Playground", () => {
   });
 
   it("email page with should sendOptions should send a test email and render result with error", () => {
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}/${welcomeHrefUrl_it("en")}`);
 
     cy.intercept("POST", /api\/postSendEmail/, {
       fixture: "postSendEmail_aws_ses_ko",
