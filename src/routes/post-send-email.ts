@@ -1,18 +1,23 @@
-import { RouteHandler } from "fastify";
+import { RequestHandler } from "express";
 import { getPathConfig, loadConfig } from "../utils.js";
-import fs from "fs";
+import fs from "node:fs";
 import { inputOutputHtml } from "../lib/inputOutputHtml.js";
 import { VARIABLES_LOADER } from "../lib/loadVariables.js";
 import { sendTestEmail } from "../lib/send-test-email.js";
-import path from "path";
+import path from "node:path";
 
-export const handler: RouteHandler = async (request, reply) => {
+export type Params = {
+  to: string;
+  email: string;
+  locale: string;
+};
+
+export const handler: RequestHandler = async (request, res) => {
   const config = await loadConfig();
   const { inputFolder, mjmlParsingOptions, sendTestOptions } = config;
-  const email: string = (request.params as any).email;
-  const locale: string = (request.params as any).locale;
 
-  const body: { to: string } = JSON.parse(request.body as string);
+  const params: Params = request.body;
+  const { email, locale, to } = params;
 
   const filePath = path.resolve(
     getPathConfig(),
@@ -43,7 +48,7 @@ export const handler: RouteHandler = async (request, reply) => {
       const res = await sendTestEmail(
         {
           ...sendTestOptions,
-          to: body.to,
+          to,
         },
         html,
       );
@@ -55,8 +60,7 @@ export const handler: RouteHandler = async (request, reply) => {
     }
   }
 
-  reply
-    .code(code)
-    .header("Content-Type", "application/json; charset=utf-8")
-    .send(message);
+  res.status(code);
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.send(message);
 };
