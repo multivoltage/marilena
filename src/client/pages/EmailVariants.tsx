@@ -6,7 +6,7 @@ export const EmailVariants = () => {
   let { emailName } = useParams();
 
   const { data: list = [] } = useQuery<Response>(
-    "email-list",
+    "email-variants",
     () => fetch(`/api/email-list/${emailName}`).then((r) => r.json()),
     {
       enabled: !!emailName,

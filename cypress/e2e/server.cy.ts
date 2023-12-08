@@ -128,37 +128,35 @@ describe("Email refresh - Playground", () => {
 
 describe("Email Actions - Playground", () => {
   it("email page with should sendOptions should send a test email and render result without error", () => {
-    cy.visit(`http://localhost:${SERVER_PORT}/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
 
-    cy.intercept("POST", /api\/postSendEmail/, {
+    cy.intercept("POST", /api\/send/, {
       fixture: "postSendEmail_aws_ses_ok",
       statusCode: 200,
     }).as("postSendEmail");
 
-    cy.get("#send-form__input").should(
-      "have.value",
-      "diego.tonini93@gmail.com",
-    );
-    cy.contains("SEND EMAIL TO").click();
+    cy.get(".send-to input")
+      .invoke("attr", "placeholder")
+      .should("contain", "diego.tonini93@gmail.com");
+    cy.contains("send email").click();
     cy.wait("@postSendEmail");
-    cy.get("#modal-send-email__result").should("be.visible");
+    cy.get(".send-to__modal").should("be.visible");
   });
 
   it("email page with should sendOptions should send a test email and render result with error", () => {
-    cy.visit(`http://localhost:${SERVER_PORT}/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
 
-    cy.intercept("POST", /api\/postSendEmail/, {
+    cy.intercept("POST", /api\/send/, {
       fixture: "postSendEmail_aws_ses_ko",
       statusCode: 400,
     }).as("postSendEmail");
 
-    cy.get("#send-form__input").should(
-      "have.value",
-      "diego.tonini93@gmail.com",
-    );
-    cy.contains("SEND EMAIL TO").click();
+    cy.get(".send-to input")
+      .invoke("attr", "placeholder")
+      .should("contain", "diego.tonini93@gmail.com");
+    cy.contains("send email").click();
     cy.wait("@postSendEmail");
-    cy.get("#modal-send-email__result").should("be.visible");
+    cy.get(".send-to__modal").should("be.visible");
   });
 });
 

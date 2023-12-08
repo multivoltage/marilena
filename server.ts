@@ -7,12 +7,15 @@ import serveStatic from "serve-static";
 import { createServer as createViteServer } from "vite";
 import { fileURLToPath } from "url";
 import { WebSocketServer, WebSocket } from "ws";
+import bodyParser from "body-parser";
 import { EVENT_NAME_NEED_REFRESH_WEBSOCKET, SERVER_PORT } from "./src/const.js";
 
 /** api routes */
 import { handler as emailListHandler } from "./src/routes/email-list.js";
 import { handler as emailLangVariants } from "./src/routes/email-lang-variants.js";
 import { handler as emailHtmlHandler } from "./src/routes/email-html.js";
+import { handler as getConfigHandler } from "./src/routes/get-config.js";
+import { handler as postSendEmailHandler } from "./src/routes/post-send-email.js";
 import { loadConfig } from "./src/utils.js";
 import logger from "node-color-log";
 import { setupWatcher } from "./src/lib/watcher.js";
@@ -66,6 +69,10 @@ async function createServer(isProd = process.env.NODE_ENV === "production") {
   app.get("/api/email-list", emailListHandler);
   app.get("/api/email-list/:emailName", emailLangVariants);
   app.get("/api/email-list/:emailName/:locale", emailHtmlHandler);
+  app.get("/api/config", getConfigHandler);
+
+  var jsonParser = bodyParser.json();
+  app.post("/api/send", jsonParser, postSendEmailHandler);
 
   if (isProd) {
     app.use(compression());

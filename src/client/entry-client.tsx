@@ -16,19 +16,37 @@ const container = document.getElementById("app");
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <EmailList />,
+    element: (
+      <div className="page page__email-list">
+        <EmailList />
+      </div>
+    ),
   },
   {
     path: "/:emailName",
-    element: <EmailVariants />,
+    element: (
+      <div className="page page__email-variants">
+        <EmailVariants />
+      </div>
+    ),
   },
   {
     path: "/:emailName/:locale",
-    element: <Email />,
+    element: (
+      <div className="page page__email">
+        <Email />
+      </div>
+    ),
   },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const FullApp = () => (
   <React.StrictMode>
