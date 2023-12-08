@@ -1,18 +1,19 @@
 /// <reference types="cypress" />
+import { SERVER_PORT } from "../../src/const";
 
-const welcomeHrefUrl = "example-one";
-const welcomeHrefUrl_it = (locale) => `example-one/${locale}/index.html`;
+const welcomeHrefUrl = "/example-one";
+const welcomeHrefUrl_it = (locale) => `${welcomeHrefUrl}/${locale}`;
 
 describe("create-example", () => {
   it("home page show email founded list with links", () => {
-    cy.visit("http://localhost:8080/");
+    cy.visit(`http://localhost:${SERVER_PORT}`);
 
     cy.contains("Email founded");
     cy.contains("example-one").should("have.attr", "href", welcomeHrefUrl);
   });
 
   it("welcome email should render language variants [it,en]", () => {
-    cy.visit("http://localhost:8080/" + welcomeHrefUrl);
+    cy.visit(`http://localhost:${SERVER_PORT}` + welcomeHrefUrl);
 
     cy.get("ul").within(() => {
       cy.contains("en").should("have.attr", "href", welcomeHrefUrl_it("en"));
@@ -20,17 +21,21 @@ describe("create-example", () => {
   });
 
   it("welcome it email should render correctly", () => {
-    cy.visit(`http://localhost:8080/${welcomeHrefUrl_it("en")}`);
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
 
-    cy.getEmailFrame().within(() => {
-      cy.contains("This is a working example with:");
-      cy.contains("partials");
+    cy.wait(400);
+    cy.getEmailFrame().then(($el) => {
+      expect($el.text()).to.contain("This is a working example with:");
+
+      expect($el.text()).to.contain("partials");
       // check header_title
-      cy.contains("Welcome {{ user }}");
+      expect($el.text()).to.contain("Welcome {{ user }}");
       // check common-it
-      cy.contains("this is a description taken from common-en.yml");
+      expect($el.text()).to.contain(
+        "this is a description taken from common-en.yml",
+      );
       // check footer
-      cy.contains("this is partial for footer");
+      expect($el.text()).to.contain("this is partial for footer");
     });
   });
 });

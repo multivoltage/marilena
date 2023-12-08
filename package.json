@@ -15,7 +15,7 @@
     "test": "npm run test:unit && npm run test:server && npm run test:example",
     "test:unit": "jest --silent=true",
     "test:server": "start-server-and-test start :8080 cy:run-server",
-    "test:example": "node dist/create-example.js && start-server-and-test start:example :8080 cy:run-example",
+    "test:example": "node dist/src/create-example.js && start-server-and-test start:example :8080 cy:run-example",
     "jest-clean-cache": "jest --clearCache",
     "cy:open": "cypress open",
     "cy:run-server": "cypress run --spec cypress/e2e/server.cy.ts",
