@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, test } from "@jest/globals";
 import { CoreConfig } from "../src/types";
 import { build } from "../src/lib/buildWithConfig";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { rimrafSync } from "rimraf";
 import { Eta } from "eta";
 

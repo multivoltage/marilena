@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import fs from "fs/promises";
-import path, { dirname } from "path";
+import path, { dirname } from "node:path";
 import express from "express";
 import compression from "compression";
 import serveStatic from "serve-static";

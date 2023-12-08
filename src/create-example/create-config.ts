@@ -1,9 +1,9 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 import { CONFIG_FILE_NAME } from "../const";
 
 const config = `
-import path from "path";
+import path from "node:path";
 /**
  * this is of config file. Is used only inside playground
  */

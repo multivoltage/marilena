@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
-import path from "path";
+import path from "node:path";
 import { getPathConfig, isEmailDirectory, loadConfig } from "../utils.js";
-import fs from "fs";
+import fs from "node:fs";
 
 export type Response = Array<{ emailName: string }>;
 
