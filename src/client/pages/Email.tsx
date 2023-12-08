@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import { SERVER_PORT } from "../../const.js";
 
 let socket: WebSocket;
 export const Email = () => {
@@ -11,7 +12,7 @@ export const Email = () => {
     document.title = `${emailName} - ${locale}`;
 
     // setup socket
-    socket = new WebSocket(`ws://localhost:8081`);
+    socket = new WebSocket(`ws://localhost:8080`);
 
     socket.addEventListener("open", (event) => {
       console.log("socket open");
@@ -34,6 +35,7 @@ export const Email = () => {
   return (
     <div className="email-frame-container">
       <iframe
+        id="email-frame"
         ref={formRef}
         src={`/api/email-list/${emailName}/${locale}`}
       ></iframe>
