@@ -26,6 +26,7 @@ npm i marilena
 marilena provides a command witch generate a small but working example with eta.js, variables, layout and partials. You can choose to generate this example adding these commands to your `package.json` and then run `npm run generate-example`.
 
 ```json
+"type": "module",
 "scripts": {
   "start": "marilena --server --project example/marilena.config.mjs",
   "build": "marilena --build --project example/marilena.config.mjs",
