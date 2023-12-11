@@ -13,10 +13,9 @@
     "dev": "tsx server.ts --project playground/marilena.config.mjs",
     "build-emails": "clear && npm run build && node ./dist/src/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server && npm run test:example",
-    "test:unit": "jest --silent=true",
+    "test:unit": "vitest run",
     "test:server": "start-server-and-test start :8080 cy:run-server",
-    "test:example": "node dist/src/create-example.js && start-server-and-test start:example :8080 cy:run-example",
-    "jest-clean-cache": "jest --clearCache",
+    "test:example": "node dist/src/create-example && start-server-and-test start:example :8080 cy:run-example",
     "cy:open": "cypress open",
     "cy:run-server": "cypress run --spec cypress/e2e/server.cy.ts",
     "cy:run-example": "cypress run --spec cypress/e2e/create-example.cy.ts",
@@ -52,15 +51,11 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-ses": "^3.388.0",
-    "@fastify/view": "^8.0.0",
-    "@fastify/websocket": "^8.1.0",
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
-    "esbuild-node-tsc": "^2.0.5",
     "eta": "^3.0.3",
     "express": "^4.18.2",
-    "fastify": "^4.14.1",
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.8",
     "mjml": "^4.14.1",
@@ -80,7 +75,6 @@
     "ws": "^8.14.2"
   },
   "devDependencies": {
-    "@jest/globals": "^29.5.0",
     "@types/compression": "^1.7.5",
     "@types/express": "^4.17.21",
     "@types/js-yaml": "^4.0.5",
@@ -99,19 +93,16 @@
     "cypress": "^12.16.0",
     "dotenv-cli": "^7.2.1",
     "ejs": "^3.1.9",
-    "esbuild": "0.19.7",
     "handlebars": "^4.7.7",
     "husky": "^8.0.3",
-    "jest": "^29.5.0",
     "lint-staged": "^14.0.1",
-    "nodemon": "^3.0.1",
     "prettier": "^3.0.0",
     "release-it": "^16.1.0",
     "rimraf": "^5.0.1",
     "start-server-and-test": "^2.0.0",
-    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
-    "vite": "^4.5.1"
+    "vite": "^4.5.1",
+    "vitest": "^1.0.2"
   },
   "engines": {
     "node": ">=18"

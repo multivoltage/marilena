@@ -1,6 +1,6 @@
-import { beforeAll, describe, expect, test } from "@jest/globals";
+import { beforeAll, describe, expect, test } from "vitest";
 import { CoreConfig } from "../src/types";
-import { build } from "../src/lib/buildWithConfig";
+import { build } from "../src/lib/buildWithConfig.js";
 import fs from "node:fs";
 import path from "node:path";
 import { rimrafSync } from "rimraf";
