@@ -70,7 +70,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.20.1",
     "serve-static": "^1.15.0",
-    "string-strip-html": "^8.5.0",
+    "string-strip-html": "^13.4.3",
     "tsx": "^4.6.2",
     "ws": "^8.14.2",
     "vite": "^4.5.1"
