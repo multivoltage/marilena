@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`writer correctly email files create email with: [engine: NO, suffix: html, locale: en] - custom htmlVersion 1`] = `
+exports[`writer correctly email files > create email with: [engine: NO, suffix: html, locale: en] - custom htmlVersion 1`] = `
 "<mjml>
   <mj-body>
     <mj-section>
@@ -13,7 +13,7 @@ exports[`writer correctly email files create email with: [engine: NO, suffix: ht
 "
 `;
 
-exports[`writer correctly email files create email with: [engine: NO, suffix: html, locale: en] 1`] = `
+exports[`writer correctly email files > create email with: [engine: NO, suffix: html, locale: en] 1`] = `
 "<mjml>
   <mj-body>
     <mj-section>
@@ -26,7 +26,7 @@ exports[`writer correctly email files create email with: [engine: NO, suffix: ht
 "
 `;
 
-exports[`writer correctly email files create email with: [engine: eta, suffix: html, locale: en] 1`] = `
+exports[`writer correctly email files > create email with: [engine: eta, suffix: html, locale: en] 1`] = `
 "<mjml>
   <mj-body>
     <mj-section>
@@ -42,7 +42,7 @@ exports[`writer correctly email files create email with: [engine: eta, suffix: h
 "
 `;
 
-exports[`writer correctly email files create email with: [engine: handlebars, suffix: html, locale: en] 1`] = `
+exports[`writer correctly email files > create email with: [engine: handlebars, suffix: html, locale: en] 1`] = `
 "<mjml>
   <mj-body>
     <mj-section>
@@ -56,4 +56,4 @@ exports[`writer correctly email files create email with: [engine: handlebars, su
 "
 `;
 
-exports[`writer correctly email files create text version email 1`] = `"only text version"`;
+exports[`writer correctly email files > create text version email 1`] = `"only text version"`;
