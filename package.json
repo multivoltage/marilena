@@ -15,7 +15,7 @@
     "test": "npm run test:unit && npm run test:server && npm run test:example",
     "test:unit": "vitest run",
     "test:server": "start-server-and-test start :8080 cy:run-server",
-    "test:example": "node dist/src/create-example && start-server-and-test start:example :8080 cy:run-example",
+    "test:example": "node dist/src/create-example.js && start-server-and-test start:example :8080 cy:run-example",
     "cy:open": "cypress open",
     "cy:run-server": "cypress run --spec cypress/e2e/server.cy.ts",
     "cy:run-example": "cypress run --spec cypress/e2e/create-example.cy.ts",
