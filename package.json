@@ -59,7 +59,7 @@
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.8",
     "mjml": "^4.14.1",
-    "node-color-log": "^10.0.2",
+    "node-color-log": "^11.0.0",
     "node-html-parser": "^6.1.5",
     "node-watch": "^0.7.3",
     "nodemailer": "^6.9.7",
