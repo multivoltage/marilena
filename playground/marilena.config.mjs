@@ -22,7 +22,7 @@ export default {
   },
   sendTestOptions: {
     to: "diego.tonini93@gmail.com",
-    from: "noreply@conio.com", // only valid and registered alias are working with SES
+    from: "noreply@todo.com", // only valid and registered alias are working with SES
     createTransport: () =>
       nodemailer.createTransport({
         SES: {
