@@ -73,7 +73,7 @@
     "string-strip-html": "^13.4.3",
     "tsx": "^4.6.2",
     "ws": "^8.14.2",
-    "vite": "^4.5.1"
+    "vite": "^5.0.8"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
