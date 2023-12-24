@@ -62,7 +62,7 @@
     "node-html-parser": "^6.1.5",
     "node-watch": "^0.7.3",
     "nodemailer": "^6.9.7",
-    "open": "^9.1.0",
+    "open": "^10.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
