@@ -38,3 +38,6 @@ cypress/screenshots
 cypress/videos
 
 .env
+
+# avoid bad upload when run npm pack
+*.tgz

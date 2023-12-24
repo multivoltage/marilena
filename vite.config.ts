@@ -17,6 +17,6 @@ export default defineConfig({
   plugins: [react()],
   server: { port: SERVER_PORT },
   build: {
-    minify: false,
+    minify: isProd,
   },
 });

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { loadConfig } from "../utils.js";
 import { build } from "./buildWithConfig.js";
 

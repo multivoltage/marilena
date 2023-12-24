@@ -8,4 +8,7 @@ export default defineConfig({
   },
   video: false,
   chromeWebSecurity: false,
+  env: {
+    SEND_TEST_OPTION_TO: "example-to@gmail.com",
+  },
 });

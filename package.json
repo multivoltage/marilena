@@ -14,7 +14,7 @@
     "build-emails": "clear && npm run build && node ./dist/src/lib/buildAllEmails.js --project playground/marilena.config.mjs",
     "test": "npm run test:unit && npm run test:server && npm run test:example",
     "test:unit": "vitest run",
-    "test:server": "start-server-and-test start :8080 cy:run-server",
+    "test:server": "cross-env SEND_TEST_OPTION_TO=example-to@gmail.com start-server-and-test start :8080 cy:run-server",
     "test:example": "node dist/src/create-example.js && start-server-and-test start:example :8080 cy:run-example",
     "cy:open": "cypress open",
     "cy:run-server": "cypress run --spec cypress/e2e/server.cy.ts",
@@ -23,8 +23,7 @@
     "release": "dotenv release-it",
     "generate-types": "tsc --declaration --declarationDir ./dist --outDir temp ./src/types.ts && rm -rf temp",
     "prettier:check": "npx prettier --check .",
-    "prettier:fix": "npx prettier --write .",
-    "################################ vite ########################": ""
+    "prettier:fix": "npx prettier --write ."
   },
   "types": "dist/types.d.ts",
   "bin": {
@@ -54,7 +53,7 @@
     "body-parser": "^1.20.2",
     "compression": "^1.7.4",
     "cross-env": "^7.0.3",
-    "eta": "^3.0.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "js-yaml": "^4.1.0",
     "minimist": "^1.2.8",
@@ -72,8 +71,8 @@
     "serve-static": "^1.15.0",
     "string-strip-html": "^13.4.3",
     "tsx": "^4.6.2",
-    "ws": "^8.14.2",
-    "vite": "^4.5.1"
+    "vite": "^4.5.1",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@types/compression": "^1.7.5",
@@ -93,7 +92,7 @@
     "copyfiles": "^2.4.1",
     "cypress": "^12.16.0",
     "dotenv-cli": "^7.2.1",
-    "ejs": "^3.1.9",
+    "eta": "^3.2.0",
     "handlebars": "^4.7.7",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
