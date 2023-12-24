@@ -36,3 +36,6 @@ jobs:
 
       - name: Test server
         run: npm run test:server
+
+      - name: Test example
+        run: npm run test:example
