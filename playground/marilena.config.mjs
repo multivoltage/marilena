@@ -21,8 +21,8 @@ export default {
     keepComments: false,
   },
   sendTestOptions: {
-    to: "diego.tonini93@gmail.com",
-    from: "noreply@todo.com", // only valid and registered alias are working with SES
+    to: process.env.SEND_TEST_OPTION_TO,
+    from: process.env.SEND_TEST_OPTION_FROM, // only valid and registered alias are working with SES
     createTransport: () =>
       nodemailer.createTransport({
         SES: {
@@ -30,8 +30,8 @@ export default {
             apiVersion: "2010-12-01",
             region: "us-east-1",
             credentials: {
-              accessKeyId: "...",
-              secretAccessKey: "...",
+              accessKeyId: process.env.AWS_ACCESS_KEY,
+              secretAccessKey: process.env.AWS_SECRET,
             },
           }),
           aws,

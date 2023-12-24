@@ -137,7 +137,7 @@ describe("Email Actions - Playground", () => {
 
     cy.get(".send-to input")
       .invoke("attr", "placeholder")
-      .should("contain", "diego.tonini93@gmail.com");
+      .should("contain", Cypress.env("SEND_TEST_OPTION_TO"));
     cy.contains("send email").click();
     cy.wait("@postSendEmail");
     cy.get(".send-to__modal").should("be.visible");
@@ -153,7 +153,7 @@ describe("Email Actions - Playground", () => {
 
     cy.get(".send-to input")
       .invoke("attr", "placeholder")
-      .should("contain", "diego.tonini93@gmail.com");
+      .should("contain", Cypress.env("SEND_TEST_OPTION_TO"));
     cy.contains("send email").click();
     cy.wait("@postSendEmail");
     cy.get(".send-to__modal").should("be.visible");

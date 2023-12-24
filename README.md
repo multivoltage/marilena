@@ -15,7 +15,7 @@ This project wants to mix up MJML, a template engine for variables and a web ser
 
 ## 🚀 Usage
 
-### Install (require node >=16)
+### Install (require node >=18)
 
 ```sh
 npm i marilena
@@ -41,7 +41,7 @@ If you fails to generate the example or you want to build a project from 0 you n
 ```js
 import path from "node:path";
 // you can leverage your IDE's intellisense with jsdoc type hints
-/** @type {import('marilena').UserConfig} */
+/** @type {import('../src/types').UserConfig} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
@@ -129,11 +129,17 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
 | sendTestOptions | | option in case you want to send the email to some account for testing. Setting this should add `send-email` button during development: Read below for some use cases |
 
+---
+
+## Load env variables
+
+Marilena uses `dotenv` out of the box. So if you create `.env` file (or it is created by runnning `create-example`) marilena will load variables from there.
+
 ## About templateOptions
 
 This project can producte output html from input template. But in a real word probably we store variables in some part and render some content multiple times (example a footer). In this case `templateOptions` can define:
 
-- `engine`: `eta` or `handlebars` are supported. Apart `eta`, which is used also in the project library, all others requires dependency installed since `marilena` use lazy import for engines.
+- `engine`: `eta` or `handlebars` are supported. These deps are peer-dependency so if you want to use ones please install that as dependency.
 - `prepareEngine`: define a callback where we can setup our engine. Basically you can define all things before the render. For example:
 
 ```js

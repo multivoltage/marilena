@@ -8,7 +8,7 @@ import path from "node:path";
  * this is of config file. Is used only inside playground
  */
 
-/** @type {import('marilena').UserConfig} */
+/** @type {import('../src/types').UserConfig} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
@@ -23,6 +23,24 @@ export default {
   },
   mjmlParsingOptions: {
     keepComments: false,
+  },
+  sendTestOptions: {
+    to: process.env.SEND_TEST_OPTION_TO,
+    from: process.env.SEND_TEST_OPTION_FROM, // only valid and registered alias are working with SES
+    createTransport: () =>
+      nodemailer.createTransport({
+        SES: {
+          ses: new aws.SES({
+            apiVersion: "2010-12-01",
+            region: "us-east-1",
+            credentials: {
+              accessKeyId: process.env.AWS_ACCESS_KEY,
+              secretAccessKey: process.env.AWS_SECRET,
+            },
+          }),
+          aws,
+        },
+      }),
   },
 };
 `;

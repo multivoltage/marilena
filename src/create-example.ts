@@ -7,6 +7,7 @@ import createMail from "./create-example/create-mail.js";
 import createLayoutAndPartial from "./create-example/create-layout-and-partials.js";
 import createCommonEn from "./create-example/create-common-en.js";
 import createStyles from "./create-example/create-style.js";
+import createEnvFile from "./create-example/create-env-file.js";
 import logger from "node-color-log";
 
 const rootFolder = process.cwd();
@@ -43,6 +44,9 @@ createCommonEn(fromPath);
 
 // 7 create example/input/styles.css
 createStyles(fromPath);
+
+// create .env in the root
+createEnvFile(rootFolder);
 
 logger.debug(
   `
