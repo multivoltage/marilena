@@ -41,7 +41,7 @@ If you fails to generate the example or you want to build a project from 0 you n
 ```js
 import path from "node:path";
 // you can leverage your IDE's intellisense with jsdoc type hints
-/** @type {import('../src/types').UserConfig} */
+/** @type {import('marilena/dist/src/types').UserConfig} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
@@ -192,8 +192,8 @@ export default {
             apiVersion: "2010-12-01",
             region: "us-east-1",
             credentials: {
-              accessKeyId: "...",
-              secretAccessKey: "...",
+              accessKeyId: process.env.AWS_ACCESS_KEY || "secret",
+              secretAccessKey: process.env.AWS_SECRET || "secret",
             },
           }),
           aws,

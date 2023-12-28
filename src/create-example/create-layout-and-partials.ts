@@ -9,12 +9,14 @@ const layoutMain = `
     <mj-include path="input/styles.css" type="css" css-inline="inline" />
     <mj-body width="600px" background-color="#f4f4f4" class="gradient">
 
-    <!-- header -->
+      <!-- header -->
 
-    <%~ it.body %>
+      <%~ it.body %>
 
-    <!-- footer-->
-    <%~ include("../partials/footer.html") %>
+      <!-- footer-->
+      <%~ include("../partials/footer.html") %>
+
+    </mj-body>
 </mjml>
 `;
 
@@ -22,6 +24,7 @@ const footer = `
 <mj-section css-class="gradient">
   <mj-column width="100%">
     <mj-text>this is partial for footer</mj-text>
+  </mj-column>
 </mj-section>
 `;
 
