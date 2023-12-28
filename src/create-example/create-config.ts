@@ -8,7 +8,7 @@ import path from "node:path";
  * this is of config file. Is used only inside playground
  */
 
-/** @type {import('../src/types').UserConfig} */
+/** @type {import('marilena/dist/src/types').UserConfig} */
 export default {
   inputFolder: "./input",
   outputFolder: "./output",
