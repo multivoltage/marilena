@@ -230,7 +230,7 @@ export default {
 
 ## Use css
 
-If you want to add a css file import in `mj-include` tag. Path start from root directory of the project (like package json):
+If you want to add a css file import in `mj-include` tag. Path start from root directory of the project (like `package.json`):
 
 ```xml
 <mjml>
@@ -261,4 +261,3 @@ If you want to add a css file import in `mj-include` tag. Path start from root d
 - [ ] config in typescript
 - [ ] fast-refresh on config change
 - [ ] snaphost test for each email out of the box
-- [ ] refactor to esm instead common js
