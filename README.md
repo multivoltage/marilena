@@ -1,17 +1,16 @@
-# Intro
+## The problem
 
-We know emails are `VERY HARD` to develop from scratch.
-Sometimes you can use tool like Maiject, SendPulse, MailerSend, Stripo.email etc. Some of this have cool interfaces with drag and drop and different actions to do.
-
-So why you/your company should use this library?
+We know emails are `VERY HARD` to develop from scratch. Even if there are tools like Maiject, SendPulse, MailerSend, Stripo.email etc (maybe with a good drag-n-drop UI) sometimes you find yourself in one of the following cases:
 
 - you need to produce some html files using layouts and partials for different languages, passing them to a backend witch add maybe some data coming from itself (or another service) and fills your html files with its template engine.
 - backend of your company deploy email using with a custom service that use Amazon SES.
 - previous providers are not able to customize some parts. For example css rule. Or to do this is very complicated.
-- coming from [email-foundation-template](https://github.com/foundation/foundation-emails) and you want to try a different tool with advantages (please read below about features).
+- coming from [email-foundation-template](https://github.com/foundation/foundation-emails) and you want to try a different tool with advantages (please read below about features), or you need to use different template engine with more power (see Eta.js).
 - having complete control of development without use any Saas is mandatory.
 
-This project wants to mix up MJML, a template engine for variables and a web server, to create a tool able to generate emails with a simple flow and one command. Please keep in mind that Maiject, SendPulse, MailerSend, Stripo.email etc maybe can be already perfect for your purpose.
+## This solution
+
+`marilena` wants to mix up MJML, an optional template engine for variables and a web server, to create a tool able to generate emails with a simple flow and one command. Please keep in mind that Maiject, SendPulse, MailerSend, Stripo.email etc maybe can be already perfect for your purpose.
 
 ## 🚀 Usage
 
@@ -23,14 +22,19 @@ npm i marilena
 
 ### Setup
 
-marilena provides a command witch generate a small but working example with eta.js, variables, layout and partials. You can choose to generate this example adding these commands to your `package.json` and then run `npm run generate-example`.
+`marilena` provides a command witch generate a small but working example with eta.js, variables, layout and partials. You can generate an example with:
+
+```
+npx marilena --create-example
+```
+
+and change `package.json` like:
 
 ```json
 "type": "module",
 "scripts": {
   "start": "marilena --server --project example/marilena.config.mjs",
   "build": "marilena --build --project example/marilena.config.mjs",
-  "generate-example": "marilena --create-example",
 },
 ```
 
@@ -71,7 +75,7 @@ Edit you `package.json`. By default `marilena` try to find config in the root of
 },
 ```
 
-create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`. Yes you can use both :)
+create a file structures based on your config. Please remember that each email template requires `index.html` as name, and variables are loaded only from `variables.json` or `variables.yml`. Yes you can use both (result will be an union of two).
 
 ```
 project
@@ -228,18 +232,32 @@ export default {
 };
 ```
 
-## Use css
+## Add css/scss style
 
-If you want to add a css file import in `mj-include` tag. Path start from root directory of the project (like `package.json`):
+You have some options to apply styles on your email:
+
+- Use `<mj-style>` tag (read MJML documentatation)
+
+```
+<mj-style inline="inline">
+  .blue-text div {
+    color: blue !important;
+  }
+</mj-style>
+```
+
+- create a `style.css` inside `inputFolder` and import in `mj-include` tag. Path start from root directory of the project (like `package.json`):
 
 ```xml
 <mjml>
+  <mj-include path="input/styles.css" type="css" css-inline="inline"/>
   <mj-body>
-    <mj-include path="input/styles.css" type="css" css-inline="inline"/>
     <!-- other mjml nodes -->
   </mj-body>
 </mjml>
 ```
+
+- create a `style.scss` inside `inputFolder`. A compiled css will be added to the `<head>` of document.
 
 ## 🚀 Features
 

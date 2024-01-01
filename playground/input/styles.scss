@@ -1,0 +1,8 @@
+@use "./email-content";
+
+body {
+  // here we use important because .gradient is styled by "style.css" with "in-line" mode
+  .footer.gradient {
+    background: rgb(255, 0, 0) !important;
+  }
+}
