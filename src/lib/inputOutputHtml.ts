@@ -2,6 +2,11 @@ import mjml2html from "mjml";
 import { CoreConfig } from "../types";
 import { CONFIG_FILE_NAME, SUPPORTED_ENGINES } from "../const.js";
 import { stripHtml } from "string-strip-html";
+import { compile } from "sass";
+import { getPathConfig, loadConfig } from "../utils.js";
+import path from "node:path";
+import fs from "node:fs";
+import * as cheerio from "cheerio";
 
 const isTextExecution = process.env.NODE_ENV === "test";
 
@@ -68,6 +73,31 @@ export async function inputOutputHtml({
     return mjmlTenplateWithVars;
   }
 
-  const html = mjml2html(mjmlTenplateWithVars, mjmlParsingOptions).html;
+  let html = mjml2html(mjmlTenplateWithVars, mjmlParsingOptions).html;
+
+  const $ = cheerio.load(html, {
+    xml: {
+      xmlMode: false,
+    },
+  });
+
+  // add SCSS
+  const { inputFolder } = await loadConfig();
+  const scssFilePath = path.resolve(
+    getPathConfig(),
+    "..",
+    inputFolder,
+    "styles.scss",
+  );
+
+  let scssFounded = fs.existsSync(scssFilePath);
+  if (scssFounded) {
+    const scssCompiled = compile(scssFilePath).css;
+    // we add compiled scss into <head> tag
+    $("head").append(`<style>${scssCompiled}</style>`);
+  }
+
+  html = $.html();
+
   return html;
 }

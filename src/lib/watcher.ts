@@ -21,7 +21,7 @@ export const setupWatcher = function (
 ) {
   const { inputFolder } = config;
 
-  const regex = new RegExp(`.*(.json|.yml|.html|.css|.eta|.hbs)`);
+  const regex = new RegExp(`.*(.json|.yml|.html|.css|.scss|.eta|.hbs)`);
   const pathConfig = getPathConfig();
   const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
 
@@ -41,8 +41,8 @@ export const setupWatcher = function (
         } else if (baseName.endsWith(".html")) {
           // changed email/partial/layout
           callbacks.handleEmailChange();
-        } else if (baseName.endsWith(".css")) {
-          // changed css
+        } else if (baseName.endsWith(".css") || baseName.endsWith(".scss")) {
+          // changed styles
           callbacks.handleEditCss();
         }
       }

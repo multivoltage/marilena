@@ -36,6 +36,22 @@ describe("Email Render - Playground", () => {
       expect($el.text()).to.contain("this is partial for footer");
     });
   });
+
+  it("email should apply scss", () => {
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("it")}`);
+
+    cy.wait(1000);
+    cy.getEmailFrame().then(($el) => {
+      // check header_title
+      const $footer = $el.find(".footer.gradient");
+      const { backgroundColor } = getComputedStyle($footer[0]);
+      expect(backgroundColor.replace(/ /g, "")).to.equal("rgb(255,0,0)");
+
+      const $p = $el.find(".text-warning p");
+      const { color } = getComputedStyle($p[0]);
+      expect(color.replace(/ /g, "")).to.equal("rgb(255,0,0)");
+    });
+  });
 });
 
 describe("Email refresh - Playground", () => {
