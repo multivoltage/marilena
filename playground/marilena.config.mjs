@@ -1,6 +1,7 @@
 import path from "path";
 import * as aws from "@aws-sdk/client-ses";
 import nodemailer from "nodemailer";
+import Handlebars from "handlebars";
 /**
  * this is of config file. Is used only inside playground
  */
@@ -37,5 +38,9 @@ export default {
           aws,
         },
       }),
+  },
+  fillFakeMetaData: (outputHtml, fakeData) => {
+    const template = Handlebars.compile(outputHtml);
+    return template(fakeData);
   },
 };

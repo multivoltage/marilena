@@ -1,0 +1,13 @@
+{
+  "user": "Diego Tonini",
+  "people": [
+    {
+      "name": "Luca Pavesi",
+      "age": 23
+    },
+    {
+      "name": "Girgio Gentili",
+      "age": 45
+    }
+  ]
+}

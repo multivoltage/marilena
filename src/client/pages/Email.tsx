@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { SERVER_PORT } from "../../const.js";
 import { useMutation, useQuery } from "react-query";
-import { CoreConfig } from "src/types.js";
 import type { Params } from "../../routes/post-send-email.js";
 import ReactModal from "react-modal";
+import { SerializedConfig } from "src/routes/get-config.js";
 
 let socket: WebSocket;
 export const Email = () => {
@@ -12,8 +12,9 @@ export const Email = () => {
   const formRef = useRef<HTMLIFrameElement>(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sendTo, setSendTo] = useState("");
+  const [fillFakeMetaData, setFillFakeMetaData] = useState(false);
 
-  const { data: config } = useQuery<CoreConfig>("getConfig", () =>
+  const { data: config } = useQuery<SerializedConfig>("getConfig", () =>
     fetch("/api/config").then((r) => r.json()),
   );
   const { mutate, data, isLoading } = useMutation({
@@ -74,6 +75,7 @@ export const Email = () => {
         email: emailName,
         locale,
         to: sendTo,
+        fillFakeMetaData,
       };
 
       mutate(params);
@@ -84,8 +86,12 @@ export const Email = () => {
     setModalOpen(false);
   }
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleChangeEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setSendTo(e.currentTarget.value);
+  }
+
+  function handleChangeFillFakeData(e: React.ChangeEvent<HTMLInputElement>) {
+    setFillFakeMetaData(e.target.checked);
   }
 
   return (
@@ -94,15 +100,29 @@ export const Email = () => {
         <iframe
           id="email-frame"
           ref={formRef}
-          src={`/api/email-list/${emailName}/${locale}`}
+          src={`/api/email-list/${emailName}/${locale}?fillFakeMetaData=${String(
+            fillFakeMetaData,
+          )}`}
         ></iframe>
       </div>
 
       <div className="send-to">
-        <input type="email" placeholder={sendTo} onChange={handleChange} />
+        <input type="email" placeholder={sendTo} onChange={handleChangeEmail} />
         <button onClick={sendEmail}>
           {isLoading ? "loading..." : "send email"}
         </button>
+        <br />
+
+        <div>
+          <input
+            type="checkbox"
+            id="scales"
+            name="scales"
+            checked={fillFakeMetaData}
+            onChange={handleChangeFillFakeData}
+          />
+          <label htmlFor="scales">Fill with fake data</label>
+        </div>
       </div>
 
       <ReactModal isOpen={isModalOpen}>

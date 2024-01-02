@@ -13,6 +13,7 @@ export interface UserConfig {
   locales?: string[]; // default ["en"]
   mjmlParsingOptions?: MJMLParsingOptions;
   sendTestOptions?: SendTestOptions;
+  fillFakeMetaData?: (outputHtml: string, metadata: object) => string;
 }
 
 export type SupportedEngine = "eta" | "handlebars";
