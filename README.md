@@ -126,12 +126,13 @@ Under the hood a default configuration will be loaded but a file `marilena.confi
 | ------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
 | inputFolder | | folder where email are in the project. Path is relative to `marilena.config.mjs` | ./input |
 | outputFolder | | folder used for generated email (when run build command). Path is relative to `marilena.config.mjs` | ./output |
-| locales | | array of languages used. If you need only spanish email use an array of single value | ["es"] |
+| locales | | array of languages used. If you need only spanish email use an array of single value | ["en"] |
 | templateOptions | | if you chose to use one of supported engines, this part is mandatory to setup custom partial and other settings for the template engine selected. Read below for some use cases | empty |
 | mjmlParsingOptions | | options passed to mjml render. See: [mjml options](https://www.npmjs.com/package/mjml) |
 | htmlVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to customize the output html filename. The function must return file name `es: ${emailName}-${locale}.html` | index.html |
 | textVersion | | function of type `(emailName: string, locale: string) => string`. If set, this function allow to generate text version of email stripping all html. The function must return file name `es: ${emailName}-${locale}-text-version.txt` |
 | sendTestOptions | | option in case you want to send the email to some account for testing. Setting this should add `send-email` button during development: Read below for some use cases |
+| fillFakeMetaData | | function of type `(outputHtml: string, fakeData: object) => string`. If set, this function allow to "simulate" a backend, parsing final output and replace with fake data. See dedicate section for details. |
 
 ---
 
@@ -230,6 +231,43 @@ export default {
       }),
   },
 };
+```
+
+## About fillFakeMetaData
+
+In the real world the html produced by `marilena` is consumed by a backend. Probably this backend will fill email with real data using some template engine like jinja (php) or handlebars (php js) or blocks (go) etc. In some case we can mock a minimal behavior. This is useful for:
+
+- render email with custm data
+- test a send with some data
+
+Follow these step:
+
+- add `fillFakeMetaData` in `marilena.config.mjs`
+
+```js
+import Handlebars from "handlebars";
+
+export default {
+  /* this example is made with Handlebars but you can use any js template engine */
+  fillFakeMetaData: (outputHtml, fakeData) => {
+    const template = Handlebars.compile(outputHtml);
+    return template(fakeData);
+  },
+};
+```
+
+- create `metadata.json` or `metadata.yml` under `[inputFolder]/[emailName]/[locale]` path (same path of variables).
+
+```json
+{
+  "user": "Diego Tonini",
+  "people": [
+    {
+      "name": "Luca Pavesi",
+      "age": 23
+    }
+  ]
+}
 ```
 
 ## Add css/scss style

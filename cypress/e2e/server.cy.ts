@@ -52,6 +52,24 @@ describe("Email Render - Playground", () => {
       expect(color.replace(/ /g, "")).to.equal("rgb(255,0,0)");
     });
   });
+
+  it("welcome en email should render fakeMetadata", () => {
+    cy.visit(`http://localhost:${SERVER_PORT}${welcomeHrefUrl_it("en")}`);
+
+    cy.wait(1000);
+    cy.getEmailFrame().then(($el) => {
+      const $peopleList = $el.find(".people-list");
+      expect($peopleList.text()).to.not.contain("Luca Pavesi - 23");
+    });
+
+    cy.contains("Fill with fake data").click();
+
+    cy.wait(1000);
+    cy.getEmailFrame().then(($el) => {
+      const $peopleList = $el.find(".people-list");
+      expect($peopleList.text()).to.contain("Luca Pavesi - 23");
+    });
+  });
 });
 
 describe("Email refresh - Playground", () => {

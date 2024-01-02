@@ -22,5 +22,17 @@
       build and upload emails where there is a backend which parse and compile
       with other engine like handlebars
     </mj-text>
+
+    <mj-text css-class="people-list">
+      <ul>
+        {{#each people}}
+          <li><mj-text>{{this.name}} - {{this.age}}</mj-text></li>
+        {{/each}}
+      </ul>
+    </mj-text>
+
+
+
+
   </mj-column>
 </mj-section>

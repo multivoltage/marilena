@@ -3,6 +3,7 @@ import fs from "node:fs";
 import { CoreConfig } from "../types";
 import {
   FILE_NAME_COMMON_VARIABLES,
+  FILE_NAME_EMAIL_METADATA,
   FILE_NAME_EMAIL_VARIABLES,
 } from "../const.js";
 import logger from "node-color-log";
@@ -102,6 +103,54 @@ function loadSingle(options: Options, emailName: string): object {
   return vars;
 }
 
+function loadMetadata(options: Options, emailName: string): object {
+  const { config, locale } = options;
+  const { inputFolder } = config;
+  const inputFolderPath = path.resolve(getPathConfig(), "..", inputFolder);
+  let vars: object = {};
+  let founded = false;
+
+  try {
+    const ymlVarisblaes = yaml.load(
+      fs.readFileSync(
+        path.join(
+          inputFolderPath,
+          emailName,
+          locale,
+          `${FILE_NAME_EMAIL_METADATA}.yml`,
+        ),
+        "utf-8",
+      ),
+    ) as object;
+    vars = { ...vars, ...ymlVarisblaes };
+    founded = true;
+  } catch (e) {}
+
+  try {
+    const jsonVariables = JSON.parse(
+      fs.readFileSync(
+        path.join(
+          inputFolderPath,
+          emailName,
+          locale,
+          `${FILE_NAME_EMAIL_METADATA}.json`,
+        ),
+        "utf-8",
+      ),
+    );
+    vars = { ...vars, ...jsonVariables };
+    founded = true;
+  } catch (e) {}
+
+  if (!founded) {
+    logger.error(
+      `cannot load metadata for email "${emailName}" ${locale}. Please create file "${FILE_NAME_EMAIL_METADATA}" with .json or .yml extension file under ${inputFolderPath}/${emailName}/${locale}`,
+    );
+  }
+
+  return vars;
+}
+
 export const VARIABLES_LOADER = {
   loadCommon,
   loadSingle,
@@ -111,4 +160,5 @@ export const VARIABLES_LOADER = {
       ...loadSingle(options, emailName as string),
     };
   },
+  loadMetadata,
 };
