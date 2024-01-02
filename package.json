@@ -1,6 +1,6 @@
 {
   "name": "marilena",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "type": "module",
   "description": "a tool to build emails with cool stuff like mjml and different template engine like handlebars or eta.js",
   "scripts": {
