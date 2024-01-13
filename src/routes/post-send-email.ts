@@ -78,7 +78,11 @@ export const handler: RequestHandler = async (request, res) => {
       code = 200;
       message = res;
     } catch (err) {
-      message = err;
+      const error = err as unknown as Error;
+
+      message = {
+        message: error.message,
+      };
       code = 400;
     }
   }
