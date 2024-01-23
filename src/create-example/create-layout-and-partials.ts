@@ -7,7 +7,7 @@ const layoutMain = `
         <mj-preview>hi user</mj-preview>
     </mj-head>
     <mj-include path="example/input/styles.css" type="css" css-inline="inline" />
-    <mj-body width="600px" background-color="#f4f4f4" class="gradient">
+    <mj-body width="600px" background-color="#f4f4f4">
 
       <!-- header -->
 
