@@ -4,7 +4,7 @@ import { CONFIG_FILE_NAME } from "../const.js";
 
 const config = `
 import path from "node:path";
-import nodemailer from 'nodemailer'
+import nodemailer from "nodemailer"
 /**
  * this is of config file. Is used only inside playground
  */

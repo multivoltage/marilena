@@ -6,13 +6,16 @@ import type { Params } from "../../routes/post-send-email.js";
 import ReactModal from "react-modal";
 import { SerializedConfig } from "src/routes/get-config.js";
 
-let socket: WebSocket;
+// let socket: WebSocket;
 export const Email = () => {
   let { emailName, locale } = useParams();
-  const formRef = useRef<HTMLIFrameElement>(null);
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const socketRef = useRef<WebSocket>();
   const [isModalOpen, setModalOpen] = useState(false);
   const [sendTo, setSendTo] = useState("");
   const [fillFakeMetaData, setFillFakeMetaData] = useState(false);
+  const [screenMode, setScreenMode] = useState<"DEKSTOP" | "MOBILE">("DEKSTOP");
+  const screenSize = screenMode === "DEKSTOP" ? 800 : 375;
 
   const { data: config } = useQuery<SerializedConfig>("getConfig", () =>
     fetch("/api/config").then((r) => r.json()),
@@ -36,22 +39,25 @@ export const Email = () => {
     document.title = `${emailName} - ${locale}`;
 
     // setup socket
-    socket = new WebSocket(`ws://localhost:8080`);
+    socketRef.current = new WebSocket(`ws://localhost:${SERVER_PORT}`);
 
-    socket.addEventListener("open", (event) => {
+    socketRef.current.addEventListener("open", (event) => {
       console.log("socket open");
     });
     // Listen for messages
-    socket.addEventListener("message", (event) => {
+    socketRef.current.addEventListener("message", (event) => {
       const message = event.data;
       if (message === "need_refresh") {
-        formRef.current?.contentWindow?.location.reload();
+        frameRef.current?.contentWindow?.location.reload();
       }
     });
 
     return () => {
-      if (socket.readyState === WebSocket.OPEN) {
-        socket.close();
+      if (
+        !!socketRef.current &&
+        socketRef.current.readyState === WebSocket.OPEN
+      ) {
+        socketRef.current.close();
       }
     };
   }, []);
@@ -68,6 +74,13 @@ export const Email = () => {
       setSendTo(sendTo);
     }
   }, [config]);
+
+  useEffect(() => {
+    const iframe = frameRef.current;
+    if (iframe) {
+      iframe.style.width = `${screenSize}px`;
+    }
+  }, [screenSize]);
 
   function sendEmail() {
     if (emailName && locale && config?.sendTestOptions?.to) {
@@ -94,18 +107,27 @@ export const Email = () => {
     setFillFakeMetaData(e.target.checked);
   }
 
+  const setScreen = (screen: "DEKSTOP" | "MOBILE") =>
+    function handleChangeFillFakeData() {
+      setScreenMode(screen);
+    };
+
   return (
     <div className="page-wrapper">
+      <div className="frame-settings">
+        <button onClick={setScreen("DEKSTOP")}>DEKSTOP</button>
+        <button onClick={setScreen("MOBILE")}>MOBILE</button>
+        <span>{screenSize}px</span>
+      </div>
       <div className="email-frame-container">
         <iframe
           id="email-frame"
-          ref={formRef}
+          ref={frameRef}
           src={`/api/email-list/${emailName}/${locale}?fillFakeMetaData=${String(
             fillFakeMetaData,
           )}`}
         ></iframe>
       </div>
-
       <div className="send-to">
         <input type="email" placeholder={sendTo} onChange={handleChangeEmail} />
         <button onClick={sendEmail}>
@@ -124,7 +146,6 @@ export const Email = () => {
           <label htmlFor="scales">Fill with fake data</label>
         </div>
       </div>
-
       <ReactModal isOpen={isModalOpen}>
         <div className="send-to__modal">
           <button onClick={closeModal} className="">
