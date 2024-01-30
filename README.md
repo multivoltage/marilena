@@ -1,3 +1,10 @@
+<h1 align="center">marilena</h1>
+<p align="center">a tool to build emails with cool stuff like mjml and different template engine like handlebars or eta.js</p>
+
+<p align="center">
+  <img alt="version" src="https://img.shields.io/npm/v/marilena.svg" />
+</p>
+
 ## The problem
 
 We know emails are `VERY HARD` to develop from scratch. Even if there are tools like Maiject, SendPulse, MailerSend, Stripo.email etc (maybe with a good drag-n-drop UI) sometimes you find yourself in one of the following cases:

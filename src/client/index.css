@@ -34,3 +34,17 @@ body {
   right: 1rem;
   top: 1rem;
 }
+
+#email-frame {
+  transition: width 200ms ease-in-out;
+}
+
+.email-frame-container,
+.frame-settings {
+  display: flex;
+  justify-content: center;
+}
+
+.frame-settings {
+  margin: 1rem 0;
+}
